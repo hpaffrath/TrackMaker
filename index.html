@@ -451,8 +451,12 @@
           <input type="number" id="customDrumBars" min="1" max="32" value="1" style="width:70px;">
         </div>
         <button class="btn btn-ghost" id="clearCustomDrumBtn" style="display:none;">Clear custom pattern</button>
+        <button class="btn btn-ghost" id="exportDrumMidiBtn">⬇ Export Drum MIDI</button>
+        <button class="btn btn-ghost" id="importDrumMidiBtn">⬆ Import Drum MIDI</button>
+        <input type="file" id="drumMidiFileInput" accept=".mid,.midi" style="display:none;">
         <span class="hint">Funk, Hip-Hop and Bossa use 16th-note syncopation. More patterns coming later.</span>
       </div>
+      <div class="hint" style="margin-top:6px;">Export writes whichever drum pattern is selected (preset or custom) as its own .mid file. Import reads a MIDI file's percussion channel back in as a Custom pattern.</div>
       <div id="customDrumGridWrap" style="display:none; margin-top:14px;">
         <div class="hint" style="margin-bottom:10px;">Click a cell to toggle that hit. Loops every N bars (set above) — real drum samples (Public Domain TR-505 kit).</div>
         <div class="timeline-scroll" style="overflow-x:auto;">
@@ -2122,6 +2126,134 @@
     e.target.value = '';
   });
 
+  // ---------------- Drum-only MIDI export/import ----------------
+  function buildDrumMidiBlob(){
+    const bpm = parseFloat(bpmInput.value);
+    const nBeats = beatsPerBar();
+    const div = STEPS_PER_BEAT;
+    const ticksPerStep = PPQ/div;
+    const mpqn = Math.round(60000000/bpm);
+    const ddExp = Math.round(Math.log2(parseInt(beatUnitSel.value)));
+
+    const drumName = drumPatternSel.value;
+    if(drumName === 'none'){ alert('No drum pattern is selected — nothing to export.'); return null; }
+    const hitsPattern = buildDrumHits(drumName, nBeats, div);
+    const patternLen = hitsPattern.length;
+
+    const conductorEvents = [
+      { tick:0, bytes: metaBytes(0x03, strToBytes('Track Maker Drums')) },
+      { tick:0, bytes: metaBytes(0x51, [(mpqn>>16)&0xFF,(mpqn>>8)&0xFF,mpqn&0xFF]) },
+      { tick:0, bytes: metaBytes(0x58, [nBeats, ddExp, 24, 8]) }
+    ];
+
+    const rhythmEvents = [];
+    function addDrumHit(tick, note, vel){
+      rhythmEvents.push({ tick, bytes:[0x99, note, vel] });
+      rhythmEvents.push({ tick:tick+Math.max(10, Math.round(ticksPerStep*0.4)), bytes:[0x89, note, 0] });
+    }
+    const totalStepsCount = totalSteps();
+    for(let step=0; step<totalStepsCount; step++){
+      const stepTick = step*ticksPerStep;
+      const hit = hitsPattern[step % patternLen];
+      if(hit.kick) addDrumHit(stepTick, 36, 110);
+      if(hit.snare) addDrumHit(stepTick, 38, 105);
+      if(hit.hat) addDrumHit(stepTick, 42, 80);
+      if(hit.ohat) addDrumHit(stepTick, 46, 75);
+      if(hit.clap) addDrumHit(stepTick, 39, 95);
+      if(hit.rim) addDrumHit(stepTick, 37, 90);
+      if(hit.tomLow) addDrumHit(stepTick, 45, 95);
+      if(hit.tomMid) addDrumHit(stepTick, 47, 95);
+      if(hit.tomHigh) addDrumHit(stepTick, 50, 95);
+      if(hit.crash) addDrumHit(stepTick, 49, 100);
+      if(hit.ride) addDrumHit(stepTick, 51, 90);
+      if(hit.cowbell) addDrumHit(stepTick, 56, 90);
+    }
+    if(rhythmEvents.length === 0){ alert('The selected drum pattern has no hits in it — nothing to export.'); return null; }
+
+    const tracks = [ serializeTrack(conductorEvents), serializeTrack(rhythmEvents) ];
+    const header = buildHeaderChunk(1, tracks.length, PPQ);
+    return new Blob([concatUint8(header, ...tracks)], { type:'audio/midi' });
+  }
+
+  const DRUM_NOTE_TO_VOICE = {
+    36:'kick', 38:'snare', 42:'hat', 46:'ohat', 39:'clap', 37:'rim',
+    45:'tomLow', 47:'tomMid', 50:'tomHigh', 49:'crash', 51:'ride', 56:'cowbell'
+  };
+
+  function importDrumMidiData(parsed){
+    if(parsed.division & 0x8000){ alert('SMPTE-based MIDI timing is not supported.'); return; }
+    const filePPQ = parsed.division;
+    let bpmFound = null, numFound = null, denFound = null;
+    const percEvents = [];
+    parsed.tracks.forEach(track=>{
+      track.forEach(ev=>{
+        if(ev.type === 'meta'){
+          if(ev.metaType === 0x51){ const mpqn=(ev.bytes[0]<<16)|(ev.bytes[1]<<8)|ev.bytes[2]; bpmFound=Math.round(60000000/mpqn); }
+          if(ev.metaType === 0x58){ numFound=ev.bytes[0]; denFound=Math.pow(2, ev.bytes[1]); }
+        } else if(ev.type==='on' && ev.channel===9 && ev.velocity>0){
+          percEvents.push(ev);
+        }
+      });
+    });
+    if(percEvents.length === 0){ alert('No percussion (channel 10) notes found in this MIDI file.'); return; }
+
+    const ticksPerOurStep = filePPQ / STEPS_PER_BEAT;
+    const nBeats = numFound || beatsPerBar();
+    const stepsPerBarOur = nBeats * STEPS_PER_BEAT;
+
+    let maxStep = 0, unmapped = 0;
+    const hitsByStep = {};
+    percEvents.forEach(ev=>{
+      const voice = DRUM_NOTE_TO_VOICE[ev.note];
+      if(!voice){ unmapped++; return; }
+      const step = Math.round(ev.tick / ticksPerOurStep);
+      if(!hitsByStep[step]) hitsByStep[step] = new Set();
+      hitsByStep[step].add(voice);
+      if(step > maxStep) maxStep = step;
+    });
+
+    const barsNeeded = Math.max(1, Math.ceil((maxStep+1)/stepsPerBarOur));
+    const totalStepsImport = barsNeeded*stepsPerBarOur;
+    DRUM_VOICES.forEach(v=> customDrumPattern[v] = new Array(totalStepsImport).fill(false));
+    Object.keys(hitsByStep).forEach(stepStr=>{
+      const step = parseInt(stepStr);
+      if(step >= totalStepsImport) return;
+      hitsByStep[step].forEach(voice=>{ customDrumPattern[voice][step] = true; });
+    });
+
+    customDrumPatternBars = barsNeeded;
+    document.getElementById('customDrumBars').value = barsNeeded;
+    if(bpmFound) bpmInput.value = bpmFound;
+    if(numFound) ensureOption(beatsPerBarSel, numFound);
+    if(denFound) ensureOption(beatUnitSel, denFound);
+    updateSigBadge();
+    drumPatternSel.value = 'custom';
+    updateCustomDrumUIVisibility();
+
+    alert('Imported drum pattern: ' + barsNeeded + ' bar(s)' + (bpmFound ? (' at ' + bpmFound + ' BPM') : '') + '.' +
+      (unmapped>0 ? (' ' + unmapped + ' hit(s) used an unrecognized percussion note and were skipped.') : '') +
+      ' Set as Custom pattern — review the grid.');
+  }
+
+  document.getElementById('exportDrumMidiBtn').addEventListener('click', ()=>{
+    const blob = buildDrumMidiBlob();
+    if(blob) downloadBlob(blob, 'track-maker-drums.mid');
+  });
+  document.getElementById('importDrumMidiBtn').addEventListener('click', ()=>{
+    document.getElementById('drumMidiFileInput').click();
+  });
+  document.getElementById('drumMidiFileInput').addEventListener('change', (e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      try{ importDrumMidiData(parseMidi(reader.result)); }
+      catch(err){ alert('Could not parse this MIDI file: ' + err.message); }
+    };
+    reader.readAsArrayBuffer(file);
+    e.target.value = '';
+  });
+
   // ---------------- Hamburger menu ----------------
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const hamburgerMenu = document.getElementById('hamburgerMenu');
@@ -2134,7 +2266,7 @@
 
   // ---------------- Help modal ----------------
   // Version reflects the date this file was generated/updated — bump it on every new revision.
-  const APP_VERSION = '2026.07.13.9';
+  const APP_VERSION = '2026.07.14.1';
 
   const TAB_OVERVIEW = {
     drone: 'Sustains a chord that loops until stopped — good for pads, ambient backing, or holding a tonal center.',
@@ -2172,7 +2304,8 @@
       <ul>
         <li><strong>Beats per bar</strong> / <strong>Beat unit</strong> set the time signature and control how the timeline is grouped into bars.</li>
         <li><strong>Metronome</strong> ticks once per beat, with an optional accent on beat 1 and a choice of tick sound.</li>
-        <li><strong>Drum pattern</strong> adds a backing beat that loops with your progression, played with real drum samples (a Public Domain Roland TR-505 kit) rather than synthesis. Pick <strong>Custom (build below)</strong> to reveal a 12-row step grid — click cells to build your own one-bar beat across kick, snare, clap, hats, rim, toms, crash, ride, and cowbell.</li>
+        <li><strong>Drum pattern</strong> adds a backing beat that loops with your progression, played with real drum samples (a Public Domain Roland TR-505 kit) rather than synthesis. Pick <strong>Custom (build below)</strong> to reveal a step grid — click cells to build your own beat across kick, snare, clap, hats, rim, toms, crash, ride, and cowbell, spanning as many bars as you set in Pattern Length before it loops.</li>
+        <li><strong>Export/Import Drum MIDI</strong> (next to the drum pattern picker) writes or reads just the drum track as its own .mid file — export works for the currently selected pattern, preset or custom; import always lands as a new Custom pattern so you can edit it further.</li>
       </ul>
       <h4>Sequence Settings</h4>
       <ul>
