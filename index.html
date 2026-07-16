@@ -425,7 +425,7 @@
           <label>Drum pattern</label>
           <select id="drumPattern">
             <option value="none" selected>None</option>
-            <option value="custom">Custom (build below)</option>
+            <option value="custom">Blank / keep current grid</option>
             <option value="rock">Rock (4/4)</option>
             <option value="rock_halftime">Rock Half-Time (4/4)</option>
             <option value="rock_driving">Rock Driving 8ths (4/4)</option>
@@ -458,7 +458,7 @@
       </div>
       <div class="hint" style="margin-top:6px;">Export writes whichever drum pattern is selected (preset or custom) as its own .mid file. Import reads a MIDI file's percussion channel back in as a Custom pattern.</div>
       <div id="customDrumGridWrap" style="display:none; margin-top:14px;">
-        <div class="hint" style="margin-bottom:10px;">Click a cell to toggle that hit. Loops every N bars (set above) — real drum samples (Public Domain TR-505 kit).</div>
+        <div class="hint" style="margin-bottom:10px;">Picking any preset above loads it into this grid as an editable starting point — edit freely, it won't snap back. Click a cell to toggle a hit. Loops every N bars (set above) — real drum samples (Public Domain TR-505 kit).</div>
         <div class="timeline-scroll" style="overflow-x:auto;">
           <div id="customDrumRows"></div>
         </div>
@@ -1272,14 +1272,31 @@
     });
   }
 
-  function updateCustomDrumUIVisibility(){
-    const isCustom = drumPatternSel.value === 'custom';
-    document.getElementById('customDrumGridWrap').style.display = isCustom ? '' : 'none';
-    document.getElementById('clearCustomDrumBtn').style.display = isCustom ? '' : 'none';
-    document.getElementById('customDrumBarsField').style.display = isCustom ? 'flex' : 'none';
-    if(isCustom) renderCustomDrumGrid();
+  function loadPresetIntoCustomGrid(patternName){
+    const nBeats = beatsPerBar();
+    const presetHits = buildDrumHits(patternName, nBeats, STEPS_PER_BEAT); // one bar's worth
+    const n = presetHits.length;
+    DRUM_VOICES.forEach(v=>{
+      const fresh = new Array(n).fill(false);
+      for(let i=0;i<n;i++){ if(presetHits[i][v]) fresh[i] = true; }
+      customDrumPattern[v] = fresh;
+    });
+    customDrumPatternBars = 1;
+    document.getElementById('customDrumBars').value = 1;
   }
-  drumPatternSel.addEventListener('change', updateCustomDrumUIVisibility);
+
+  function updateCustomDrumUIVisibility(){
+    const showGrid = drumPatternSel.value !== 'none';
+    document.getElementById('customDrumGridWrap').style.display = showGrid ? '' : 'none';
+    document.getElementById('clearCustomDrumBtn').style.display = showGrid ? '' : 'none';
+    document.getElementById('customDrumBarsField').style.display = showGrid ? 'flex' : 'none';
+    if(showGrid) renderCustomDrumGrid();
+  }
+  drumPatternSel.addEventListener('change', ()=>{
+    const val = drumPatternSel.value;
+    if(val !== 'none' && val !== 'custom') loadPresetIntoCustomGrid(val);
+    updateCustomDrumUIVisibility();
+  });
   document.getElementById('clearCustomDrumBtn').addEventListener('click', ()=>{
     DRUM_VOICES.forEach(v=> customDrumPattern[v].fill(false));
     renderCustomDrumGrid();
@@ -1729,7 +1746,7 @@
     }
 
     if(drumPatternSel.value !== 'none'){
-      const hitsPerBar = buildDrumHits(drumPatternSel.value, nBeats, div);
+      const hitsPerBar = buildDrumHits('custom', nBeats, div); // always play from the grid — presets are loaded into it on selection
       const stepInBar = step % (nBeats*div);
       const hit = hitsPerBar[stepInBar];
       if(hit.kick) playSample('kick', time, 1.0);
@@ -1888,7 +1905,7 @@
       rhythmEvents.push({ tick:tick+Math.max(10, Math.round(ticksPerStep*0.4)), bytes:[0x89, note, 0] });
     }
     const drumName = drumPatternSel.value;
-    const hitsPerBar = drumName !== 'none' ? buildDrumHits(drumName, nBeats, div) : null;
+    const hitsPerBar = drumName !== 'none' ? buildDrumHits('custom', nBeats, div) : null;
     const stepsPerBar = nBeats*div;
     const totalStepsCount = totalSteps();
     for(let step=0; step<totalStepsCount; step++){
@@ -2137,7 +2154,7 @@
 
     const drumName = drumPatternSel.value;
     if(drumName === 'none'){ alert('No drum pattern is selected — nothing to export.'); return null; }
-    const hitsPattern = buildDrumHits(drumName, nBeats, div);
+    const hitsPattern = buildDrumHits('custom', nBeats, div);
     const patternLen = hitsPattern.length;
 
     const conductorEvents = [
@@ -2266,7 +2283,7 @@
 
   // ---------------- Help modal ----------------
   // Version reflects the date this file was generated/updated — bump it on every new revision.
-  const APP_VERSION = '2026.07.14.1';
+  const APP_VERSION = '2026.07.14.2';
 
   const TAB_OVERVIEW = {
     drone: 'Sustains a chord that loops until stopped — good for pads, ambient backing, or holding a tonal center.',
@@ -2304,7 +2321,7 @@
       <ul>
         <li><strong>Beats per bar</strong> / <strong>Beat unit</strong> set the time signature and control how the timeline is grouped into bars.</li>
         <li><strong>Metronome</strong> ticks once per beat, with an optional accent on beat 1 and a choice of tick sound.</li>
-        <li><strong>Drum pattern</strong> adds a backing beat that loops with your progression, played with real drum samples (a Public Domain Roland TR-505 kit) rather than synthesis. Pick <strong>Custom (build below)</strong> to reveal a step grid — click cells to build your own beat across kick, snare, clap, hats, rim, toms, crash, ride, and cowbell, spanning as many bars as you set in Pattern Length before it loops.</li>
+        <li><strong>Drum pattern</strong> picks what plays, using real drum samples (a Public Domain Roland TR-505 kit) rather than synthesis. Any preset you pick loads straight into the step grid below as an editable starting point — kick, snare, clap, hats, rim, toms, crash, ride, cowbell — so you can tweak a preset instead of starting from scratch. Edits stick even if you look at other tabs; picking a different preset overwrites the grid, but "Blank / keep current grid" leaves whatever's there alone. Pattern Length (bars) controls how much of the grid plays before it loops.</li>
         <li><strong>Export/Import Drum MIDI</strong> (next to the drum pattern picker) writes or reads just the drum track as its own .mid file — export works for the currently selected pattern, preset or custom; import always lands as a new Custom pattern so you can edit it further.</li>
       </ul>
       <h4>Sequence Settings</h4>
