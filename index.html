@@ -248,6 +248,19 @@
     background:var(--accent2); color:#fff;
   }
   .fret-note.root{ background:var(--accent); color:#1a1400; }
+
+  .practice-transport{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .practice-transport .radio-chip{
+    display:flex; align-items:center; gap:4px; font-size:10.5px; color:var(--text-dim);
+    text-transform:uppercase; letter-spacing:0.04em; font-weight:600; cursor:pointer;
+    padding:5px 9px; border:1px solid var(--border); border-radius:14px; background:var(--surface2);
+  }
+  .practice-transport .radio-chip input{ accent-color:var(--accent); width:11px; height:11px; margin:0; }
+  .practice-transport .radio-chip:has(input:checked){ color:var(--accent); border-color:var(--accent); }
+  .practice-playpause{
+    width:36px; height:36px; border-radius:50%; padding:0; font-size:15px;
+    display:flex; align-items:center; justify-content:center; line-height:1;
+  }
   .fret-cell.in-position{ background:rgba(232,184,75,0.12); border-color:rgba(232,184,75,0.4); }
   .fret-num-label.in-position{ color:var(--accent); font-weight:700; }
 
@@ -330,12 +343,21 @@
 <div class="container">
 
   <div class="panel">
+    <div class="pane-header"><span class="pane-dot"></span><span class="pane-label">Section</span></div>
+    <div class="modes">
+      <div class="mode-tab active" data-section-tab="sound">Sound Tools</div>
+      <div class="mode-tab" data-section-tab="practice">Practice Tools</div>
+    </div>
+  </div>
+
+  <div class="panel">
     <div class="pane-header"><span class="pane-dot"></span><span class="pane-label">Voice &amp; Mode</span></div>
     <div class="modes">
-      <div class="mode-tab active" data-mode="drone">Drone</div>
-      <div class="mode-tab" data-mode="bass">Single Note (Bass)</div>
-      <div class="mode-tab" data-mode="sequencer">Chord Sequencer</div>
-      <div class="mode-tab" data-mode="arpeggio">Arpeggios</div>
+      <div class="mode-tab active" data-mode="drone" data-section="sound">Drone</div>
+      <div class="mode-tab" data-mode="bass" data-section="sound">Single Note (Bass)</div>
+      <div class="mode-tab" data-mode="sequencer" data-section="sound">Chord Sequencer</div>
+      <div class="mode-tab" data-mode="arpeggio" data-section="practice" style="display:none;">Arpeggios</div>
+      <div class="mode-tab" data-mode="scale" data-section="practice" style="display:none;">Scales</div>
     </div>
     <div class="panel-body">
       <div class="controls">
@@ -617,6 +639,15 @@
   <div class="panel" id="arpeggioPanel" style="display:none;">
     <div class="pane-header"><span class="pane-dot"></span><span class="pane-label">Arpeggio Practice</span></div>
     <div class="panel-body">
+      <div class="row" style="margin-bottom:14px;">
+        <div class="practice-transport">
+          <label class="radio-chip"><input type="radio" name="arpSoundTool" value="drone" checked>Drone</label>
+          <label class="radio-chip"><input type="radio" name="arpSoundTool" value="bass">Note</label>
+          <label class="radio-chip"><input type="radio" name="arpSoundTool" value="sequencer">Seq</label>
+          <button class="btn btn-primary practice-playpause" id="arpPlayPauseBtn" aria-label="Play or pause backing track" type="button">▶</button>
+        </div>
+        <span class="hint">Backing track — uses that tool's current settings, metronome included when the Sequencer is selected.</span>
+      </div>
       <div class="row">
         <div class="field">
           <label>Fretboard shows</label>
@@ -659,6 +690,77 @@
     </div>
   </div>
 
+  <div class="panel" id="scalePanel" style="display:none;">
+    <div class="pane-header"><span class="pane-dot"></span><span class="pane-label">Scale Practice</span></div>
+    <div class="panel-body">
+      <div class="row" style="margin-bottom:14px;">
+        <div class="practice-transport">
+          <label class="radio-chip"><input type="radio" name="scaleSoundTool" value="drone" checked>Drone</label>
+          <label class="radio-chip"><input type="radio" name="scaleSoundTool" value="bass">Note</label>
+          <label class="radio-chip"><input type="radio" name="scaleSoundTool" value="sequencer">Seq</label>
+          <button class="btn btn-primary practice-playpause" id="scalePlayPauseBtn" aria-label="Play or pause backing track" type="button">▶</button>
+        </div>
+        <span class="hint">Backing track — uses that tool's current settings, metronome included when the Sequencer is selected.</span>
+      </div>
+      <div class="row" id="scaleControlsRow">
+        <div class="field">
+          <label>Scale Type</label>
+          <select id="scaleTypeSelect">
+            <option value="major">Major</option>
+            <option value="minor">Natural Minor</option>
+            <option value="harmonicMinor">Harmonic Minor</option>
+            <option value="melodicMinor">Melodic Minor</option>
+            <option value="majPent">Major Pentatonic</option>
+            <option value="minPent">Minor Pentatonic</option>
+            <option value="blues">Blues</option>
+            <option value="dorian">Dorian</option>
+            <option value="phrygian">Phrygian</option>
+            <option value="lydian">Lydian</option>
+            <option value="mixolydian">Mixolydian</option>
+            <option value="locrian">Locrian</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Fretboard shows</label>
+          <select id="scaleDisplayMode">
+            <option value="notes">Note names</option>
+            <option value="intervals">Intervals</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Formula</label>
+          <div class="paint-preview" id="scaleFormula" style="min-width:180px;">1 - 2 - 3 - 4 - 5 - 6 - 7</div>
+        </div>
+      </div>
+      <div class="hint" style="margin-top:10px;">Standard tuning (E A D G B e) for now — other tunings may come later.</div>
+    </div>
+
+    <div class="pane-header"><span class="pane-dot"></span><span class="pane-label">Position</span></div>
+    <div class="panel-body">
+      <div class="row">
+        <button class="btn btn-ghost" id="scalePrevBtn">◀ Prev</button>
+        <div class="sig-badge" id="scalePositionLabel" style="font-size:15px;">Position 1 of 11 (Frets 1–5)</div>
+        <button class="btn btn-ghost" id="scaleNextBtn">Next ▶</button>
+      </div>
+    </div>
+
+    <div class="pane-header"><span class="pane-dot"></span><span class="pane-label">Fretboard</span></div>
+    <div class="panel-body">
+      <div class="hint" style="margin-bottom:10px;">Shows every occurrence of the scale's notes across frets 1-12, open strings marked at the nut. The current exercise position (from Prev/Next below) is highlighted in gold.</div>
+      <div class="timeline-scroll" style="overflow-x:auto; padding:14px;">
+        <div id="scaleFretboardWrap"></div>
+      </div>
+    </div>
+
+    <div class="pane-header"><span class="pane-dot"></span><span class="pane-label">Exercise (TAB)</span></div>
+    <div class="panel-body">
+      <div class="hint" style="margin-bottom:10px;">Rolling 4-note sequence up through the position, then mirrored back down — TAB always shows fret numbers regardless of the display toggle above.</div>
+      <div class="timeline-scroll" style="overflow-x:auto;">
+        <div id="scaleTabWrap"></div>
+      </div>
+    </div>
+  </div>
+
   <footer>Organ, strings, pad, and piano — synthesized live via the Web Audio API. Drums use real samples (Public Domain TR-505 kit).</footer>
 </div>
 
@@ -692,6 +794,24 @@
   };
   const STANDARD_TUNING = [40,45,50,55,59,64]; // low E2..high E4, MIDI note numbers
   const STRING_LABELS = ['E','A','D','G','B','e']; // low to high
+
+  // Scale intervals + formulas, structured exactly like chordIntervals/CHORD_FORMULAS
+  // above, so the Scales tool can reuse the same tone-set / fretboard / TAB engine
+  // built for Arpeggios rather than duplicating it.
+  const SCALE_TYPES = {
+    major:        { label:'Major',              intervals:[0,2,4,5,7,9,11], formula:['1','2','3','4','5','6','7'] },
+    minor:        { label:'Natural Minor',       intervals:[0,2,3,5,7,8,10], formula:['1','2','b3','4','5','b6','b7'] },
+    harmonicMinor:{ label:'Harmonic Minor',      intervals:[0,2,3,5,7,8,11], formula:['1','2','b3','4','5','b6','7'] },
+    melodicMinor: { label:'Melodic Minor',       intervals:[0,2,3,5,7,9,11], formula:['1','2','b3','4','5','6','7'] },
+    majPent:      { label:'Major Pentatonic',    intervals:[0,2,4,7,9],      formula:['1','2','3','5','6'] },
+    minPent:      { label:'Minor Pentatonic',    intervals:[0,3,5,7,10],     formula:['1','b3','4','5','b7'] },
+    blues:        { label:'Blues',               intervals:[0,3,5,6,7,10],   formula:['1','b3','4','b5','5','b7'] },
+    dorian:       { label:'Dorian',              intervals:[0,2,3,5,7,9,10], formula:['1','2','b3','4','5','6','b7'] },
+    phrygian:     { label:'Phrygian',            intervals:[0,1,3,5,7,8,10], formula:['1','b2','b3','4','5','b6','b7'] },
+    lydian:       { label:'Lydian',              intervals:[0,2,4,6,7,9,11], formula:['1','2','3','#4','5','6','7'] },
+    mixolydian:   { label:'Mixolydian',          intervals:[0,2,4,5,7,9,10], formula:['1','2','3','4','5','6','b7'] },
+    locrian:      { label:'Locrian',             intervals:[0,1,3,5,6,8,10], formula:['1','b2','b3','4','b5','b6','b7'] }
+  };
 
   const SCALES = {
     major: {
@@ -1297,6 +1417,7 @@
   rootKeySel.addEventListener('change', ()=>{
     if(isGridMode()) renderDegreeButtons();
     if(currentMode === 'arpeggio') renderArpeggio();
+    if(currentMode === 'scale') renderScale();
   });
   [scaleTypeSel, useSeventhsBox].forEach(el=> el.addEventListener('change', renderDegreeButtons));
   qualitySel.addEventListener('change', ()=>{
@@ -1311,21 +1432,30 @@
   const ARP_MAX_FRET = 15;
   function arpPositionCount(){ return ARP_MAX_FRET - 4; } // positions starting at fret 1..11
   let arpPositionIndex = 0;
+  let scalePositionIndex = 0;
 
-  function getChordToneSet(root, quality){
+  // Generic: builds a pitch-class -> degree-label map from any root + interval/formula
+  // pair. Both chords and scales reduce to this same shape, so the fretboard/TAB
+  // engine below never needs to know which one it's looking at.
+  function buildToneSet(root, intervals, formula){
     const rootIdx = noteNames.indexOf(root);
-    const ints = chordIntervals[quality] || [0];
-    const formula = CHORD_FORMULAS[quality] || ints.map((_,i)=>String(i+1));
     const set = {};
-    ints.forEach((iv, idx)=>{
+    intervals.forEach((iv, idx)=>{
       const pc = ((rootIdx + iv) % 12 + 12) % 12;
-      set[pc] = formula[idx];
+      set[pc] = formula[idx] || String(idx+1);
     });
     return set;
   }
+  function getChordToneSet(root, quality){
+    return buildToneSet(root, chordIntervals[quality] || [0], CHORD_FORMULAS[quality] || []);
+  }
+  function getScaleToneSet(root, scaleType){
+    const s = SCALE_TYPES[scaleType] || SCALE_TYPES.major;
+    return buildToneSet(root, s.intervals, s.formula);
+  }
 
   // Notes are naturally ordered low string -> high string, low fret -> high fret,
-  // which mirrors how arpeggio shapes are actually learned on the neck.
+  // which mirrors how arpeggio/scale shapes are actually learned on the neck.
   function findPositionNotes(startFret, toneSet){
     const notes = [];
     const firstFret = (startFret === 1) ? 0 : startFret; // position 1 includes open strings
@@ -1341,7 +1471,7 @@
     return notes;
   }
 
-  const ARP_FRETBOARD_MAX_FRET = 12;
+  const ARP_FRETBOARD_MAX_FRET = 15;
   function findAllNotes(toneSet){
     const notes = [];
     for(let s=0; s<6; s++){
@@ -1357,7 +1487,8 @@
   }
 
   // Rolling 4-note cascading sequence: 1234, 2345, 3456... up, then mirrored back
-  // down — a genuinely musical arpeggio-study pattern rather than a straight run.
+  // down — a genuinely musical study pattern rather than a straight run. Used by
+  // both Arpeggios and Scales.
   function buildRollingSequence(notes){
     const n = notes.length;
     if(n === 0) return [];
@@ -1368,60 +1499,86 @@
     return seq;
   }
 
-  // Full 1-12 fret reference diagram — shows every occurrence of the chord's
+  // Full 1-12 fret reference diagram — shows every occurrence of the chord/scale's
   // tones, with the current exercise position (from Prev/Next) highlighted.
-  function renderFretboard(allNotes, toneSet, posStart){
-    const wrap = document.getElementById('fretboardWrap');
-    wrap.innerHTML = '';
-    const showIntervals = document.getElementById('arpDisplayMode').value === 'intervals';
+  // Shared by Arpeggios and Scales via the wrapId parameter.
+  function renderFretboard(wrapId, allNotes, toneSet, posStart, showIntervals){
+    const wrap = document.getElementById(wrapId);
     const fretCount = ARP_FRETBOARD_MAX_FRET;
 
-    const grid = document.createElement('div');
-    grid.className = 'fret-grid';
-    grid.style.gridTemplateColumns = '22px repeat(' + fretCount + ', 27px)';
+    const fretW = 42, stringGap = 28, leftMargin = 42, topMargin = 26, bottomPad = 14;
+    const boardLeft = leftMargin, boardRight = leftMargin + fretCount*fretW;
+    const boardTop = topMargin, boardBottom = topMargin + 5*stringGap;
+    const svgW = boardRight + 14, svgH = boardBottom + bottomPad;
+    const noteR = 11;
 
-    grid.appendChild(document.createElement('div'));
-    for(let f=1; f<=fretCount; f++){
-      const lbl = document.createElement('div');
-      lbl.className = 'fret-num-label';
-      if(f >= posStart && f < posStart+5) lbl.classList.add('in-position');
-      lbl.textContent = f;
-      grid.appendChild(lbl);
+    function stringY(s){ return boardTop + (5-s)*stringGap; } // high e (s=5) at top
+    function fretCenterX(f){ return boardLeft + (f-1)*fretW + fretW/2; }
+    function fretWireX(i){ return boardLeft + i*fretW; } // i = 0..fretCount, wire *before* fret i+1
+
+    const parts = [];
+    parts.push('<svg viewBox="0 0 '+svgW+' '+svgH+'" width="'+svgW+'" height="'+svgH+'" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">');
+
+    // Position highlight band (drawn first, behind everything else)
+    const bandX = fretWireX(posStart-1), bandX2 = fretWireX(Math.min(fretCount, posStart-1+5));
+    parts.push('<rect x="'+bandX+'" y="'+(boardTop-8)+'" width="'+(bandX2-bandX)+'" height="'+(boardBottom-boardTop+16)+'" fill="var(--accent)" opacity="0.10"></rect>');
+
+    // Fret inlay dots (3,5,7,9 single; 12 double) — purely decorative, like a real neck
+    const midY = (boardTop+boardBottom)/2;
+    [3,5,7,9].forEach(f=>{
+      if(f<=fretCount) parts.push('<circle cx="'+fretCenterX(f)+'" cy="'+midY+'" r="3.5" fill="var(--border)"></circle>');
+    });
+    if(12<=fretCount){
+      parts.push('<circle cx="'+fretCenterX(12)+'" cy="'+(midY-stringGap)+'" r="3.5" fill="var(--border)"></circle>');
+      parts.push('<circle cx="'+fretCenterX(12)+'" cy="'+(midY+stringGap)+'" r="3.5" fill="var(--border)"></circle>');
     }
 
-    for(let s=5; s>=0; s--){
-      const strLabel = document.createElement('div');
-      strLabel.className = 'fret-string-label';
+    // Fret wires (vertical), nut (before fret 1) drawn thicker
+    for(let i=0; i<=fretCount; i++){
+      const x = fretWireX(i);
+      const isNut = (i===0);
+      parts.push('<line x1="'+x+'" y1="'+(boardTop-10)+'" x2="'+x+'" y2="'+(boardBottom+10)+'" stroke="var(--border)" stroke-width="'+(isNut?5:1)+'"></line>');
+    }
+
+    // Fret number labels along the top, highlighted if within the active position
+    for(let f=1; f<=fretCount; f++){
+      const inPos = (f>=posStart && f<posStart+5);
+      parts.push('<text x="'+fretCenterX(f)+'" y="'+(topMargin-10)+'" text-anchor="middle" font-size="12" fill="'+(inPos?'var(--accent)':'var(--text-dim)')+'" font-weight="'+(inPos?'700':'400')+'">'+f+'</text>');
+    }
+
+    // String lines (horizontal), full width
+    for(let s=0; s<6; s++){
+      parts.push('<line x1="'+boardLeft+'" y1="'+stringY(s)+'" x2="'+boardRight+'" y2="'+stringY(s)+'" stroke="var(--border)" stroke-width="1"></line>');
+    }
+
+    // String labels on the left — open-string chord/scale tones shown as a marker instead of a plain letter
+    for(let s=0; s<6; s++){
+      const y = stringY(s);
       const openPc = ((STANDARD_TUNING[s] % 12)+12)%12;
       if(toneSet.hasOwnProperty(openPc)){
         const isRoot = toneSet[openPc] === '1';
-        strLabel.classList.add('open-hit');
-        if(isRoot) strLabel.classList.add('root');
-        strLabel.textContent = showIntervals ? toneSet[openPc] : noteNames[openPc];
+        const txt = showIntervals ? toneSet[openPc] : noteNames[openPc];
+        parts.push('<circle cx="'+(leftMargin-19)+'" cy="'+y+'" r="'+noteR+'" fill="'+(isRoot?'var(--accent)':'var(--accent2)')+'"></circle>');
+        parts.push('<text x="'+(leftMargin-19)+'" y="'+(y+4)+'" text-anchor="middle" font-size="10" font-weight="700" fill="'+(isRoot?'#1a1400':'#fff')+'">'+txt+'</text>');
       } else {
-        strLabel.textContent = STRING_LABELS[s];
-      }
-      grid.appendChild(strLabel);
-      for(let f=1; f<=fretCount; f++){
-        const cell = document.createElement('div');
-        cell.className = 'fret-cell';
-        if(f === 1) cell.classList.add('at-nut');
-        if(f >= posStart && f < posStart+5) cell.classList.add('in-position');
-        const hit = allNotes.find(n=>n.string===s && n.fret===f);
-        if(hit){
-          const dot = document.createElement('div');
-          dot.className = 'fret-note' + (hit.isRoot ? ' root' : '');
-          dot.textContent = showIntervals ? hit.label : hit.noteName;
-          cell.appendChild(dot);
-        }
-        grid.appendChild(cell);
+        parts.push('<text x="'+(leftMargin-25)+'" y="'+(y+4)+'" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-dim)">'+STRING_LABELS[s]+'</text>');
       }
     }
-    wrap.appendChild(grid);
+
+    // Note dots, sitting directly on their string line
+    allNotes.forEach(n=>{
+      const x = fretCenterX(n.fret), y = stringY(n.string);
+      const txt = showIntervals ? n.label : n.noteName;
+      parts.push('<circle cx="'+x+'" cy="'+y+'" r="'+noteR+'" fill="'+(n.isRoot?'var(--accent)':'var(--accent2)')+'"></circle>');
+      parts.push('<text x="'+x+'" y="'+(y+4)+'" text-anchor="middle" font-size="10" font-weight="700" fill="'+(n.isRoot?'#1a1400':'#fff')+'">'+txt+'</text>');
+    });
+
+    parts.push('</svg>');
+    wrap.innerHTML = parts.join('');
   }
 
-  function renderTab(seq, startFret){
-    const wrap = document.getElementById('tabWrap');
+  function renderTab(wrapId, seq){
+    const wrap = document.getElementById(wrapId);
     wrap.innerHTML = '';
     if(seq.length === 0){
       wrap.innerHTML = '<span class="hint">No chord tones found in this position.</span>';
@@ -1464,8 +1621,10 @@
       'Position ' + (arpPositionIndex+1) + ' of ' + arpPositionCount() + ' (Frets ' + startFret + '\u2013' + (startFret+4) + ')';
 
     const toneSet = getChordToneSet(root, quality);
-    renderFretboard(findAllNotes(toneSet), toneSet, startFret);
-    renderTab(buildRollingSequence(findPositionNotes(startFret, toneSet)), startFret);
+    const showIntervals = document.getElementById('arpDisplayMode').value === 'intervals';
+    renderFretboard('fretboardWrap', findAllNotes(toneSet), toneSet, startFret, showIntervals);
+    renderTab('tabWrap', buildRollingSequence(findPositionNotes(startFret, toneSet)));
+    updatePracticeTransportIcon('arp');
   }
 
   document.getElementById('arpDisplayMode').addEventListener('change', ()=>{ if(currentMode==='arpeggio') renderArpeggio(); });
@@ -1476,6 +1635,37 @@
   document.getElementById('arpNextBtn').addEventListener('click', ()=>{
     arpPositionIndex = Math.min(arpPositionCount()-1, arpPositionIndex+1);
     renderArpeggio();
+  });
+
+  // Scales — reuses the exact same tone-set / fretboard / TAB / rolling-sequence
+  // engine as Arpeggios above, just with SCALE_TYPES as the formula source and
+  // its own root/type controls and position state.
+  function renderScale(){
+    const root = rootKeySel.value;
+    const scaleType = document.getElementById('scaleTypeSelect').value;
+    const s = SCALE_TYPES[scaleType];
+    document.getElementById('scaleFormula').textContent = s ? s.formula.join(' - ') : '\u2014';
+
+    const startFret = scalePositionIndex + 1;
+    document.getElementById('scalePositionLabel').textContent =
+      'Position ' + (scalePositionIndex+1) + ' of ' + arpPositionCount() + ' (Frets ' + startFret + '\u2013' + (startFret+4) + ')';
+
+    const toneSet = getScaleToneSet(root, scaleType);
+    const showIntervals = document.getElementById('scaleDisplayMode').value === 'intervals';
+    renderFretboard('scaleFretboardWrap', findAllNotes(toneSet), toneSet, startFret, showIntervals);
+    renderTab('scaleTabWrap', buildRollingSequence(findPositionNotes(startFret, toneSet)));
+    updatePracticeTransportIcon('scale');
+  }
+
+  document.getElementById('scaleTypeSelect').addEventListener('change', ()=>{ if(currentMode==='scale') renderScale(); });
+  document.getElementById('scaleDisplayMode').addEventListener('change', ()=>{ if(currentMode==='scale') renderScale(); });
+  document.getElementById('scalePrevBtn').addEventListener('click', ()=>{
+    scalePositionIndex = Math.max(0, scalePositionIndex-1);
+    renderScale();
+  });
+  document.getElementById('scaleNextBtn').addEventListener('click', ()=>{
+    scalePositionIndex = Math.min(arpPositionCount()-1, scalePositionIndex+1);
+    renderScale();
   });
 
   // ---------------- Shared transport fields ----------------
@@ -1905,59 +2095,92 @@
   });
 
   // ---------------- Mode switching ----------------
-  const tabs = document.querySelectorAll('.mode-tab');
-  const panels = { drone: document.getElementById('dronePanel'), bass: document.getElementById('bassPanel'), arpeggio: document.getElementById('arpeggioPanel') };
+  const tabs = document.querySelectorAll('.mode-tab[data-mode]');
+  const panels = { drone: document.getElementById('dronePanel'), bass: document.getElementById('bassPanel'), arpeggio: document.getElementById('arpeggioPanel'), scale: document.getElementById('scalePanel') };
   const seqPanelEl = document.getElementById('seqPanel');
   let currentMode = 'drone';
+  const SOUND_TOOL_MODES = ['drone','bass','sequencer'];
+  const PRACTICE_TOOL_MODES = ['arpeggio','scale'];
+  let activeSoundMode = null; // which sound tool (if any) is actually producing audio right now
+  let lastSoundMode = 'drone';
+  let lastPracticeMode = 'arpeggio';
 
   function isGridMode(){ return currentMode === 'sequencer'; }
+  function isPracticeMode(){ return PRACTICE_TOOL_MODES.includes(currentMode); }
 
   [beatsPerBarSel, beatUnitSel, barsInput].forEach(el=> el.addEventListener('change', ()=>{ updateSigBadge(); seqRoll.render(); }));
 
-  tabs.forEach(tab=>{
-    tab.addEventListener('click', ()=>{
+  function activateMode(modeKey){
+    // Only interrupt audio when switching to a *different* sound tool than
+    // whichever one is actually playing — returning to the same tool (even via
+    // Practice Tools in between) never stops it.
+    if(SOUND_TOOL_MODES.includes(modeKey) && activeSoundMode && activeSoundMode !== modeKey){
       stopAllSustained();
       stopSequence();
-      tabs.forEach(t=>t.classList.remove('active'));
-      tab.classList.add('active');
-      currentMode = tab.dataset.mode;
-      Object.keys(panels).forEach(k=> panels[k].style.display = (k===currentMode) ? '' : 'none');
-      seqPanelEl.style.display = isGridMode() ? '' : 'none';
+    }
+    tabs.forEach(t=> t.classList.toggle('active', t.dataset.mode===modeKey));
+    currentMode = modeKey;
+    if(SOUND_TOOL_MODES.includes(modeKey)) lastSoundMode = modeKey;
+    if(PRACTICE_TOOL_MODES.includes(modeKey)) lastPracticeMode = modeKey;
 
-      rootKeyLabel.textContent = isGridMode() ? 'Key' : 'Root';
-      qualityLabel.textContent = isGridMode() ? 'Quality Override' : 'Chord Quality';
+    Object.keys(panels).forEach(k=> panels[k].style.display = (k===currentMode) ? '' : 'none');
+    seqPanelEl.style.display = isGridMode() ? '' : 'none';
 
-      if(isGridMode()){
-        autoOptionEl.hidden = false;
-        if(!qualityTouchedInSequence) qualitySel.value = 'auto';
-        renderDegreeButtons();
-        seqRoll.render();
-      } else {
-        if(qualitySel.value === 'auto') qualitySel.value = 'major';
-        autoOptionEl.hidden = true;
-      }
-      qualitySel.disabled = (currentMode === 'bass');
-      document.getElementById('qualityField').style.display = (currentMode === 'bass') ? 'none' : 'flex';
-      document.getElementById('midiMenuSection').style.display = (currentMode === 'sequencer') ? '' : 'none';
-      document.getElementById('octaveField').style.display = (currentMode === 'arpeggio') ? 'none' : 'flex';
-      document.getElementById('soundField').style.display = (currentMode === 'arpeggio') ? 'none' : 'flex';
-      document.getElementById('timeSigMetroDrumsSection').style.display = (currentMode === 'arpeggio') ? 'none' : '';
+    rootKeyLabel.textContent = isGridMode() ? 'Key' : 'Root';
+    qualityLabel.textContent = isGridMode() ? 'Quality Override' : 'Chord Quality';
 
-      const keyScaleRow = document.getElementById('keyScaleRootQualityRow');
-      const voiceAnchor = document.getElementById('voiceModeFieldsAnchor');
-      const rootKeyFieldEl = document.getElementById('rootKeyField');
-      const qualityFieldEl = document.getElementById('qualityField');
-      if(isGridMode()){
-        keyScaleRow.appendChild(rootKeyFieldEl);
-        keyScaleRow.appendChild(qualityFieldEl);
-      } else {
-        voiceAnchor.parentNode.insertBefore(rootKeyFieldEl, voiceAnchor);
-        voiceAnchor.parentNode.insertBefore(qualityFieldEl, voiceAnchor);
-      }
+    if(isGridMode()){
+      autoOptionEl.hidden = false;
+      if(!qualityTouchedInSequence) qualitySel.value = 'auto';
+      renderDegreeButtons();
+      seqRoll.render();
+    } else {
+      if(qualitySel.value === 'auto') qualitySel.value = 'major';
+      autoOptionEl.hidden = true;
+    }
+    qualitySel.disabled = (currentMode === 'bass');
+    document.getElementById('qualityField').style.display = (currentMode === 'bass' || currentMode === 'scale') ? 'none' : 'flex';
+    document.getElementById('midiMenuSection').style.display = (currentMode === 'sequencer') ? '' : 'none';
+    document.getElementById('octaveField').style.display = isPracticeMode() ? 'none' : 'flex';
+    document.getElementById('soundField').style.display = isPracticeMode() ? 'none' : 'flex';
+    document.getElementById('timeSigMetroDrumsSection').style.display = isPracticeMode() ? 'none' : '';
 
-      if(currentMode === 'arpeggio') renderArpeggio();
-      updatePaintPreview();
-    });
+    const keyScaleRow = document.getElementById('keyScaleRootQualityRow');
+    const scaleControlsRow = document.getElementById('scaleControlsRow');
+    const voiceAnchor = document.getElementById('voiceModeFieldsAnchor');
+    const rootKeyFieldEl = document.getElementById('rootKeyField');
+    const qualityFieldEl = document.getElementById('qualityField');
+    if(isGridMode()){
+      keyScaleRow.appendChild(rootKeyFieldEl);
+      keyScaleRow.appendChild(qualityFieldEl);
+    } else if(currentMode === 'scale'){
+      scaleControlsRow.prepend(rootKeyFieldEl);
+      voiceAnchor.parentNode.insertBefore(qualityFieldEl, voiceAnchor);
+    } else {
+      voiceAnchor.parentNode.insertBefore(rootKeyFieldEl, voiceAnchor);
+      voiceAnchor.parentNode.insertBefore(qualityFieldEl, voiceAnchor);
+    }
+
+    if(currentMode === 'arpeggio') renderArpeggio();
+    if(currentMode === 'scale') renderScale();
+    updatePaintPreview();
+  }
+
+  tabs.forEach(tab=>{
+    tab.addEventListener('click', ()=> activateMode(tab.dataset.mode));
+  });
+
+  // ---------------- Section switching (Sound Tools / Practice Tools) ----------------
+  const sectionTabs = document.querySelectorAll('.mode-tab[data-section-tab]');
+  let currentSection = 'sound';
+  function activateSection(sectionKey){
+    currentSection = sectionKey;
+    sectionTabs.forEach(t=> t.classList.toggle('active', t.dataset.sectionTab===sectionKey));
+    tabs.forEach(t=> t.style.display = (t.dataset.section===sectionKey) ? '' : 'none');
+    activateMode(sectionKey === 'sound' ? lastSoundMode : lastPracticeMode);
+  }
+  sectionTabs.forEach(t=>{
+    t.addEventListener('click', ()=> activateSection(t.dataset.sectionTab));
   });
 
   // ---------------- Drone ----------------
@@ -1969,12 +2192,14 @@
       droneVoices = null;
       droneBtn.textContent = '▶ Play Drone';
       droneBtn.classList.remove('playing');
+      activeSoundMode = null;
     } else {
       const sel = currentSelection();
       const freqs = chordFreqs(sel.root, sel.quality, sel.octave);
       droneVoices = playSustainedChord(freqs);
       droneBtn.textContent = '■ Stop Drone';
       droneBtn.classList.add('playing');
+      activeSoundMode = 'drone';
     }
   });
 
@@ -1987,6 +2212,7 @@
       bassVoice = null;
       bassBtn.textContent = '▶ Play Bass Note';
       bassBtn.classList.remove('playing');
+      activeSoundMode = null;
     } else {
       ensureCtx();
       const sel = currentSelection();
@@ -1994,12 +2220,14 @@
       bassVoice = playNote(freq, audioCtx.currentTime, null);
       bassBtn.textContent = '■ Stop Bass Note';
       bassBtn.classList.add('playing');
+      activeSoundMode = 'bass';
     }
   });
 
   function stopAllSustained(){
     if(droneVoices){ droneVoices.forEach(v=>v.stop()); droneVoices=null; droneBtn.textContent='▶ Play Drone'; droneBtn.classList.remove('playing'); }
     if(bassVoice){ bassVoice.stop(); bassVoice=null; bassBtn.textContent='▶ Play Bass Note'; bassBtn.classList.remove('playing'); }
+    if(activeSoundMode === 'drone' || activeSoundMode === 'bass') activeSoundMode = null;
   }
 
   clearGridBtn.addEventListener('click', ()=> seqRoll.clearAll());
@@ -2079,6 +2307,7 @@
     requestAnimationFrame(drawPlayhead);
     seqPlayBtn.textContent = '■ Stop';
     seqPlayBtn.classList.add('playing');
+    activeSoundMode = 'sequencer';
   }
   function stopSequence(){
     if(!seqPlaying) return;
@@ -2087,10 +2316,41 @@
     seqRoll.hidePlayhead();
     seqPlayBtn.textContent = '▶ Play';
     seqPlayBtn.classList.remove('playing');
+    if(activeSoundMode === 'sequencer') activeSoundMode = null;
   }
   seqPlayBtn.addEventListener('click', ()=>{
     if(seqPlaying) stopSequence(); else startSequence();
   });
+
+  // ---------------- Practice-panel backing-track transport ----------------
+  // Reuses the real Drone/Bass/Sequencer buttons rather than duplicating any
+  // playback logic — stays perfectly in sync with the main Sound Tools panel.
+  function updatePracticeTransportIcon(prefix){
+    const checked = document.querySelector('input[name="'+prefix+'SoundTool"]:checked');
+    if(!checked) return;
+    const btn = document.getElementById(prefix+'PlayPauseBtn');
+    const isPlaying = (activeSoundMode === checked.value);
+    btn.textContent = isPlaying ? '⏸' : '▶';
+    btn.classList.toggle('playing', isPlaying);
+  }
+  function setupPracticeTransport(prefix){
+    const radios = document.querySelectorAll('input[name="'+prefix+'SoundTool"]');
+    const btn = document.getElementById(prefix+'PlayPauseBtn');
+    radios.forEach(r=> r.addEventListener('change', ()=> updatePracticeTransportIcon(prefix)));
+    btn.addEventListener('click', ()=>{
+      const selected = document.querySelector('input[name="'+prefix+'SoundTool"]:checked').value;
+      if(activeSoundMode && activeSoundMode !== selected){
+        stopAllSustained();
+        stopSequence();
+      }
+      if(selected === 'drone') droneBtn.click();
+      else if(selected === 'bass') bassBtn.click();
+      else if(selected === 'sequencer') seqPlayBtn.click();
+      updatePracticeTransportIcon(prefix);
+    });
+  }
+  setupPracticeTransport('arp');
+  setupPracticeTransport('scale');
 
   // ==================================================================
   // MIDI file I/O
@@ -2567,13 +2827,14 @@
 
   // ---------------- Help modal ----------------
   // Version reflects the date this file was generated/updated — bump it on every new revision.
-  const APP_VERSION = '2026.07.14.5';
+  const APP_VERSION = '2026.07.14.9';
 
   const TAB_OVERVIEW = {
     drone: 'Sustains a chord that loops until stopped — good for pads, ambient backing, or holding a tonal center.',
     bass: 'Sustains a single root note — a steady bass anchor under whatever else is playing.',
     sequencer: 'A full piano-roll for building chord progressions and arrangements, with tempo, time signature, metronome, drum patterns, and MIDI import/export.',
-    arpeggio: 'Fretboard diagrams and TAB exercises for practicing a chord\'s arpeggio up the neck, position by position, on a real guitar.'
+    arpeggio: 'Fretboard diagrams and TAB exercises for practicing a chord\'s arpeggio up the neck, position by position, on a real guitar.',
+    scale: 'Fretboard diagrams and TAB exercises for practicing a scale up the neck, same position-by-position approach as Arpeggios.'
   };
 
   const TAB_HELP = {
@@ -2637,13 +2898,21 @@
     `,
     arpeggio: `
       <h4>Arpeggio Practice</h4>
-      <p>Fretboard diagrams and TAB exercises for practicing a chord's arpeggio up the neck — no audio playback, this is a reference for playing on a real guitar. Use the previous three tabs to play a backing track while you practice, if you like.</p>
+      <p>Fretboard diagrams and TAB exercises for practicing a chord's arpeggio up the neck — no audio playback for the exercise itself, this is a reference for playing on a real guitar. Use the <strong>Drone / Note / Seq</strong> radio buttons and the ▶ button at the top to start or stop a backing track without leaving this tab — it uses whichever tool is selected with its current settings, and the same backing track keeps playing if you switch to Scales too.</p>
       <ul>
-        <li>Pick <strong>Root</strong> and <strong>Chord Quality</strong> at the top, same controls as Drone. The <strong>Formula</strong> box shows the interval formula for that chord (e.g. 1 - 3 - 5, or 1 - b3 - 5 - b7) — everything here is built from that formula, which is what will make adding scales later straightforward.</li>
+        <li>Pick <strong>Root</strong> and <strong>Chord Quality</strong> at the top, same controls as Drone. The <strong>Formula</strong> box shows the interval formula for that chord (e.g. 1 - 3 - 5, or 1 - b3 - 5 - b7).</li>
         <li><strong>Fretboard shows</strong> toggles the diagram between actual note names and interval labels (1, b3, 5, b7…).</li>
         <li><strong>Position</strong> walks the exercise up the neck five frets at a time — Position 1 covers frets 1–5 plus the open strings (they're right there in reach), Position 2 covers frets 2–6, and so on. Use Prev/Next to move between them.</li>
-        <li>The <strong>Fretboard</strong> diagram shows every chord tone available in the current position, root notes highlighted.</li>
+        <li>The <strong>Fretboard</strong> diagram shows every chord tone across frets 1–12, root notes highlighted, with the current position highlighted in gold.</li>
         <li>The <strong>Exercise (TAB)</strong> below it is a rolling 4-note sequence (1234, 2345, 3456…) climbing through the position and mirrored back down — more musical than a straight run up and down. TAB always shows fret numbers, regardless of the note/interval toggle above.</li>
+      </ul>
+    `,
+    scale: `
+      <h4>Scale Practice</h4>
+      <p>Same idea as Arpeggios, applied to scales — fretboard diagram, formula, and a position-by-position TAB exercise. The same <strong>Drone / Note / Seq</strong> backing-track controls are here too, kept in sync with Arpeggios and the main Sound Tools panel.</p>
+      <ul>
+        <li>Pick a <strong>Root</strong> and <strong>Scale Type</strong> — major, natural/harmonic/melodic minor, major and minor pentatonic, blues, and the modes (Dorian, Phrygian, Lydian, Mixolydian, Locrian). The <strong>Formula</strong> box shows the interval formula (e.g. 1 - 2 - b3 - 4 - 5 - 6 - b7 for Dorian).</li>
+        <li>Everything else — the fretboard, positions, TAB — works identically to Arpeggios: Prev/Next walks the neck five frets at a time, the fretboard is a full 1–12 fret reference with the active position highlighted, and the TAB is the same rolling 4-note cascading sequence.</li>
       </ul>
     `
   };
@@ -2651,10 +2920,13 @@
   function renderHelpContent(){
     const overviewHtml =
       '<div class="modal-tab-overview">' +
+        '<div style="margin-bottom:4px;"><strong style="color:var(--text);">Sound Tools</strong></div>' +
         '<div><strong>Drone</strong> — ' + TAB_OVERVIEW.drone + '</div>' +
         '<div><strong>Single Note (Bass)</strong> — ' + TAB_OVERVIEW.bass + '</div>' +
         '<div><strong>Chord Sequencer</strong> — ' + TAB_OVERVIEW.sequencer + '</div>' +
+        '<div style="margin:10px 0 4px;"><strong style="color:var(--text);">Practice Tools</strong></div>' +
         '<div><strong>Arpeggios</strong> — ' + TAB_OVERVIEW.arpeggio + '</div>' +
+        '<div><strong>Scales</strong> — ' + TAB_OVERVIEW.scale + '</div>' +
       '</div>';
     document.getElementById('helpModalBody').innerHTML = overviewHtml + TAB_HELP[currentMode];
     document.getElementById('helpModalTitle').innerHTML = 'Help <span class="modal-version">v' + APP_VERSION + '</span>';
