@@ -264,6 +264,18 @@
   .fret-cell.in-position{ background:rgba(232,184,75,0.12); border-color:rgba(232,184,75,0.4); }
   .fret-num-label.in-position{ color:var(--accent); font-weight:700; }
 
+  .finder-results-group{ margin-bottom:16px; }
+  .finder-results-group:last-child{ margin-bottom:0; }
+  .finder-results-group h4{
+    font-family:'JetBrains Mono', monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.1em;
+    color:var(--text-dim); margin-bottom:8px;
+  }
+  .finder-match-list{ display:flex; flex-wrap:wrap; gap:6px; }
+  .finder-match-chip{
+    font-family:'JetBrains Mono', monospace; font-size:12px; padding:5px 10px; border-radius:5px;
+    background:var(--surface2); border:1px solid var(--border); color:var(--text-dim);
+  }
+  .finder-match-chip.exact{ background:var(--accent); border-color:var(--accent); color:#1a1400; font-weight:700; }
   .tab-grid{ display:inline-grid; gap:0; }
   .tab-string-label{
     font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text-dim); font-weight:700;
@@ -325,6 +337,19 @@
             </div>
           </div>
         </div>
+        <div class="pane-header"><span class="pane-dot"></span><span class="pane-label">Groove Favorites</span></div>
+        <div class="panel-body">
+          <div class="row">
+            <button class="btn btn-ghost" id="exportFavoritesBtn" style="width:100%;">⬇ Export Favorites</button>
+          </div>
+          <div class="row">
+            <button class="btn btn-ghost" id="importFavoritesBtn" style="width:100%;">⬆ Import Favorites</button>
+            <input type="file" id="favoritesFileInput" accept=".json" style="display:none;">
+          </div>
+          <div class="hint" style="margin-top:12px;">
+            Favorites are starred in the Groove Library, but only saved in this browser. Export them to a file to back them up or bring them into another browser/computer — Import merges them in without removing any you already have.
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -337,6 +362,44 @@
       <button class="modal-close" id="helpModalClose" aria-label="Close">✕</button>
     </div>
     <div class="modal-body" id="helpModalBody"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="grooveLibraryModalOverlay" style="display:none;">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="pane-label">Groove Library</span>
+      <button class="modal-close" id="grooveLibraryModalClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="margin-top:0;">Real drummer-performed grooves from Google's Expanded Groove MIDI Dataset (E-GMD), hosted in this project's GitHub repo. Licensed CC BY 4.0 — © Google LLC. Picking one imports it as a Custom drum pattern, same as Import Drum MIDI.</p>
+      <div class="row" style="margin-bottom:10px;">
+        <div class="field">
+          <label>Genre</label>
+          <select id="grooveLibraryGenre"><option value="">Loading…</option></select>
+        </div>
+        <div class="field">
+          <label>Type</label>
+          <select id="grooveLibraryType">
+            <option value="beat" selected>Beat (loopable)</option>
+            <option value="fill">Fill</option>
+            <option value="">Both</option>
+          </select>
+        </div>
+        <div class="field" style="flex:1; min-width:160px;">
+          <label>Search</label>
+          <input type="text" id="grooveLibrarySearch" placeholder="style, drummer, or # number…" style="width:100%;">
+        </div>
+        <div class="field" style="justify-content:flex-end;">
+          <label>&nbsp;</label>
+          <label style="display:flex; align-items:center; gap:6px; font-weight:normal; white-space:nowrap;">
+            <input type="checkbox" id="grooveLibraryFavOnly"> ★ Favorites only
+          </label>
+        </div>
+      </div>
+      <div id="grooveLibraryStatus" class="hint" style="margin-bottom:8px;"></div>
+      <div id="grooveLibraryResults" style="max-height:340px; overflow-y:auto; border:1px solid var(--border); border-radius:6px;"></div>
+    </div>
   </div>
 </div>
 
@@ -358,6 +421,7 @@
       <div class="mode-tab" data-mode="sequencer" data-section="sound">Chord Sequencer</div>
       <div class="mode-tab" data-mode="arpeggio" data-section="practice" style="display:none;">Arpeggios</div>
       <div class="mode-tab" data-mode="scale" data-section="practice" style="display:none;">Scales</div>
+      <div class="mode-tab" data-mode="finder" data-section="practice" style="display:none;">Finder</div>
     </div>
     <div class="panel-body">
       <div class="controls">
@@ -521,6 +585,11 @@
         <button class="btn btn-ghost" id="exportDrumMidiBtn">⬇ Export Drum MIDI</button>
         <button class="btn btn-ghost" id="importDrumMidiBtn">⬆ Import Drum MIDI</button>
         <input type="file" id="drumMidiFileInput" accept=".mid,.midi" style="display:none;">
+        <button class="btn btn-ghost" id="grooveLibraryBtn">🎵 Groove Library</button>
+        <span id="loadedGrooveInfo" style="display:none; align-items:center; gap:4px;">
+          <span id="loadedGrooveLabel" class="hint"></span>
+          <button id="loadedGrooveFavBtn" title="Favorite" style="background:none; border:none; cursor:pointer; font-size:15px; padding:0 2px;"></button>
+        </span>
         <span class="hint">Funk, Hip-Hop and Bossa use 16th-note syncopation. More patterns coming later.</span>
       </div>
       <div class="hint" style="margin-top:6px;">Export writes whichever drum pattern is selected (preset or custom) as its own .mid file. Import reads a MIDI file's percussion channel back in as a Custom pattern.</div>
@@ -602,20 +671,19 @@
 
     <div class="pane-header"><span class="pane-dot"></span><span class="pane-label">Grid</span></div>
     <div class="panel-body">
-      <div class="hint" style="margin-bottom:14px;">Drag the middle of a note to move it, or its left/right edge to resize it — both snap to the grid. Tick "Select notes", click two or more touching notes to Merge, or one note to Split. To delete: right-click a note (desktop), press and hold it (tablet/touch), or select it and hit Delete.</div>
+      <div class="hint" style="margin-bottom:14px;">Drag the middle of a note to move it, or its left/right edge to resize it — both snap to the grid. Click a note to select it; shift+click (or double-tap on touch) to add more to the selection, then drag any of them to move the whole group, or use Copy / Cut / Merge / Split / Delete above. To delete a single note without selecting it: right-click (desktop) or press and hold (touch).</div>
 
       <div id="seqWrap">
         <div class="row" style="margin-bottom:14px;">
-          <div class="checkbox-field">
-            <input type="checkbox" id="seqSelectBox">
-            <label for="seqSelectBox">Select notes (merge / split)</label>
-          </div>
           <div class="zoom-wrap">
             <label>Zoom</label>
             <input type="range" id="seqZoom" min="4" max="30" value="18" style="width:110px;">
           </div>
+          <button class="btn btn-ghost" id="seqPasteBtn" disabled>📋 Paste</button>
           <div class="row" id="seqActionBar" style="display:none;">
             <span class="hint" id="seqSelectionInfo">0 selected</span>
+            <button class="btn btn-ghost" id="seqCopyBtn">Copy</button>
+            <button class="btn btn-ghost" id="seqCutBtn">Cut</button>
             <button class="btn btn-primary" id="seqMergeBtn">Merge</button>
             <div class="field" id="seqSplitField" style="min-width:170px;">
               <select id="seqSplitSelect"><option value="">Split into…</option></select>
@@ -758,6 +826,31 @@
       <div class="timeline-scroll" style="overflow-x:auto;">
         <div id="scaleTabWrap"></div>
       </div>
+    </div>
+  </div>
+
+  <div class="panel" id="finderPanel" style="display:none;">
+    <div class="pane-header"><span class="pane-dot"></span><span class="pane-label">Arpeggio / Scale Finder</span></div>
+    <div class="panel-body">
+      <div class="row">
+        <span class="hint" id="finderSelectedSummary">Click notes on the fretboard below to select them — on any strings, any frets, in any combination.</span>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <button class="btn btn-ghost" id="finderClearBtn">Clear selection</button>
+      </div>
+    </div>
+
+    <div class="pane-header"><span class="pane-dot"></span><span class="pane-label">Fretboard (24 frets)</span></div>
+    <div class="panel-body">
+      <div class="hint" style="margin-bottom:10px;">Click a note to select or deselect it. Selected notes are shown in gold.</div>
+      <div class="timeline-scroll" style="overflow-x:auto; padding:14px;">
+        <div id="finderFretboardWrap"></div>
+      </div>
+    </div>
+
+    <div class="pane-header"><span class="pane-dot"></span><span class="pane-label">Results</span></div>
+    <div class="panel-body">
+      <div id="finderResults" class="hint">Select at least one note to see matching chords and scales.</div>
     </div>
   </div>
 
@@ -1160,6 +1253,7 @@
     gain.gain.value = g;
     src.connect(gain); gain.connect(rhythmGain);
     src.start(time);
+    return src;
   }
 
   // Basic synthesized approximations, used automatically if a real sample hasn't
@@ -1502,12 +1596,14 @@
   // Full 1-12 fret reference diagram — shows every occurrence of the chord/scale's
   // tones, with the current exercise position (from Prev/Next) highlighted.
   // Shared by Arpeggios and Scales via the wrapId parameter.
-  function renderFretboard(wrapId, allNotes, toneSet, posStart, showIntervals){
+  function renderFretboard(wrapId, allNotes, toneSet, posStart, showIntervals, options){
+    options = options || {};
     const wrap = document.getElementById(wrapId);
-    const fretCount = ARP_FRETBOARD_MAX_FRET;
+    const fretCount = options.maxFret || ARP_FRETBOARD_MAX_FRET;
+    const onCellClick = options.onCellClick || null;
 
-    const fretW = 42, stringGap = 28, leftMargin = 42, topMargin = 26, bottomPad = 14;
-    const boardLeft = leftMargin, boardRight = leftMargin + fretCount*fretW;
+    const fretW = 42, stringGap = 28, leftMargin = 42, openW = 34, topMargin = 26, bottomPad = 14;
+    const boardLeft = leftMargin + openW, boardRight = boardLeft + fretCount*fretW;
     const boardTop = topMargin, boardBottom = topMargin + 5*stringGap;
     const svgW = boardRight + 14, svgH = boardBottom + bottomPad;
     const noteR = 11;
@@ -1515,23 +1611,28 @@
     function stringY(s){ return boardTop + (5-s)*stringGap; } // high e (s=5) at top
     function fretCenterX(f){ return boardLeft + (f-1)*fretW + fretW/2; }
     function fretWireX(i){ return boardLeft + i*fretW; } // i = 0..fretCount, wire *before* fret i+1
+    const openCenterX = leftMargin + openW/2; // dedicated slot for open-string (fret 0) notes, left of the nut
 
     const parts = [];
-    parts.push('<svg viewBox="0 0 '+svgW+' '+svgH+'" width="'+svgW+'" height="'+svgH+'" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">');
+    parts.push('<svg viewBox="0 0 '+svgW+' '+svgH+'" width="'+svgW+'" height="'+svgH+'" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace"'+(onCellClick?' style="cursor:pointer;"':'')+'>');
 
-    // Position highlight band (drawn first, behind everything else)
-    const bandX = fretWireX(posStart-1), bandX2 = fretWireX(Math.min(fretCount, posStart-1+5));
-    parts.push('<rect x="'+bandX+'" y="'+(boardTop-8)+'" width="'+(bandX2-bandX)+'" height="'+(boardBottom-boardTop+16)+'" fill="var(--accent)" opacity="0.10"></rect>');
+    // Position highlight band (drawn first, behind everything else) — skipped if posStart is null
+    if(posStart != null){
+      const bandX = fretWireX(posStart-1), bandX2 = fretWireX(Math.min(fretCount, posStart-1+5));
+      parts.push('<rect x="'+bandX+'" y="'+(boardTop-8)+'" width="'+(bandX2-bandX)+'" height="'+(boardBottom-boardTop+16)+'" fill="var(--accent)" opacity="0.10"></rect>');
+    }
 
-    // Fret inlay dots (3,5,7,9 single; 12 double) — purely decorative, like a real neck
+    // Fret inlay dots (3,5,7,9,15,17,19,21 single; 12,24 double) — purely decorative
     const midY = (boardTop+boardBottom)/2;
-    [3,5,7,9].forEach(f=>{
+    [3,5,7,9,15,17,19,21].forEach(f=>{
       if(f<=fretCount) parts.push('<circle cx="'+fretCenterX(f)+'" cy="'+midY+'" r="3.5" fill="var(--border)"></circle>');
     });
-    if(12<=fretCount){
-      parts.push('<circle cx="'+fretCenterX(12)+'" cy="'+(midY-stringGap)+'" r="3.5" fill="var(--border)"></circle>');
-      parts.push('<circle cx="'+fretCenterX(12)+'" cy="'+(midY+stringGap)+'" r="3.5" fill="var(--border)"></circle>');
-    }
+    [12,24].forEach(f=>{
+      if(f<=fretCount){
+        parts.push('<circle cx="'+fretCenterX(f)+'" cy="'+(midY-stringGap)+'" r="3.5" fill="var(--border)"></circle>');
+        parts.push('<circle cx="'+fretCenterX(f)+'" cy="'+(midY+stringGap)+'" r="3.5" fill="var(--border)"></circle>');
+      }
+    });
 
     // Fret wires (vertical), nut (before fret 1) drawn thicker
     for(let i=0; i<=fretCount; i++){
@@ -1542,7 +1643,7 @@
 
     // Fret number labels along the top, highlighted if within the active position
     for(let f=1; f<=fretCount; f++){
-      const inPos = (f>=posStart && f<posStart+5);
+      const inPos = (posStart != null) && (f>=posStart && f<posStart+5);
       parts.push('<text x="'+fretCenterX(f)+'" y="'+(topMargin-10)+'" text-anchor="middle" font-size="12" fill="'+(inPos?'var(--accent)':'var(--text-dim)')+'" font-weight="'+(inPos?'700':'400')+'">'+f+'</text>');
     }
 
@@ -1567,7 +1668,7 @@
 
     // Note dots, sitting directly on their string line
     allNotes.forEach(n=>{
-      const x = fretCenterX(n.fret), y = stringY(n.string);
+      const x = n.fret===0 ? openCenterX : fretCenterX(n.fret), y = stringY(n.string);
       const txt = showIntervals ? n.label : n.noteName;
       parts.push('<circle cx="'+x+'" cy="'+y+'" r="'+noteR+'" fill="'+(n.isRoot?'var(--accent)':'var(--accent2)')+'"></circle>');
       parts.push('<text x="'+x+'" y="'+(y+4)+'" text-anchor="middle" font-size="10" font-weight="700" fill="'+(n.isRoot?'#1a1400':'#fff')+'">'+txt+'</text>');
@@ -1575,6 +1676,28 @@
 
     parts.push('</svg>');
     wrap.innerHTML = parts.join('');
+
+    if(onCellClick){
+      const svgEl = wrap.querySelector('svg');
+      svgEl.addEventListener('click', (e)=>{
+        const rect = svgEl.getBoundingClientRect();
+        const scaleX = svgW/rect.width, scaleY = svgH/rect.height;
+        const x = (e.clientX-rect.left)*scaleX;
+        const y = (e.clientY-rect.top)*scaleY;
+        if(x < leftMargin) return;
+        let f;
+        if(x < boardLeft){
+          f = 0; // open-string zone, left of the nut
+        } else {
+          f = Math.floor((x-boardLeft)/fretW)+1;
+          if(f>fretCount) return;
+        }
+        let bestS=-1, bestDist=Infinity;
+        for(let s=0;s<6;s++){ const d=Math.abs(y-stringY(s)); if(d<bestDist){ bestDist=d; bestS=s; } }
+        if(bestDist > stringGap*0.6) return;
+        onCellClick(bestS, f);
+      });
+    }
   }
 
   function renderTab(wrapId, seq){
@@ -1666,6 +1789,79 @@
   document.getElementById('scaleNextBtn').addEventListener('click', ()=>{
     scalePositionIndex = Math.min(arpPositionCount()-1, scalePositionIndex+1);
     renderScale();
+  });
+
+  // Arpeggio / Scale Finder — reverse lookup: given a set of manually selected
+  // fretboard notes, find every root+quality (chord) and root+type (scale) whose
+  // tone set contains all of them. Reuses buildToneSet/getChordToneSet/
+  // getScaleToneSet and the same renderFretboard used by Arpeggios/Scales.
+  const FINDER_MAX_FRET = 24;
+  let finderSelected = []; // array of {string, fret}
+
+  function finderToggleNote(s, f){
+    const idx = finderSelected.findIndex(n=> n.string===s && n.fret===f);
+    if(idx >= 0) finderSelected.splice(idx, 1);
+    else finderSelected.push({ string:s, fret:f });
+  }
+
+  function computeFinderMatches(pcs){
+    const chordMatches = [], scaleMatches = [];
+    noteNames.forEach(root=>{
+      Object.keys(chordIntervals).forEach(q=>{
+        if(q === 'single') return;
+        const toneSet = getChordToneSet(root, q);
+        const setPcs = Object.keys(toneSet).map(Number);
+        const isSubset = pcs.every(pc=> setPcs.includes(pc));
+        if(isSubset) chordMatches.push({ label: root+chordLabel[q], exact: setPcs.length===pcs.length, size:setPcs.length });
+      });
+      Object.keys(SCALE_TYPES).forEach(st=>{
+        const toneSet = getScaleToneSet(root, st);
+        const setPcs = Object.keys(toneSet).map(Number);
+        const isSubset = pcs.every(pc=> setPcs.includes(pc));
+        if(isSubset) scaleMatches.push({ label: root+' '+SCALE_TYPES[st].label, exact: setPcs.length===pcs.length, size:setPcs.length });
+      });
+    });
+    const bySize = (a,b)=> (b.exact-a.exact) || (a.size-b.size);
+    chordMatches.sort(bySize);
+    scaleMatches.sort(bySize);
+    return { chordMatches, scaleMatches };
+  }
+
+  function renderFinderResults(pcs){
+    const resultsEl = document.getElementById('finderResults');
+    if(pcs.length === 0){
+      resultsEl.innerHTML = 'Select at least one note to see matching chords and scales.';
+      return;
+    }
+    const { chordMatches, scaleMatches } = computeFinderMatches(pcs);
+    function group(title, matches){
+      if(matches.length === 0) return '<div class="finder-results-group"><h4>'+title+'</h4><div class="hint">No matches.</div></div>';
+      const chips = matches.map(m=> '<span class="finder-match-chip'+(m.exact?' exact':'')+'">'+m.label+(m.exact?' (exact)':'')+'</span>').join('');
+      return '<div class="finder-results-group"><h4>'+title+'</h4><div class="finder-match-list">'+chips+'</div></div>';
+    }
+    resultsEl.className = '';
+    resultsEl.innerHTML = group('Chords / Arpeggios', chordMatches) + group('Scales', scaleMatches);
+  }
+
+  function renderFinder(){
+    const summary = document.getElementById('finderSelectedSummary');
+    const pcs = [];
+    const seen = new Set();
+    const allNotes = finderSelected.map(({string:s, fret:f})=>{
+      const midi = STANDARD_TUNING[s] + f;
+      const pc = ((midi % 12)+12)%12;
+      if(!seen.has(pc)){ seen.add(pc); pcs.push(pc); }
+      return { string:s, fret:f, label:noteNames[pc], noteName:noteNames[pc], isRoot:true };
+    });
+    summary.textContent = finderSelected.length === 0
+      ? 'Click notes on the fretboard below to select them — on any strings, any frets, in any combination.'
+      : 'Selected: ' + pcs.map(pc=>noteNames[pc]).join(', ');
+    renderFretboard('finderFretboardWrap', allNotes, {}, null, false, { maxFret: FINDER_MAX_FRET, onCellClick: (s,f)=>{ finderToggleNote(s,f); renderFinder(); } });
+    renderFinderResults(pcs);
+  }
+  document.getElementById('finderClearBtn').addEventListener('click', ()=>{
+    finderSelected = [];
+    renderFinder();
   });
 
   // ---------------- Shared transport fields ----------------
@@ -1765,10 +1961,14 @@
   drumPatternSel.addEventListener('change', ()=>{
     const val = drumPatternSel.value;
     if(val !== 'none' && val !== 'custom') loadPresetIntoCustomGrid(val);
+    loadedGrooveEntry = null; // switched away from the grid the groove was loaded into
+    updateLoadedGrooveUI();
     updateCustomDrumUIVisibility();
   });
   document.getElementById('clearCustomDrumBtn').addEventListener('click', ()=>{
     DRUM_VOICES.forEach(v=> customDrumPattern[v].fill(false));
+    loadedGrooveEntry = null;
+    updateLoadedGrooveUI();
     renderCustomDrumGrid();
   });
   document.getElementById('customDrumBars').addEventListener('change', (e)=>{
@@ -1783,7 +1983,8 @@
   // objects rendered as blocks on a zoomable timeline (Chord Sequencer).
   // ==================================================================
   function createPianoRoll(cfg){
-    const state = { notes: [], nextId: 1, pixelsPerStep: 18, selectModeOn: false, selectedIds: new Set() };
+    const state = { notes: [], nextId: 1, pixelsPerStep: 18, selectedIds: new Set(), clipboard: null, pasteArmed: false };
+    let lastTap = { id: null, time: 0, prevSelection: null }; // for double-tap-to-toggle, the touch equivalent of shift+click
 
     function placeNote(newNote){
       const newEnd = newNote.start + newNote.length;
@@ -1872,13 +2073,59 @@
       render();
     }
 
-    cfg.selectBoxEl.addEventListener('change', (e)=>{
-      state.selectModeOn = e.target.checked;
-      clearSelection();
+    function updatePasteButtonUI(){
+      const btn = cfg.pasteBtnEl;
+      if(state.pasteArmed){
+        btn.textContent = 'Click track to place…';
+        btn.disabled = false;
+        btn.classList.add('btn-primary');
+      } else if(state.clipboard){
+        btn.textContent = '📋 Paste (' + state.clipboard.length + (state.clipboard.length===1 ? ' chord)' : ' chords)');
+        btn.disabled = false;
+        btn.classList.remove('btn-primary');
+      } else {
+        btn.textContent = '📋 Paste';
+        btn.disabled = true;
+        btn.classList.remove('btn-primary');
+      }
+    }
+
+    function copySelectionToClipboard(){
+      const ids = Array.from(state.selectedIds);
+      if(ids.length === 0) return;
+      const selected = ids.map(id=>state.notes.find(n=>n.id===id)).filter(Boolean).sort((a,b)=>a.start-b.start);
+      const base = selected[0].start;
+      state.clipboard = selected.map(n=>({ offset:n.start-base, length:n.length, root:n.root, quality:n.quality, octave:n.octave }));
+      state.pasteArmed = false;
+      updatePasteButtonUI();
+    }
+
+    function doCopy(){ copySelectionToClipboard(); clearSelection(); render(); }
+    function doCut(){ copySelectionToClipboard(); doDelete(); }
+
+    function pasteClipboardAt(anchorStep){
+      if(!state.clipboard) return;
+      const total = totalSteps();
+      state.clipboard.forEach(frag=>{
+        const start = anchorStep + frag.offset;
+        if(start < 0 || start >= total) return; // falls off the end — skip just that chord
+        const length = Math.min(frag.length, total - start);
+        placeNote({ id: state.nextId++, start, length, root: frag.root, quality: frag.quality, octave: frag.octave });
+      });
+      state.pasteArmed = false;
+      updatePasteButtonUI();
       render();
-    });
+    }
+
     cfg.mergeBtnEl.addEventListener('click', doMerge);
     cfg.deleteBtnEl.addEventListener('click', doDelete);
+    cfg.copyBtnEl.addEventListener('click', doCopy);
+    cfg.cutBtnEl.addEventListener('click', doCut);
+    cfg.pasteBtnEl.addEventListener('click', ()=>{
+      if(!state.clipboard) return;
+      state.pasteArmed = !state.pasteArmed;
+      updatePasteButtonUI();
+    });
     cfg.splitSelectEl.addEventListener('change', (e)=>{
       const v = e.target.value;
       if(v) doSplit(parseInt(v));
@@ -1936,6 +2183,7 @@
         cfg.trackEl.appendChild(barLine);
       }
 
+      const noteElsById = {};
       state.notes.forEach(note=>{
         const el = document.createElement('div');
         el.className = 'note-block';
@@ -1943,6 +2191,7 @@
         el.style.width = Math.max(4, note.length*state.pixelsPerStep - 2) + 'px';
         el.textContent = note.root + chordLabel[note.quality];
         if(state.selectedIds.has(note.id)) el.classList.add('selected');
+        noteElsById[note.id] = el;
 
         el.addEventListener('pointerdown', (e)=>{
           if(e.button !== 0) return;
@@ -1950,8 +2199,17 @@
           el.setPointerCapture(e.pointerId);
           const startX = e.clientX;
           const originalStart = note.start;
+          const isGroupDrag = state.selectedIds.has(note.id) && state.selectedIds.size > 1;
+          // group members captured up front, each with its own original start/length/el
+          const group = isGroupDrag
+            ? Array.from(state.selectedIds).map(id=>state.notes.find(n=>n.id===id)).filter(Boolean)
+                .map(n=>({ note:n, originalStart:n.start, el:noteElsById[n.id] }))
+            : null;
+          const minDelta = isGroupDrag ? -Math.min(...group.map(g=>g.originalStart)) : null;
+          const maxDelta = isGroupDrag ? totalSteps() - Math.max(...group.map(g=>g.originalStart+g.note.length)) : null;
           let dragging = false;
           let newStart = originalStart;
+          let groupDelta = 0;
           let longPressFired = false;
           el.classList.add('charging');
           const longPressTimer = setTimeout(()=>{
@@ -1960,8 +2218,7 @@
             el.removeEventListener('pointermove', onMove);
             el.removeEventListener('pointerup', onUp);
             try{ el.releasePointerCapture(e.pointerId); }catch(err){}
-            if(state.selectModeOn){ clearSelection(); }
-            else { state.notes = state.notes.filter(n=>n.id!==note.id); }
+            state.notes = state.notes.filter(n=>n.id!==note.id);
             render();
           }, 550);
 
@@ -1972,11 +2229,19 @@
               el.classList.add('dragging');
               el.classList.remove('charging');
               clearTimeout(longPressTimer);
+              if(isGroupDrag) group.forEach(g=> g.el && g.el.classList.add('dragging'));
             }
             if(!dragging) return;
-            const deltaSteps = Math.round(dx / state.pixelsPerStep);
-            newStart = Math.max(0, Math.min(totalSteps()-note.length, originalStart+deltaSteps));
-            el.style.left = (newStart*state.pixelsPerStep) + 'px';
+            if(isGroupDrag){
+              groupDelta = Math.max(minDelta, Math.min(maxDelta, Math.round(dx / state.pixelsPerStep)));
+              group.forEach(g=>{
+                if(g.el) g.el.style.left = ((g.originalStart+groupDelta)*state.pixelsPerStep) + 'px';
+              });
+            } else {
+              const deltaSteps = Math.round(dx / state.pixelsPerStep);
+              newStart = Math.max(0, Math.min(totalSteps()-note.length, originalStart+deltaSteps));
+              el.style.left = (newStart*state.pixelsPerStep) + 'px';
+            }
           }
           function onUp(ev){
             clearTimeout(longPressTimer);
@@ -1987,14 +2252,38 @@
             el.removeEventListener('pointerup', onUp);
             el.classList.remove('dragging');
             if(dragging){
-              if(newStart !== originalStart){
+              if(isGroupDrag){
+                if(groupDelta !== 0){
+                  const groupIds = new Set(group.map(g=>g.note.id));
+                  state.notes = state.notes.filter(n=>!groupIds.has(n.id));
+                  group.forEach(g=> placeNote({ ...g.note, start:g.originalStart+groupDelta }));
+                }
+              } else if(newStart !== originalStart){
                 state.notes = state.notes.filter(n=>n.id!==note.id);
                 placeNote({ ...note, start:newStart });
               }
               render();
-            } else if(state.selectModeOn){
-              if(state.selectedIds.has(note.id)) state.selectedIds.delete(note.id);
-              else state.selectedIds.add(note.id);
+            } else {
+              // plain tap/click (no drag): select just this note.
+              // shift+click, or a second tap on the same note within 400ms (the touch
+              // equivalent of shift+click), toggles it into/out of the existing selection instead.
+              const now = Date.now();
+              const isDoubleTap = lastTap.id === note.id && (now - lastTap.time) < 400;
+              if(isDoubleTap){
+                state.selectedIds = lastTap.prevSelection;
+                if(state.selectedIds.has(note.id)) state.selectedIds.delete(note.id);
+                else state.selectedIds.add(note.id);
+                lastTap = { id:null, time:0, prevSelection:null };
+              } else {
+                const prevSelection = new Set(state.selectedIds);
+                if(ev.shiftKey){
+                  if(state.selectedIds.has(note.id)) state.selectedIds.delete(note.id);
+                  else state.selectedIds.add(note.id);
+                } else {
+                  state.selectedIds = new Set([note.id]);
+                }
+                lastTap = { id: note.id, time: now, prevSelection };
+              }
               updateSelectionUI();
               render();
             }
@@ -2004,7 +2293,6 @@
         });
         el.addEventListener('contextmenu', (e)=>{
           e.preventDefault(); e.stopPropagation();
-          if(state.selectModeOn){ clearSelection(); render(); return; }
           state.notes = state.notes.filter(n=>n.id!==note.id);
           render();
         });
@@ -2058,20 +2346,28 @@
     }
 
     cfg.trackEl.addEventListener('click', (evt)=>{
-      if(state.selectModeOn) return;
-      if(!selectedDegree) return;
-      ensureCtx();
       const rect = cfg.trackEl.getBoundingClientRect();
       const x = evt.clientX - rect.left;
       const step = Math.max(0, Math.min(totalSteps()-1, Math.floor(x / state.pixelsPerStep)));
+      if(state.pasteArmed && state.clipboard){
+        pasteClipboardAt(step);
+        return;
+      }
+      const hadSelection = state.selectedIds.size > 0;
+      if(hadSelection) state.selectedIds.clear();
+      if(!selectedDegree){
+        if(hadSelection){ updateSelectionUI(); render(); }
+        return;
+      }
+      ensureCtx();
       const len = Math.min(parseInt(noteLengthSel.value), totalSteps()-step);
       const cell = currentGridSelection();
       placeNote({ id: state.nextId++, start: step, length: len, root: cell.root, quality: cell.quality, octave: cell.octave });
-      render();
+      render(); // rebuilds note elements from current state, which also reflects the now-cleared selection
     });
-    cfg.trackEl.addEventListener('contextmenu', (e)=>{
-      if(state.selectModeOn){ e.preventDefault(); clearSelection(); render(); }
-    });
+    cfg.trackEl.addEventListener('contextmenu', (e)=> e.preventDefault());
+
+    updatePasteButtonUI();
 
     return {
       render,
@@ -2087,20 +2383,21 @@
   const seqRoll = createPianoRoll({
     trackEl: document.getElementById('seqTrack'), rulerEl: document.getElementById('seqRuler'),
     innerEl: document.getElementById('seqInner'), playheadEl: document.getElementById('seqPlayhead'),
-    zoomSliderEl: document.getElementById('seqZoom'), selectBoxEl: document.getElementById('seqSelectBox'),
+    zoomSliderEl: document.getElementById('seqZoom'),
     actionBarEl: document.getElementById('seqActionBar'), infoEl: document.getElementById('seqSelectionInfo'),
     mergeBtnEl: document.getElementById('seqMergeBtn'), splitFieldEl: document.getElementById('seqSplitField'),
     splitSelectEl: document.getElementById('seqSplitSelect'), deleteBtnEl: document.getElementById('seqDeleteBtn'),
-    cancelBtnEl: document.getElementById('seqCancelBtn')
+    cancelBtnEl: document.getElementById('seqCancelBtn'), copyBtnEl: document.getElementById('seqCopyBtn'),
+    cutBtnEl: document.getElementById('seqCutBtn'), pasteBtnEl: document.getElementById('seqPasteBtn')
   });
 
   // ---------------- Mode switching ----------------
   const tabs = document.querySelectorAll('.mode-tab[data-mode]');
-  const panels = { drone: document.getElementById('dronePanel'), bass: document.getElementById('bassPanel'), arpeggio: document.getElementById('arpeggioPanel'), scale: document.getElementById('scalePanel') };
+  const panels = { drone: document.getElementById('dronePanel'), bass: document.getElementById('bassPanel'), arpeggio: document.getElementById('arpeggioPanel'), scale: document.getElementById('scalePanel'), finder: document.getElementById('finderPanel') };
   const seqPanelEl = document.getElementById('seqPanel');
   let currentMode = 'drone';
   const SOUND_TOOL_MODES = ['drone','bass','sequencer'];
-  const PRACTICE_TOOL_MODES = ['arpeggio','scale'];
+  const PRACTICE_TOOL_MODES = ['arpeggio','scale','finder'];
   let activeSoundMode = null; // which sound tool (if any) is actually producing audio right now
   let lastSoundMode = 'drone';
   let lastPracticeMode = 'arpeggio';
@@ -2139,7 +2436,7 @@
       autoOptionEl.hidden = true;
     }
     qualitySel.disabled = (currentMode === 'bass');
-    document.getElementById('qualityField').style.display = (currentMode === 'bass' || currentMode === 'scale') ? 'none' : 'flex';
+    document.getElementById('qualityField').style.display = (currentMode === 'bass' || currentMode === 'scale' || currentMode === 'finder') ? 'none' : 'flex';
     document.getElementById('midiMenuSection').style.display = (currentMode === 'sequencer') ? '' : 'none';
     document.getElementById('octaveField').style.display = isPracticeMode() ? 'none' : 'flex';
     document.getElementById('soundField').style.display = isPracticeMode() ? 'none' : 'flex';
@@ -2153,16 +2450,20 @@
     if(isGridMode()){
       keyScaleRow.appendChild(rootKeyFieldEl);
       keyScaleRow.appendChild(qualityFieldEl);
+      rootKeyFieldEl.style.display = 'flex';
     } else if(currentMode === 'scale'){
       scaleControlsRow.prepend(rootKeyFieldEl);
       voiceAnchor.parentNode.insertBefore(qualityFieldEl, voiceAnchor);
+      rootKeyFieldEl.style.display = 'flex';
     } else {
       voiceAnchor.parentNode.insertBefore(rootKeyFieldEl, voiceAnchor);
       voiceAnchor.parentNode.insertBefore(qualityFieldEl, voiceAnchor);
+      rootKeyFieldEl.style.display = (currentMode === 'finder') ? 'none' : 'flex';
     }
 
     if(currentMode === 'arpeggio') renderArpeggio();
     if(currentMode === 'scale') renderScale();
+    if(currentMode === 'finder') renderFinder();
     updatePaintPreview();
   }
 
@@ -2259,8 +2560,7 @@
 
     if(drumPatternSel.value !== 'none'){
       const hitsPerBar = buildDrumHits('custom', nBeats, div); // always play from the grid — presets are loaded into it on selection
-      const stepInBar = step % (nBeats*div);
-      const hit = hitsPerBar[stepInBar];
+      const hit = hitsPerBar[step % hitsPerBar.length];
       if(hit.kick) playSample('kick', time, 1.0);
       if(hit.snare) playSample('snare', time, 0.9);
       if(hit.hat) playSample('hat', time, 0.7);
@@ -2450,13 +2750,11 @@
     }
     const drumName = drumPatternSel.value;
     const hitsPerBar = drumName !== 'none' ? buildDrumHits('custom', nBeats, div) : null;
-    const stepsPerBar = nBeats*div;
     const totalStepsCount = totalSteps();
     for(let step=0; step<totalStepsCount; step++){
       const stepTick = step*ticksPerStep;
-      const stepInBar = step % stepsPerBar;
       if(hitsPerBar){
-        const hit = hitsPerBar[stepInBar];
+        const hit = hitsPerBar[step % hitsPerBar.length];
         if(hit.kick) addDrumHit(stepTick, 36, 110);
         if(hit.snare) addDrumHit(stepTick, 38, 105);
         if(hit.hat) addDrumHit(stepTick, 42, 80);
@@ -2737,8 +3035,18 @@
   }
 
   const DRUM_NOTE_TO_VOICE = {
-    36:'kick', 38:'snare', 42:'hat', 46:'ohat', 39:'clap', 37:'rim',
-    45:'tomLow', 47:'tomMid', 50:'tomHigh', 49:'crash', 51:'ride', 56:'cowbell'
+    35:'kick', 36:'kick',
+    38:'snare', 40:'snare',
+    39:'clap',
+    37:'rim',
+    22:'hat', 42:'hat', 44:'hat',   // closed hi-hat: edge, bow, pedal articulations
+    26:'ohat', 46:'ohat',           // open hi-hat: edge, bow
+    41:'tomLow', 43:'tomLow', 45:'tomLow',
+    47:'tomMid', 48:'tomMid',
+    50:'tomHigh',
+    49:'crash', 52:'crash', 55:'crash', 57:'crash',
+    51:'ride', 53:'ride', 59:'ride',
+    54:'cowbell', 56:'cowbell'
   };
 
   function importDrumMidiData(parsed){
@@ -2787,7 +3095,9 @@
     if(bpmFound) bpmInput.value = bpmFound;
     if(numFound) ensureOption(beatsPerBarSel, numFound);
     if(denFound) ensureOption(beatUnitSel, denFound);
+    barsInput.value = barsNeeded; // keep the overall loop length matched so the full pattern plays, not just bar 1 on repeat
     updateSigBadge();
+    seqRoll.render();
     drumPatternSel.value = 'custom';
     updateCustomDrumUIVisibility();
 
@@ -2795,6 +3105,300 @@
       (unmapped>0 ? (' ' + unmapped + ' hit(s) used an unrecognized percussion note and were skipped.') : '') +
       ' Set as Custom pattern — review the grid.');
   }
+
+  // ---- Groove Library (E-GMD, hosted on GitHub) ----
+  const EGMD_BASE = 'https://raw.githubusercontent.com/hpaffrath/TrackMaker/refs/heads/main/e-gmd-v1.0.0/';
+  const EGMD_CSV_URL = EGMD_BASE + 'e-gmd-v1.0.0.csv';
+  const GROOVE_FAV_KEY = 'trackmaker_groove_favorites';
+  let egmdIndex = null;       // deduped, numbered array of {num, id, drummer, style, genre, bpm, beatType, duration, midiFilename}
+  let egmdIndexPromise = null; // in-flight fetch, so concurrent callers share one request
+  let grooveFavorites = {};   // { [id]: true }, persisted in localStorage
+
+  function loadGrooveFavorites(){
+    try{ grooveFavorites = JSON.parse(localStorage.getItem(GROOVE_FAV_KEY)) || {}; }
+    catch(e){ grooveFavorites = {}; }
+  }
+  function saveGrooveFavorites(){
+    try{ localStorage.setItem(GROOVE_FAV_KEY, JSON.stringify(grooveFavorites)); }
+    catch(e){ /* storage unavailable — favorites just won't persist */ }
+  }
+  function toggleGrooveFavorite(id){
+    if(grooveFavorites[id]) delete grooveFavorites[id];
+    else grooveFavorites[id] = true;
+    saveGrooveFavorites();
+  }
+
+  // Favorites live in this browser's localStorage only — export/import lets them
+  // travel with you to a different browser or machine, or just serve as a backup.
+  function downloadFavoritesJson(list){
+    const blob = new Blob([JSON.stringify({ trackMakerGrooveFavorites: list }, null, 2)], {type:'application/json'});
+    downloadBlob(blob, 'track-maker-favorites.json');
+  }
+
+  function exportGrooveFavorites(){
+    const ids = Object.keys(grooveFavorites);
+    if(ids.length === 0){ alert('No favorites yet — star some grooves in the Groove Library first.'); return; }
+    ensureEgmdIndex()
+      .then(idx=>{
+        const byId = {}; idx.forEach(e=> byId[e.id] = e);
+        downloadFavoritesJson(ids.map(id=>{
+          const e = byId[id];
+          return e ? { id:e.id, num:e.num, style:e.style, drummer:e.drummer, bpm:e.bpm, beatType:e.beatType } : { id };
+        }));
+      })
+      .catch(()=> downloadFavoritesJson(ids.map(id=>({id})))); // offline — still export the raw ids so nothing is lost
+  }
+
+  function importGrooveFavoritesFile(file){
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      let data;
+      try{ data = JSON.parse(reader.result); }
+      catch(err){ alert('Could not parse that file as JSON.'); return; }
+      const list = Array.isArray(data) ? data
+        : (data && Array.isArray(data.trackMakerGrooveFavorites)) ? data.trackMakerGrooveFavorites
+        : null;
+      if(!list){ alert('This file does not look like a Track Maker favorites export.'); return; }
+      let added = 0, already = 0;
+      list.forEach(item=>{
+        const id = typeof item === 'string' ? item : (item && item.id);
+        if(!id) return;
+        if(grooveFavorites[id]) already++;
+        else { grooveFavorites[id] = true; added++; }
+      });
+      saveGrooveFavorites();
+      if(document.getElementById('grooveLibraryModalOverlay').style.display === 'flex') renderGrooveResults();
+      if(loadedGrooveEntry) updateLoadedGrooveUI();
+      alert('Imported ' + added + ' new favorite' + (added===1?'':'s') + (already ? (' — ' + already + ' already starred.') : '.'));
+    };
+    reader.readAsText(file);
+  }
+
+  function parseEgmdCsv(text){
+    const lines = text.split('\n').filter(l=>l.trim().length);
+    const header = lines[0].split(',');
+    const col = {}; header.forEach((h,i)=> col[h.trim()] = i);
+    const byId = new Map();
+    for(let i=1;i<lines.length;i++){
+      const parts = lines[i].split(',');
+      const id = parts[col.id];
+      if(byId.has(id)) continue; // same performance re-recorded across kits — identical MIDI, keep first
+      byId.set(id, {
+        id: id,
+        drummer: parts[col.drummer],
+        style: parts[col.style],
+        genre: parts[col.style].split('/')[0],
+        bpm: parts[col.bpm],
+        beatType: parts[col.beat_type],
+        duration: parseFloat(parts[col.duration]) || null,
+        midiFilename: parts[col.midi_filename]
+      });
+    }
+    // Stable, deterministic order so the assigned numbers stay meaningful/referenceable
+    // across sessions — grouped by genre, then style, then drummer.
+    const list = Array.from(byId.values()).sort((a,b)=>
+      a.genre.localeCompare(b.genre) || a.style.localeCompare(b.style) ||
+      a.drummer.localeCompare(b.drummer) || (parseInt(a.bpm)-parseInt(b.bpm))
+    );
+    list.forEach((e,i)=> e.num = i+1);
+    return list;
+  }
+
+  function populateGrooveGenres(){
+    const counts = {};
+    egmdIndex.forEach(e=> counts[e.genre] = (counts[e.genre]||0)+1);
+    const genres = Object.keys(counts).sort((a,b)=> counts[b]-counts[a]);
+    const sel = document.getElementById('grooveLibraryGenre');
+    sel.innerHTML = '<option value="">All Genres (' + egmdIndex.length + ')</option>' +
+      genres.map(g=> '<option value="'+g+'">'+g+' ('+counts[g]+')</option>').join('');
+  }
+
+  function renderGrooveResults(){
+    const genre = document.getElementById('grooveLibraryGenre').value;
+    const type = document.getElementById('grooveLibraryType').value;
+    const search = document.getElementById('grooveLibrarySearch').value.trim().toLowerCase().replace(/^#/, '');
+    const favOnly = document.getElementById('grooveLibraryFavOnly').checked;
+    const searchIsNum = /^\d+$/.test(search);
+    let matches = egmdIndex.filter(e=>{
+      if(genre && e.genre !== genre) return false;
+      if(type && e.beatType !== type) return false;
+      if(favOnly && !grooveFavorites[e.id]) return false;
+      if(search){
+        if(searchIsNum){ if(e.num !== parseInt(search,10)) return false; }
+        else if(!(e.style.toLowerCase().includes(search) || e.drummer.toLowerCase().includes(search))) return false;
+      }
+      return true;
+    });
+    const cap = 200;
+    const shown = matches.slice(0, cap);
+    const wrap = document.getElementById('grooveLibraryResults');
+    if(shown.length === 0){
+      wrap.innerHTML = '<div class="hint" style="padding:14px;">No grooves match.</div>';
+      return;
+    }
+    wrap.innerHTML = shown.map(e=>
+      '<div class="groove-row" data-id="'+e.id+'" style="padding:7px 10px; border-bottom:1px solid var(--border); cursor:pointer; display:flex; align-items:center; gap:10px;">' +
+      '<button class="groove-fav-btn" data-id="'+e.id+'" title="Favorite" style="background:none; border:none; cursor:pointer; font-size:15px; padding:2px 4px; color:'+(grooveFavorites[e.id]?'#e0b030':'var(--text-dim)')+';">' + (grooveFavorites[e.id]?'★':'☆') + '</button>' +
+      '<span class="hint" style="width:46px; flex:none;">#' + e.num + '</span>' +
+      '<span style="flex:1; min-width:0;">' + e.style + '<span class="hint" style="margin-left:8px;">' + e.drummer + ' · ' + e.beatType + '</span></span>' +
+      '<span class="hint" style="flex:none;">' + e.bpm + ' BPM</span>' +
+      '<button class="groove-preview-btn" data-id="'+e.id+'" title="Preview" style="background:none; border:1px solid var(--border); border-radius:4px; cursor:pointer; width:26px; height:26px; flex:none;">▶</button>' +
+      '</div>'
+    ).join('') + (matches.length > cap ? '<div class="hint" style="padding:9px 12px;">' + (matches.length-cap) + ' more — narrow it down with Search, Genre, or Favorites.</div>' : '');
+
+    const byId = {}; shown.forEach(e=> byId[e.id] = e);
+
+    wrap.querySelectorAll('.groove-row').forEach(row=>{
+      row.addEventListener('mouseenter', ()=> row.style.background = 'var(--surface-2, rgba(255,255,255,0.04))');
+      row.addEventListener('mouseleave', ()=> row.style.background = '');
+      row.addEventListener('click', ()=> loadGrooveEntry(byId[row.dataset.id]));
+    });
+    wrap.querySelectorAll('.groove-fav-btn').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        toggleGrooveFavorite(btn.dataset.id);
+        btn.textContent = grooveFavorites[btn.dataset.id] ? '★' : '☆';
+        btn.style.color = grooveFavorites[btn.dataset.id] ? '#e0b030' : 'var(--text-dim)';
+        if(loadedGrooveEntry && loadedGrooveEntry.id === btn.dataset.id) updateLoadedGrooveUI();
+        if(favOnly) renderGrooveResults(); // re-filter if a now-unfavorited row should disappear
+      });
+    });
+    wrap.querySelectorAll('.groove-preview-btn').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        previewGrooveEntry(byId[btn.dataset.id], btn);
+      });
+    });
+  }
+
+  // ---- Preview playback: schedules the real drum samples directly from the
+  // fetched MIDI's own timing, without touching the editable custom pattern. ----
+  let groovePreview = { id: null, sources: [], stopTimer: null };
+
+  function stopGroovePreview(){
+    groovePreview.sources.forEach(src=>{ try{ src.stop(); }catch(e){} });
+    groovePreview.sources = [];
+    if(groovePreview.stopTimer) clearTimeout(groovePreview.stopTimer);
+    groovePreview.stopTimer = null;
+    groovePreview.id = null;
+    document.querySelectorAll('.groove-preview-btn').forEach(b=> b.textContent = '▶');
+  }
+
+  function previewGrooveEntry(entry, btnEl){
+    if(groovePreview.id === entry.id){ stopGroovePreview(); return; }
+    stopGroovePreview();
+    ensureCtx();
+    btnEl.textContent = '⏳';
+    fetch(EGMD_BASE + entry.midiFilename)
+      .then(r=>{ if(!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); })
+      .then(buf=>{
+        const parsed = parseMidi(buf);
+        let mpqn = 500000; // default 120bpm, overwritten below if the file specifies one
+        parsed.tracks.forEach(track=> track.forEach(ev=>{
+          if(ev.type==='meta' && ev.metaType===0x51) mpqn = (ev.bytes[0]<<16)|(ev.bytes[1]<<8)|ev.bytes[2];
+        }));
+        const secPerTick = (mpqn/1000000) / parsed.division;
+        const startAt = audioCtx.currentTime + 0.05;
+        const sources = [];
+        let maxTick = 0;
+        parsed.tracks.forEach(track=> track.forEach(ev=>{
+          if(ev.type==='on' && ev.channel===9 && ev.velocity>0){
+            const voice = DRUM_NOTE_TO_VOICE[ev.note];
+            if(voice){
+              const src = playSample(voice, startAt + ev.tick*secPerTick, Math.min(1, ev.velocity/110));
+              if(src) sources.push(src);
+            }
+            if(ev.tick > maxTick) maxTick = ev.tick;
+          }
+        }));
+        const totalMs = (entry.duration != null ? entry.duration : maxTick*secPerTick) * 1000 + 400;
+        groovePreview = { id: entry.id, sources, stopTimer: setTimeout(stopGroovePreview, totalMs) };
+        btnEl.textContent = '■';
+      })
+      .catch(err=>{
+        btnEl.textContent = '▶';
+        document.getElementById('grooveLibraryStatus').textContent = 'Could not preview: ' + err.message;
+      });
+  }
+
+  let loadedGrooveEntry = null; // the E-GMD entry currently sitting in the custom drum grid, if any
+
+  function updateLoadedGrooveUI(){
+    const info = document.getElementById('loadedGrooveInfo');
+    if(!loadedGrooveEntry){ info.style.display = 'none'; return; }
+    info.style.display = 'inline-flex';
+    document.getElementById('loadedGrooveLabel').textContent = '#' + loadedGrooveEntry.num + ' ' + loadedGrooveEntry.style;
+    const favBtn = document.getElementById('loadedGrooveFavBtn');
+    const isFav = !!grooveFavorites[loadedGrooveEntry.id];
+    favBtn.textContent = isFav ? '★' : '☆';
+    favBtn.style.color = isFav ? '#e0b030' : 'var(--text-dim)';
+  }
+
+  document.getElementById('loadedGrooveFavBtn').addEventListener('click', ()=>{
+    if(!loadedGrooveEntry) return;
+    toggleGrooveFavorite(loadedGrooveEntry.id);
+    updateLoadedGrooveUI();
+  });
+
+  function loadGrooveEntry(entry){
+    stopGroovePreview();
+    const status = document.getElementById('grooveLibraryStatus');
+    status.textContent = 'Loading #' + entry.num + ' ' + entry.style + '…';
+    fetch(EGMD_BASE + entry.midiFilename)
+      .then(r=>{ if(!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); })
+      .then(buf=>{
+        importDrumMidiData(parseMidi(buf));
+        loadedGrooveEntry = entry;
+        updateLoadedGrooveUI();
+        document.getElementById('grooveLibraryModalOverlay').style.display = 'none';
+      })
+      .catch(err=>{ status.textContent = 'Could not load that groove: ' + err.message; });
+  }
+
+  function ensureEgmdIndex(){
+    if(egmdIndex) return Promise.resolve(egmdIndex);
+    if(egmdIndexPromise) return egmdIndexPromise;
+    egmdIndexPromise = fetch(EGMD_CSV_URL)
+      .then(r=>{ if(!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+      .then(text=>{ egmdIndex = parseEgmdCsv(text); return egmdIndex; })
+      .catch(err=>{ egmdIndexPromise = null; throw err; });
+    return egmdIndexPromise;
+  }
+
+  function openGrooveLibrary(){
+    const overlay = document.getElementById('grooveLibraryModalOverlay');
+    overlay.style.display = 'flex';
+    const status = document.getElementById('grooveLibraryStatus');
+    if(egmdIndex){ renderGrooveResults(); return; }
+    status.textContent = 'Fetching groove index…';
+    ensureEgmdIndex()
+      .then(idx=>{
+        status.textContent = idx.length + ' grooves available. Numbers (#) stay the same across sessions, so you can jot one down or search for it later.';
+        populateGrooveGenres();
+        renderGrooveResults();
+      })
+      .catch(err=>{
+        status.textContent = 'Could not load the groove index: ' + err.message;
+      });
+  }
+
+  loadGrooveFavorites();
+  document.getElementById('grooveLibraryBtn').addEventListener('click', openGrooveLibrary);
+  document.getElementById('grooveLibraryModalClose').addEventListener('click', ()=>{
+    stopGroovePreview();
+    document.getElementById('grooveLibraryModalOverlay').style.display = 'none';
+  });
+  document.getElementById('grooveLibraryModalOverlay').addEventListener('click', (e)=>{
+    if(e.target.id === 'grooveLibraryModalOverlay'){
+      stopGroovePreview();
+      e.target.style.display = 'none';
+    }
+  });
+  document.getElementById('grooveLibraryGenre').addEventListener('change', renderGrooveResults);
+  document.getElementById('grooveLibraryType').addEventListener('change', renderGrooveResults);
+  document.getElementById('grooveLibrarySearch').addEventListener('input', renderGrooveResults);
+  document.getElementById('grooveLibraryFavOnly').addEventListener('change', renderGrooveResults);
+
 
   document.getElementById('exportDrumMidiBtn').addEventListener('click', ()=>{
     const blob = buildDrumMidiBlob();
@@ -2808,7 +3412,11 @@
     if(!file) return;
     const reader = new FileReader();
     reader.onload = ()=>{
-      try{ importDrumMidiData(parseMidi(reader.result)); }
+      try{
+        importDrumMidiData(parseMidi(reader.result));
+        loadedGrooveEntry = null; // manually-imported file, not a library entry — nothing to favorite
+        updateLoadedGrooveUI();
+      }
       catch(err){ alert('Could not parse this MIDI file: ' + err.message); }
     };
     reader.readAsArrayBuffer(file);
@@ -2825,6 +3433,16 @@
   hamburgerMenu.addEventListener('click', (e)=> e.stopPropagation());
   document.addEventListener('click', ()=>{ hamburgerMenu.classList.remove('open'); });
 
+  document.getElementById('exportFavoritesBtn').addEventListener('click', exportGrooveFavorites);
+  document.getElementById('importFavoritesBtn').addEventListener('click', ()=>{
+    document.getElementById('favoritesFileInput').click();
+  });
+  document.getElementById('favoritesFileInput').addEventListener('change', (e)=>{
+    const file = e.target.files[0];
+    if(file) importGrooveFavoritesFile(file);
+    e.target.value = '';
+  });
+
   // ---------------- Help modal ----------------
   // Version reflects the date this file was generated/updated — bump it on every new revision.
   const APP_VERSION = '2026.07.14.9';
@@ -2834,7 +3452,8 @@
     bass: 'Sustains a single root note — a steady bass anchor under whatever else is playing.',
     sequencer: 'A full piano-roll for building chord progressions and arrangements, with tempo, time signature, metronome, drum patterns, and MIDI import/export.',
     arpeggio: 'Fretboard diagrams and TAB exercises for practicing a chord\'s arpeggio up the neck, position by position, on a real guitar.',
-    scale: 'Fretboard diagrams and TAB exercises for practicing a scale up the neck, same position-by-position approach as Arpeggios.'
+    scale: 'Fretboard diagrams and TAB exercises for practicing a scale up the neck, same position-by-position approach as Arpeggios.',
+    finder: 'Click notes anywhere on a 24-fret fretboard and it finds every chord and scale that contains them — a reverse lookup for working out what you\'re playing.'
   };
 
   const TAB_HELP = {
