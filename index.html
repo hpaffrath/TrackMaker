@@ -1819,7 +1819,7 @@
 
     const toneSet = getChordToneSet(root, quality);
     const showIntervals = document.getElementById('arpDisplayMode').value === 'intervals';
-    renderFretboard('fretboardWrap', findAllNotes(toneSet), toneSet, startFret, showIntervals);
+    renderFretboard('fretboardWrap', findAllNotes(toneSet), toneSet, startFret, showIntervals, { colorByInterval:true });
     renderTab('tabWrap', buildRollingSequence(findPositionNotes(startFret, toneSet)));
     updatePracticeTransportIcon('arp');
   }
@@ -1849,7 +1849,7 @@
 
     const toneSet = getScaleToneSet(root, scaleType);
     const showIntervals = document.getElementById('scaleDisplayMode').value === 'intervals';
-    renderFretboard('scaleFretboardWrap', findAllNotes(toneSet), toneSet, startFret, showIntervals);
+    renderFretboard('scaleFretboardWrap', findAllNotes(toneSet), toneSet, startFret, showIntervals, { colorByInterval:true });
     renderTab('scaleTabWrap', buildRollingSequence(findPositionNotes(startFret, toneSet)));
     updatePracticeTransportIcon('scale');
   }
