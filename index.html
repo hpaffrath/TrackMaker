@@ -273,9 +273,11 @@
   .finder-match-list{ display:flex; flex-wrap:wrap; gap:6px; }
   .finder-match-chip{
     font-family:'JetBrains Mono', monospace; font-size:12px; padding:5px 10px; border-radius:5px;
-    background:var(--surface2); border:1px solid var(--border); color:var(--text-dim);
+    background:var(--surface2); border:1px solid var(--border); color:var(--text-dim); cursor:pointer;
   }
+  .finder-match-chip:hover{ border-color:var(--text-dim); color:var(--text); }
   .finder-match-chip.exact{ background:var(--accent); border-color:var(--accent); color:#1a1400; font-weight:700; }
+  .finder-match-chip.active{ outline:2px solid var(--text); outline-offset:1px; }
   .tab-grid{ display:inline-grid; gap:0; }
   .tab-string-label{
     font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text-dim); font-weight:700;
@@ -837,6 +839,13 @@
       </div>
       <div class="row" style="margin-top:10px;">
         <button class="btn btn-ghost" id="finderClearBtn">Clear selection</button>
+        <span id="finderLabelModeWrap" style="display:none; align-items:center; gap:6px;">
+          <label class="hint" style="margin:0;">Show</label>
+          <select id="finderLabelMode">
+            <option value="interval">Intervals</option>
+            <option value="note">Notes</option>
+          </select>
+        </span>
       </div>
     </div>
 
@@ -875,6 +884,32 @@
     add9:'add9', dom9:'9', maj9:'maj9', min9:'m9'
   };
   const octaveNum = { low:2, mid:4, high:6 };
+
+  // One color per scale/chord degree, used only by the Finder's "show full pattern"
+  // view. Keyed by every label string CHORD_FORMULAS/SCALE_TYPES actually use;
+  // enharmonic equivalents (bb7/6, 9/2, b5/#4, b6/#5) intentionally share a color
+  // since they're the same physical pitch relative to the root, just spelled
+  // differently depending on the chord/scale. Root keeps the app's existing gold
+  // accent rather than joining the wheel, so it still reads as "root" everywhere.
+  const INTERVAL_COLORS = {
+    '1':   { fill:'var(--accent)', text:'#1a1400' },
+    'b2':  { fill:'#d4a149', text:'#1a1400' },
+    '2':   { fill:'#c2d449', text:'#1a1400' },
+    '9':   { fill:'#c2d449', text:'#1a1400' },
+    'b3':  { fill:'#7cd449', text:'#1a1400' },
+    '3':   { fill:'#49d45c', text:'#1a1400' },
+    '4':   { fill:'#49d4a1', text:'#1a1400' },
+    '#4':  { fill:'#49c2d4', text:'#1a1400' },
+    'b5':  { fill:'#49c2d4', text:'#1a1400' },
+    '5':   { fill:'#497cd4', text:'#ffffff' },
+    '#5':  { fill:'#5c49d4', text:'#ffffff' },
+    'b6':  { fill:'#5c49d4', text:'#ffffff' },
+    '6':   { fill:'#a149d4', text:'#ffffff' },
+    'bb7': { fill:'#a149d4', text:'#ffffff' },
+    'b7':  { fill:'#d449c2', text:'#ffffff' },
+    '7':   { fill:'#d4497c', text:'#ffffff' }
+  };
+  function intervalColor(label){ return INTERVAL_COLORS[label] || { fill:'var(--accent2)', text:'#fff' }; }
 
   // Interval-degree formulas, parallel to chordIntervals (same index order).
   // Used by the Arpeggio Practice tab for formula display and fretboard labels.
@@ -1566,10 +1601,11 @@
   }
 
   const ARP_FRETBOARD_MAX_FRET = 15;
-  function findAllNotes(toneSet){
+  function findAllNotes(toneSet, maxFret){
+    maxFret = maxFret || ARP_FRETBOARD_MAX_FRET;
     const notes = [];
     for(let s=0; s<6; s++){
-      for(let f=0; f<=ARP_FRETBOARD_MAX_FRET; f++){
+      for(let f=0; f<=maxFret; f++){
         const midi = STANDARD_TUNING[s] + f;
         const pc = ((midi % 12)+12)%12;
         if(toneSet.hasOwnProperty(pc)){
@@ -1601,6 +1637,8 @@
     const wrap = document.getElementById(wrapId);
     const fretCount = options.maxFret || ARP_FRETBOARD_MAX_FRET;
     const onCellClick = options.onCellClick || null;
+    const colorByInterval = !!options.colorByInterval;
+    const selectedPcs = options.selectedPcs || null; // Set of pitch classes the user actually picked — Finder match view only
 
     const fretW = 42, stringGap = 28, leftMargin = 42, openW = 34, topMargin = 26, bottomPad = 14;
     const boardLeft = leftMargin + openW, boardRight = boardLeft + fretCount*fretW;
@@ -1652,27 +1690,63 @@
       parts.push('<line x1="'+boardLeft+'" y1="'+stringY(s)+'" x2="'+boardRight+'" y2="'+stringY(s)+'" stroke="var(--border)" stroke-width="1"></line>');
     }
 
-    // String labels on the left — open-string chord/scale tones shown as a marker instead of a plain letter
+    // String labels on the left — open-string chord/scale tones shown as a marker instead of a plain letter.
+    // In Finder's match view (selectedPcs given), the fret-0 column of the main grid below already
+    // shows the open note, so keep this column as plain letters to avoid a duplicate marker.
     for(let s=0; s<6; s++){
       const y = stringY(s);
       const openPc = ((STANDARD_TUNING[s] % 12)+12)%12;
-      if(toneSet.hasOwnProperty(openPc)){
+      if(!selectedPcs && toneSet.hasOwnProperty(openPc)){
         const isRoot = toneSet[openPc] === '1';
         const txt = showIntervals ? toneSet[openPc] : noteNames[openPc];
-        parts.push('<circle cx="'+(leftMargin-19)+'" cy="'+y+'" r="'+noteR+'" fill="'+(isRoot?'var(--accent)':'var(--accent2)')+'"></circle>');
-        parts.push('<text x="'+(leftMargin-19)+'" y="'+(y+4)+'" text-anchor="middle" font-size="10" font-weight="700" fill="'+(isRoot?'#1a1400':'#fff')+'">'+txt+'</text>');
+        const col = colorByInterval ? intervalColor(toneSet[openPc]) : { fill: isRoot?'var(--accent)':'var(--accent2)', text: isRoot?'#1a1400':'#fff' };
+        parts.push('<circle cx="'+(leftMargin-19)+'" cy="'+y+'" r="'+noteR+'" fill="'+col.fill+'"></circle>');
+        parts.push('<text x="'+(leftMargin-19)+'" y="'+(y+4)+'" text-anchor="middle" font-size="10" font-weight="700" fill="'+col.text+'">'+txt+'</text>');
       } else {
         parts.push('<text x="'+(leftMargin-25)+'" y="'+(y+4)+'" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-dim)">'+STRING_LABELS[s]+'</text>');
       }
     }
 
-    // Note dots, sitting directly on their string line
-    allNotes.forEach(n=>{
-      const x = n.fret===0 ? openCenterX : fretCenterX(n.fret), y = stringY(n.string);
-      const txt = showIntervals ? n.label : n.noteName;
-      parts.push('<circle cx="'+x+'" cy="'+y+'" r="'+noteR+'" fill="'+(n.isRoot?'var(--accent)':'var(--accent2)')+'"></circle>');
-      parts.push('<text x="'+x+'" y="'+(y+4)+'" text-anchor="middle" font-size="10" font-weight="700" fill="'+(n.isRoot?'#1a1400':'#fff')+'">'+txt+'</text>');
-    });
+    if(selectedPcs){
+      // Finder's "show the found scale/chord" view: for every fret/string on the neck —
+      //   in the pattern AND you selected it   -> filled, colored by interval
+      //   in the pattern but you didn't select -> hollow outline, same interval color
+      //   NOT in the pattern but you selected   -> hollow outline, neutral (shouldn't
+      //                                            normally occur, since matches only ever
+      //                                            contain your selections, but handled anyway)
+      //   neither                               -> nothing at all
+      for(let s=0; s<6; s++){
+        const y = stringY(s);
+        for(let f=0; f<=fretCount; f++){
+          const pc = ((STANDARD_TUNING[s]+f) % 12 + 12) % 12;
+          const inScale = toneSet.hasOwnProperty(pc);
+          const isSelected = selectedPcs.has(pc);
+          if(!inScale && !isSelected) continue; // nothing to draw
+          const x = f===0 ? openCenterX : fretCenterX(f);
+          const label = inScale ? toneSet[pc] : null;
+          const col = inScale ? intervalColor(label) : { fill:'none', text:'var(--text-dim)' };
+          const txt = inScale ? (showIntervals ? label : noteNames[pc]) : noteNames[pc];
+          const strokeColor = inScale ? col.fill : 'var(--text-dim)';
+          if(isSelected){
+            parts.push('<circle cx="'+x+'" cy="'+y+'" r="'+noteR+'" fill="'+(inScale?col.fill:'var(--surface2)')+'" stroke="'+strokeColor+'" stroke-width="1.5"></circle>');
+            parts.push('<text x="'+x+'" y="'+(y+4)+'" text-anchor="middle" font-size="10" font-weight="700" fill="'+(inScale?col.text:'var(--text-dim)')+'">'+txt+'</text>');
+          } else {
+            parts.push('<circle cx="'+x+'" cy="'+y+'" r="'+noteR+'" fill="none" stroke="'+strokeColor+'" stroke-width="2"></circle>');
+            parts.push('<text x="'+x+'" y="'+(y+4)+'" text-anchor="middle" font-size="10" font-weight="700" fill="'+strokeColor+'">'+txt+'</text>');
+          }
+        }
+      }
+    } else {
+      // Everywhere else (Arpeggio/Scale tools, and Finder's own plain note-editing view):
+      // draw exactly the notes passed in, unchanged from before.
+      allNotes.forEach(n=>{
+        const x = n.fret===0 ? openCenterX : fretCenterX(n.fret), y = stringY(n.string);
+        const txt = showIntervals ? n.label : n.noteName;
+        const col = colorByInterval ? intervalColor(n.label) : { fill: n.isRoot?'var(--accent)':'var(--accent2)', text: n.isRoot?'#1a1400':'#fff' };
+        parts.push('<circle cx="'+x+'" cy="'+y+'" r="'+noteR+'" fill="'+col.fill+'"></circle>');
+        parts.push('<text x="'+x+'" y="'+(y+4)+'" text-anchor="middle" font-size="10" font-weight="700" fill="'+col.text+'">'+txt+'</text>');
+      });
+    }
 
     parts.push('</svg>');
     wrap.innerHTML = parts.join('');
@@ -1797,6 +1871,8 @@
   // getScaleToneSet and the same renderFretboard used by Arpeggios/Scales.
   const FINDER_MAX_FRET = 24;
   let finderSelected = []; // array of {string, fret}
+  let finderShowingMatch = null; // {type:'chord', root, quality} or {type:'scale', root, scaleType} — set by clicking a match chip
+  let finderShowIntervals = true; // Intervals vs Notes toggle, only meaningful while a match is being shown
 
   function finderToggleNote(s, f){
     const idx = finderSelected.findIndex(n=> n.string===s && n.fret===f);
@@ -1812,13 +1888,13 @@
         const toneSet = getChordToneSet(root, q);
         const setPcs = Object.keys(toneSet).map(Number);
         const isSubset = pcs.every(pc=> setPcs.includes(pc));
-        if(isSubset) chordMatches.push({ label: root+chordLabel[q], exact: setPcs.length===pcs.length, size:setPcs.length });
+        if(isSubset) chordMatches.push({ label: root+chordLabel[q], exact: setPcs.length===pcs.length, size:setPcs.length, root, quality:q });
       });
       Object.keys(SCALE_TYPES).forEach(st=>{
         const toneSet = getScaleToneSet(root, st);
         const setPcs = Object.keys(toneSet).map(Number);
         const isSubset = pcs.every(pc=> setPcs.includes(pc));
-        if(isSubset) scaleMatches.push({ label: root+' '+SCALE_TYPES[st].label, exact: setPcs.length===pcs.length, size:setPcs.length });
+        if(isSubset) scaleMatches.push({ label: root+' '+SCALE_TYPES[st].label, exact: setPcs.length===pcs.length, size:setPcs.length, root, scaleType:st });
       });
     });
     const bySize = (a,b)=> (b.exact-a.exact) || (a.size-b.size);
@@ -1834,33 +1910,70 @@
       return;
     }
     const { chordMatches, scaleMatches } = computeFinderMatches(pcs);
-    function group(title, matches){
+    function isActive(m, type){
+      return finderShowingMatch && finderShowingMatch.type===type && finderShowingMatch.root===m.root &&
+        (type==='chord' ? finderShowingMatch.quality===m.quality : finderShowingMatch.scaleType===m.scaleType);
+    }
+    function group(title, matches, type){
       if(matches.length === 0) return '<div class="finder-results-group"><h4>'+title+'</h4><div class="hint">No matches.</div></div>';
-      const chips = matches.map(m=> '<span class="finder-match-chip'+(m.exact?' exact':'')+'">'+m.label+(m.exact?' (exact)':'')+'</span>').join('');
+      const chips = matches.map((m,i)=> '<span class="finder-match-chip'+(m.exact?' exact':'')+(isActive(m,type)?' active':'')+'" data-type="'+type+'" data-idx="'+i+'">'+m.label+(m.exact?' (exact)':'')+'</span>').join('');
       return '<div class="finder-results-group"><h4>'+title+'</h4><div class="finder-match-list">'+chips+'</div></div>';
     }
     resultsEl.className = '';
-    resultsEl.innerHTML = group('Chords / Arpeggios', chordMatches) + group('Scales', scaleMatches);
+    resultsEl.innerHTML = group('Chords / Arpeggios', chordMatches, 'chord') + group('Scales', scaleMatches, 'scale');
+    resultsEl.querySelectorAll('.finder-match-chip').forEach(chip=>{
+      const type = chip.dataset.type, idx = parseInt(chip.dataset.idx);
+      const m = (type==='chord' ? chordMatches : scaleMatches)[idx];
+      chip.addEventListener('click', ()=>{
+        finderShowingMatch = isActive(m, type) ? null
+          : (type==='chord' ? { type:'chord', root:m.root, quality:m.quality } : { type:'scale', root:m.root, scaleType:m.scaleType });
+        renderFinder();
+      });
+    });
   }
 
   function renderFinder(){
     const summary = document.getElementById('finderSelectedSummary');
     const pcs = [];
     const seen = new Set();
-    const allNotes = finderSelected.map(({string:s, fret:f})=>{
+    finderSelected.forEach(({string:s, fret:f})=>{
       const midi = STANDARD_TUNING[s] + f;
       const pc = ((midi % 12)+12)%12;
       if(!seen.has(pc)){ seen.add(pc); pcs.push(pc); }
-      return { string:s, fret:f, label:noteNames[pc], noteName:noteNames[pc], isRoot:true };
     });
-    summary.textContent = finderSelected.length === 0
-      ? 'Click notes on the fretboard below to select them — on any strings, any frets, in any combination.'
-      : 'Selected: ' + pcs.map(pc=>noteNames[pc]).join(', ');
-    renderFretboard('finderFretboardWrap', allNotes, {}, null, false, { maxFret: FINDER_MAX_FRET, onCellClick: (s,f)=>{ finderToggleNote(s,f); renderFinder(); } });
+
+    if(finderShowingMatch){
+      const m = finderShowingMatch;
+      const toneSet = m.type==='chord' ? getChordToneSet(m.root, m.quality) : getScaleToneSet(m.root, m.scaleType);
+      const name = m.type==='chord' ? (m.root+chordLabel[m.quality]) : (m.root+' '+SCALE_TYPES[m.scaleType].label);
+      const selectedPcs = new Set(pcs);
+      document.getElementById('finderLabelModeWrap').style.display = 'inline-flex';
+      summary.innerHTML = 'Showing <strong>'+name+'</strong> — solid circles are notes you selected, hollow circles (same color) are the rest of the '+(m.type==='chord'?'chord':'scale')+' you didn\'t pick. Click any note to go back to editing your own selection.';
+      renderFretboard('finderFretboardWrap', null, toneSet, null, finderShowIntervals, {
+        maxFret: FINDER_MAX_FRET, colorByInterval:true, selectedPcs,
+        onCellClick: (s,f)=>{ finderShowingMatch = null; finderToggleNote(s,f); renderFinder(); }
+      });
+    } else {
+      document.getElementById('finderLabelModeWrap').style.display = 'none';
+      const allNotes = finderSelected.map(({string:s, fret:f})=>{
+        const midi = STANDARD_TUNING[s] + f;
+        const pc = ((midi % 12)+12)%12;
+        return { string:s, fret:f, label:noteNames[pc], noteName:noteNames[pc], isRoot:true };
+      });
+      summary.textContent = finderSelected.length === 0
+        ? 'Click notes on the fretboard below to select them — on any strings, any frets, in any combination.'
+        : 'Selected: ' + pcs.map(pc=>noteNames[pc]).join(', ');
+      renderFretboard('finderFretboardWrap', allNotes, {}, null, false, { maxFret: FINDER_MAX_FRET, onCellClick: (s,f)=>{ finderToggleNote(s,f); renderFinder(); } });
+    }
     renderFinderResults(pcs);
   }
   document.getElementById('finderClearBtn').addEventListener('click', ()=>{
     finderSelected = [];
+    finderShowingMatch = null;
+    renderFinder();
+  });
+  document.getElementById('finderLabelMode').addEventListener('change', (e)=>{
+    finderShowIntervals = e.target.value === 'interval';
     renderFinder();
   });
 
