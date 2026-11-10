@@ -278,6 +278,77 @@
   .finder-match-chip:hover{ border-color:var(--text-dim); color:var(--text); }
   .finder-match-chip.exact{ background:var(--accent); border-color:var(--accent); color:#1a1400; font-weight:700; }
   .finder-match-chip.active{ outline:2px solid var(--text); outline-offset:1px; }
+  .ac-chip{ display:inline-flex; flex-direction:column; gap:2px; padding:6px 11px; border-radius:6px; background:var(--surface2); border:1px solid var(--border); cursor:pointer; min-width:66px; }
+  .ac-chip b{ font-family:'JetBrains Mono', monospace; font-size:14px; color:var(--text); }
+  .ac-chip small{ font-size:10px; color:var(--text-dim); }
+  .ac-chip:hover{ border-color:var(--text-dim); }
+  .ac-chip.active{ background:var(--accent); border-color:var(--accent); }
+  .ac-chip.active b, .ac-chip.active small{ color:#1a1400; }
+  .ac-viz{ background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:10px; margin-top:14px; }
+  .ac-viz-head{ display:flex; flex-wrap:wrap; align-items:center; gap:8px 18px; margin-bottom:8px; }
+  .ac-viz-info{ display:flex; flex-wrap:wrap; gap:4px 16px; font-size:13px; color:var(--text); }
+  .ac-viz-info small{ font-size:10px; letter-spacing:.08em; color:var(--text-dim); margin-right:4px; }
+  .ac-viz-now{ display:flex; align-items:baseline; gap:10px; margin-left:auto; }
+  #acVizNow{ font-family:'JetBrains Mono', monospace; font-size:24px; font-weight:700; color:var(--accent); min-width:3ch; text-align:right; }
+  #acVizNext{ font-size:12px; color:var(--text-dim); min-width:6ch; }
+  .ac-viz-zoom{ display:flex; gap:4px; }
+  .ac-zbtn{ background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:5px; padding:3px 10px; font-size:13px; cursor:pointer; }
+  .ac-zbtn:hover{ border-color:var(--text-dim); }
+  .ac-viz-scroll{ overflow-x:auto; overflow-y:hidden; border-radius:6px; background:var(--bg); border:1px solid var(--border); }
+  .ac-viz-scroll canvas{ position:sticky; left:0; display:block; cursor:pointer; }
+  .yt-title{ font-size:14px; color:var(--text); margin:14px 0 8px; font-weight:600; }
+  .yt-wrap{ position:relative; width:100%; max-width:760px; aspect-ratio:16/9; background:#000; border-radius:8px; overflow:hidden; }
+  .yt-wrap iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .yt-bar{ position:relative; height:30px; max-width:760px; margin-top:10px; background:var(--surface2); border:1px solid var(--border); border-radius:6px; cursor:pointer; overflow:hidden; }
+  .yt-region{ position:absolute; top:0; bottom:0; background:var(--accent); opacity:.3; display:none; }
+  .yt-mark{ position:absolute; top:0; bottom:0; width:2px; background:var(--accent); display:none; font-size:10px; font-weight:700; color:var(--accent); }
+  .yt-mark::after{ content:attr(data-l); position:absolute; top:1px; left:4px; }
+  .yt-head{ position:absolute; top:0; bottom:0; width:2px; background:var(--text); left:0; pointer-events:none; }
+  .yt-time{ font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text-dim); margin-top:6px; }
+  #ytCountDisp{ margin-left:14px; font-size:20px; font-weight:700; color:var(--accent); }
+  .yt-nudge{ display:flex; align-items:center; gap:4px; }
+  .yt-sub{ font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-dim); font-weight:600; margin-bottom:8px; }
+  .yt-rec{ display:flex; align-items:stretch; gap:6px; max-width:760px; margin-bottom:6px; }
+  .yt-rec-main{ flex:1; min-width:0; padding:7px 11px; border-radius:6px; background:var(--surface2); border:1px solid var(--border); cursor:pointer; }
+  .yt-rec-main:hover{ border-color:var(--text-dim); }
+  .yt-rec-main.current{ border-color:var(--accent); }
+  .yt-rec-t{ font-size:13px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .yt-rec-s{ font-size:11px; color:var(--text-dim); margin-top:2px; }
+  .yt-rec-del{ background:var(--surface2); color:var(--text-dim); border:1px solid var(--border); border-radius:6px; padding:0 12px; cursor:pointer; font-size:14px; }
+  .yt-rec-del:hover{ color:var(--accent2); border-color:var(--accent2); }
+  .bt-now{ background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px 14px; margin-top:16px; max-width:760px; }
+  .bt-title{ font-size:16px; font-weight:600; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .bt-sub{ font-size:11px; color:var(--text-dim); margin-top:2px; min-height:14px; }
+  .bt-wrap{ display:none; max-width:480px; margin-top:10px; }
+  #btYtWrap{ position:relative; aspect-ratio:16/9; background:#000; border-radius:8px; overflow:hidden; }
+  #btYtWrap iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  #btSpWrap iframe{ width:100%; border:0; border-radius:8px; }
+  .bt-transport{ display:flex; align-items:center; flex-wrap:wrap; gap:6px; margin-top:12px; }
+  .bt-tbtn{ background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:6px; padding:6px 13px; font-size:15px; cursor:pointer; }
+  .bt-tbtn:hover{ border-color:var(--text-dim); }
+  .bt-tbtn:disabled{ opacity:.4; cursor:default; }
+  .bt-seekrow{ display:flex; align-items:center; gap:10px; margin-top:10px; }
+  .bt-seekrow input[type=range]{ flex:1; }
+  .bt-time{ font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text-dim); white-space:nowrap; }
+  .bt-status{ margin-top:8px; font-size:13px; color:var(--accent); min-height:18px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .bt-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:16px; margin-top:18px; max-width:1100px; }
+  .bt-card{ background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px; min-width:0; }
+  .bt-card-h{ display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+  .bt-list{ min-height:56px; border-radius:6px; }
+  .bt-list.drop-end{ box-shadow:inset 0 -2px 0 var(--accent); }
+  .bt-item{ display:flex; align-items:center; gap:7px; padding:6px 8px; border:1px solid var(--border); border-radius:6px; background:var(--surface); margin-bottom:5px; cursor:grab; }
+  .bt-item.playing{ border-color:var(--accent); }
+  .bt-item.drop-before{ box-shadow:0 -2px 0 var(--accent); }
+  .bt-item.dragging{ opacity:.45; }
+  .bt-num{ font-size:11px; color:var(--text-dim); min-width:16px; text-align:right; }
+  .bt-badge{ font-size:9px; letter-spacing:.06em; text-transform:uppercase; padding:1px 5px; border-radius:3px; border:1px solid var(--border); color:var(--text-dim); flex:none; }
+  .bt-item-t{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13px; color:var(--text); }
+  .bt-ib{ background:none; border:1px solid var(--border); color:var(--text-dim); border-radius:4px; cursor:pointer; padding:1px 7px; font-size:12px; flex:none; }
+  .bt-ib:hover{ color:var(--text); border-color:var(--text-dim); }
+  .bt-ib.del:hover{ color:var(--accent2); border-color:var(--accent2); }
+  .bt-empty{ font-size:12px; color:var(--text-dim); padding:14px 6px; text-align:center; border:1px dashed var(--border); border-radius:6px; }
+  #btMini{ position:fixed; right:14px; bottom:14px; z-index:60; display:none; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--accent); border-radius:22px; padding:5px 8px 5px 14px; box-shadow:0 4px 18px rgba(0,0,0,.35); max-width:min(92vw, 380px); }
+  #btMiniTitle{ font-size:12px; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; cursor:pointer; max-width:210px; }
   .tab-grid{ display:inline-grid; gap:0; }
   .tab-string-label{
     font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text-dim); font-weight:700;
@@ -412,6 +483,7 @@
     <div class="modes">
       <div class="mode-tab active" data-section-tab="sound">Sound Tools</div>
       <div class="mode-tab" data-section-tab="practice">Practice Tools</div>
+      <div class="mode-tab" data-section-tab="audio">Audio Tools</div>
     </div>
   </div>
 
@@ -424,6 +496,9 @@
       <div class="mode-tab" data-mode="arpeggio" data-section="practice" style="display:none;">Arpeggios</div>
       <div class="mode-tab" data-mode="scale" data-section="practice" style="display:none;">Scales</div>
       <div class="mode-tab" data-mode="finder" data-section="practice" style="display:none;">Finder</div>
+      <div class="mode-tab" data-mode="ytloop" data-section="audio" style="display:none;">YouTube Loop</div>
+      <div class="mode-tab" data-mode="backing" data-section="audio" style="display:none;">Backing Tracks</div>
+      <div class="mode-tab" data-mode="audiochords" data-section="audio" style="display:none;">Audio → Chords</div>
     </div>
     <div class="panel-body">
       <div class="controls">
@@ -593,6 +668,12 @@
           <button id="loadedGrooveFavBtn" title="Favorite" style="background:none; border:none; cursor:pointer; font-size:15px; padding:0 2px;"></button>
         </span>
         <span class="hint">Funk, Hip-Hop and Bossa use 16th-note syncopation. More patterns coming later.</span>
+      </div>
+      <div class="row" style="margin-top:8px;">
+        <button class="btn btn-ghost" id="saveMyPatternBtn">💾 Save Pattern</button>
+        <select id="myPatternsSelect"><option value="">My Patterns…</option></select>
+        <button class="btn btn-ghost" id="loadMyPatternBtn">Load</button>
+        <button class="btn btn-ghost" id="deleteMyPatternBtn">Delete</button>
       </div>
       <div class="hint" style="margin-top:6px;">Export writes whichever drum pattern is selected (preset or custom) as its own .mid file. Import reads a MIDI file's percussion channel back in as a Custom pattern.</div>
       <div id="customDrumGridWrap" style="display:none; margin-top:14px;">
@@ -831,6 +912,184 @@
     </div>
   </div>
 
+  <div class="panel" id="audioChordsPanel" style="display:none;">
+    <div class="pane-header"><span class="pane-dot"></span><span class="pane-label">Audio → Chords</span><span style="margin-left:10px; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:#1a1400; background:var(--accent); border-radius:4px; padding:2px 7px;" title="This feature is still being developed">Work in progress</span></div>
+    <div class="panel-body">
+      <div class="hint" style="margin-bottom:14px;"><strong style="color:var(--accent);">Work in progress</strong> — this feature is still being developed, so results and the layout will keep changing. Pick an audio file (mp3, wav, m4a, ogg…) and Track Maker estimates its tempo and chord changes, entirely in your browser — the file is never uploaded. Treat the result as a first draft: it works best on songs with clear major/minor chords and is weaker on busy mixes, 7th chords and unusual voicings. Tidy it up in the Chord Sequencer afterwards.</div>
+      <div class="row">
+        <input type="file" id="acFile" accept="audio/*" style="display:none;">
+        <button class="btn btn-primary" id="acPick">🎧 Choose audio file…</button>
+        <span class="hint" id="acName">No file chosen</span>
+      </div>
+      <div class="row" id="acProgRow" style="display:none; margin-top:10px; gap:12px;">
+        <div style="flex:1; min-width:140px; height:8px; background:var(--surface2); border-radius:4px; overflow:hidden;"><div id="acProgBar" style="height:100%; width:0%; background:var(--accent); transition:width .3s;"></div></div>
+        <span class="hint" id="acProgText"></span>
+      </div>
+      <div class="hint" id="acError" style="color:var(--accent2); margin-top:10px;"></div>
+      <audio id="acAudio" controls preload="metadata" style="width:100%; margin-top:14px; display:none;"></audio>
+      <div class="ac-viz" id="acViz" style="display:none;">
+        <div class="ac-viz-head">
+          <div class="ac-viz-info" id="acVizInfo"></div>
+          <div class="ac-viz-now"><span id="acVizNow">–</span><span id="acVizNext"></span></div>
+          <div class="ac-viz-zoom"><button type="button" class="ac-zbtn" id="acZoomOut" title="Zoom out">−</button><button type="button" class="ac-zbtn" id="acZoomFit" title="Show the whole song">Fit</button><button type="button" class="ac-zbtn" id="acZoomIn" title="Zoom in">+</button></div>
+        </div>
+        <div class="ac-viz-scroll" id="acVizScroll"><div id="acVizSpacer"><canvas id="acVizCanvas"></canvas></div></div>
+        <div class="hint" style="margin-top:6px; font-size:11px;">Click the waveform to jump there, or a chord box to hear that chord. Ctrl + scroll (or − / +) zooms. Chord colours show each chord's place in the key.</div>
+      </div>
+      <div id="acSettings" style="display:none; margin-top:16px;">
+        <div class="row">
+          <div class="field"><label>Chords</label>
+            <select id="acVocab"><option value="triads" selected>Major / minor</option><option value="sevenths">+ 7th chords (experimental)</option></select></div>
+          <div class="field"><label>Chord changes</label>
+            <select id="acSens"><option value="fewer">Fewer</option><option value="normal" selected>Normal</option><option value="more">More</option></select></div>
+          <div class="field"><label>Tempo feel</label>
+            <select id="acFeel"><option value="normal" selected>As detected</option><option value="half">Half-time</option><option value="double">Double-time</option></select></div>
+          <div class="field"><label>Beats per bar</label>
+            <select id="acBpb"><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option><option>7</option></select></div>
+        </div>
+        <div class="row">
+          <div class="field"><label>Beat grid</label>
+            <select id="acGrid"><option value="ticks" selected>Follow detected beats</option><option value="steady">Steady tempo</option><option value="auto">Auto (steady if beats wobble)</option></select></div>
+          <div class="field"><label>Chord detail</label>
+            <select id="acDetail"><option value="beat" selected>Per beat</option><option value="half">Half-beat (experimental)</option></select></div>
+          <div class="field"><label>Blocks in sequencer</label>
+            <select id="acBlocks"><option value="beat" selected>One per beat (re-strike each beat)</option><option value="merge">Merged (hold each chord)</option></select></div>
+        </div>
+        <div class="row">
+          <div class="field" style="flex:1; min-width:260px;"><label>Chords in this song (optional)</label>
+            <input type="text" id="acChords" placeholder="e.g. C F2 Am7 G Em Gsus Fmaj7" style="width:100%;" spellcheck="false" autocomplete="off"></div>
+          <div class="checkbox-field"><input type="checkbox" id="acSnap" checked><label for="acSnap">Prefer chord changes on bar lines</label></div>
+        </div>
+        <div class="hint" id="acChordsMsg" style="margin:-4px 0 8px;">Paste the chords from your chart and only those will be used — this makes the result much more accurate.</div>
+        <div class="row">
+          <div class="checkbox-field"><input type="checkbox" id="acFixedChk"><label for="acFixedChk">Use a fixed tempo instead of the detected beats</label></div>
+          <div class="field"><label>BPM</label><input type="number" id="acFixedBpm" min="30" max="300" step="0.1" disabled style="width:90px;"></div>
+          <div class="field"><label>Start of bar 1 (sec)</label><input type="number" id="acStartSec" min="0" step="0.01" placeholder="auto" style="width:110px;"></div>
+        </div>
+        <div class="hint" style="margin-top:10px;">If the tempo comes out double or half what you feel, use <strong>Tempo feel</strong>. For tracks with a loose or no steady beat, tick the fixed-tempo box and enter the BPM (and, if needed, the time where bar 1 starts). Click any chord below to hear that spot.</div>
+        <div class="hint" id="acSummary" style="margin-top:12px; color:var(--text);"></div>
+      </div>
+      <div id="acResults" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; max-height:300px; overflow-y:auto;"></div>
+      <div class="row" id="acSendRow" style="display:none; margin-top:14px;">
+        <button class="btn btn-primary" id="acSendBtn">➜ Send to Chord Sequencer</button>
+        <span class="hint" id="acSendNote"></span>
+      </div>
+      <div class="hint" style="margin-top:18px; font-size:11px;">Analysis uses <a href="https://mtg.github.io/essentia.js/" target="_blank" rel="noopener" style="color:var(--text-dim);">Essentia.js</a> (AGPL-3.0, Music Technology Group, Universitat Pompeu Fabra), loaded from a CDN the first time you analyze a file.</div>
+    </div>
+  </div>
+
+  <div class="panel" id="ytLoopPanel" style="display:none;">
+    <div class="pane-header"><span class="pane-dot"></span><span class="pane-label">YouTube Loop</span></div>
+    <div class="panel-body">
+      <div class="hint" style="margin-bottom:14px;">Paste a YouTube link, mark a section (A–B), and loop it at any speed — slowing down or speeding up keeps the pitch the same — with an optional count-in before each pass. The last 5 videos and their settings are remembered on this device.</div>
+      <div class="row">
+        <input type="text" id="ytUrl" placeholder="Paste a YouTube link, e.g. https://www.youtube.com/watch?v=…" style="flex:1; min-width:240px;" spellcheck="false" autocomplete="off">
+        <button class="btn btn-primary" id="ytLoadBtn">Load</button>
+      </div>
+      <div class="hint" id="ytError" style="color:var(--accent2); margin-top:8px;"></div>
+      <div id="ytMain" style="display:none;">
+        <div class="yt-title" id="ytTitle"></div>
+        <div class="yt-wrap"><div id="ytHost"></div></div>
+        <div class="yt-bar" id="ytBar" title="Click to jump"><div class="yt-region" id="ytRegion"></div><div class="yt-mark" id="ytMarkA" data-l="A"></div><div class="yt-mark" id="ytMarkB" data-l="B"></div><div class="yt-head" id="ytHead"></div></div>
+        <div class="yt-time"><span id="ytTime">0:00.00</span> / <span id="ytDur">0:00.00</span><span id="ytCountDisp"></span></div>
+
+        <div class="row" style="margin-top:16px;">
+          <button class="btn btn-primary" id="ytLoopBtn">🔁 Loop: set A</button>
+          <button class="btn" id="ytPlayLoopBtn">▶ Play loop</button>
+          <div class="checkbox-field"><input type="checkbox" id="ytLoopOn" checked><label for="ytLoopOn">Loop A–B</label></div>
+        </div>
+        <div class="row">
+          <div class="field"><label>A (m:ss.ss)</label>
+            <div class="yt-nudge"><button type="button" class="ac-zbtn" id="ytANeg" title="Back 0.1 s">−</button><input type="text" id="ytAIn" placeholder="m:ss.ss" style="width:92px;" spellcheck="false" autocomplete="off"><button type="button" class="ac-zbtn" id="ytAPos" title="Forward 0.1 s">+</button></div></div>
+          <div class="field"><label>B (m:ss.ss)</label>
+            <div class="yt-nudge"><button type="button" class="ac-zbtn" id="ytBNeg" title="Back 0.1 s">−</button><input type="text" id="ytBIn" placeholder="m:ss.ss" style="width:92px;" spellcheck="false" autocomplete="off"><button type="button" class="ac-zbtn" id="ytBPos" title="Forward 0.1 s">+</button></div></div>
+          <button class="btn" id="ytClearBtn">Clear A–B</button>
+        </div>
+        <div class="hint" style="margin-top:6px;">Press <strong>Loop</strong> at the start of the section (A), again at the end (B), and a third time to clear. Or type the times — minutes:seconds with decimals, e.g. <em>1:23.45</em> or <em>83.45</em>.</div>
+
+        <div class="row" style="margin-top:16px;">
+          <div class="field"><label>Speed (%)</label>
+            <div class="yt-nudge"><button type="button" class="ac-zbtn" id="ytRateM5" title="5% slower">−5</button><button type="button" class="ac-zbtn" id="ytRateM1" title="1% slower">−1</button><input type="text" id="ytRate" value="100" inputmode="decimal" style="width:70px; text-align:center;" spellcheck="false" autocomplete="off"><button type="button" class="ac-zbtn" id="ytRateP1" title="1% faster">+1</button><button type="button" class="ac-zbtn" id="ytRateP5" title="5% faster">+5</button></div></div>
+          <div class="field"><label>Presets</label>
+            <div class="yt-nudge"><select id="ytRatePreset"><option value="custom">Custom</option><option value="25">25%</option><option value="50">50%</option><option value="75">75%</option><option value="80">80%</option><option value="85">85%</option><option value="90">90%</option><option value="95">95%</option><option value="100" selected>100%</option><option value="110">110%</option><option value="125">125%</option><option value="150">150%</option><option value="200">200%</option></select><button type="button" class="ac-zbtn" id="ytRateReset">Reset</button></div></div>
+          <div class="hint" style="flex:1; min-width:200px;">Type any speed from 25% to 200% — for example <em>95</em> for 95% speed (<em>0.95</em> works too). Pitch is kept as the speed changes; YouTube's player does the correction.</div>
+        </div>
+        <div class="hint" id="ytRateNote" style="color:var(--accent2); margin-top:4px;"></div>
+
+        <div class="row">
+          <div class="field"><label>Count-in</label>
+            <select id="ytCount"><option value="0" selected>Off</option><option value="1">1 beat</option><option value="2">2 beats</option><option value="3">3 beats</option><option value="4">4 beats</option><option value="6">6 beats</option><option value="8">8 beats</option></select></div>
+          <div class="field"><label>Song tempo (BPM)</label>
+            <div class="yt-nudge"><input type="number" id="ytCountBpm" min="30" max="300" step="0.1" value="100" style="width:90px;"><button type="button" class="ac-zbtn" id="ytTap" title="Tap along with the song">Tap</button></div></div>
+          <div class="field"><label>Count in</label>
+            <select id="ytCountWhen"><option value="every" selected>Before every loop</option><option value="start">Only on ▶ Play loop</option></select></div>
+          <div class="field"><label>Click volume</label><input type="range" id="ytVol" min="0.05" max="1" step="0.05" value="0.7"></div>
+        </div>
+        <div class="hint" style="margin-top:6px;">The count-in clicks at the song's tempo, slowed or sped up along with the video, then the video restarts at A. Tap along with the video to find the tempo (the current speed is taken into account).</div>
+      </div>
+
+      <div style="margin-top:24px;">
+        <div class="yt-sub">Recent videos (saved on this device)</div>
+        <div id="ytRecent"></div>
+      </div>
+      <div class="hint" style="margin-top:14px; font-size:11px;">Video playback comes from YouTube's embedded player, loaded from youtube.com the first time you load a video. Loop points are checked about 30 times a second, so a loop can be a few hundredths of a second off.</div>
+    </div>
+  </div>
+
+  <div class="panel" id="btPanel" style="display:none;">
+    <div class="pane-header"><span class="pane-dot"></span><span class="pane-label">Backing Tracks</span></div>
+    <div class="panel-body">
+      <div class="hint" style="margin-bottom:14px;">Play a backing track from a local file, a network drive, or a link (YouTube, Spotify, or a direct link to an audio file). Everything you play goes into the history; drag tracks from there into a set list and play the whole list with a pause between tracks. It all stays saved in this browser, and a track keeps playing if you switch to another tab.</div>
+      <div class="row">
+        <input type="text" id="btUrl" placeholder="Paste a link — YouTube, Spotify, or a direct audio file link (https://…)" style="flex:1; min-width:240px;" spellcheck="false" autocomplete="off">
+        <button class="btn btn-primary" id="btAddLink">Add link</button>
+        <button class="btn" id="btAddFiles">Add local files…</button>
+        <input type="file" id="btFile" accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg,.oga,.opus,.flac,.wma,.aif,.aiff" multiple style="display:none;">
+      </div>
+      <div class="hint" style="margin-top:6px; font-size:11px;">Files from a network drive work too — browse to them in the file window (a typed path like \\server\share can't be opened by a web page). Chosen files are copied into this browser's storage, so they keep playing offline and without permission prompts.</div>
+      <div class="hint" id="btError" style="color:var(--accent2); margin-top:8px;"></div>
+
+      <div class="bt-now">
+        <div class="bt-title" id="btTitle">Nothing loaded</div>
+        <div class="bt-sub" id="btSub"></div>
+        <div class="bt-wrap" id="btYtWrap"><div id="btYtHost"></div></div>
+        <div class="bt-wrap" id="btSpWrap"><div id="btSpHost"></div></div>
+        <div class="bt-transport">
+          <button type="button" class="bt-tbtn" id="btPrev" title="Previous track in the set list">⏮</button>
+          <button type="button" class="bt-tbtn" id="btPlay" title="Play / pause">▶</button>
+          <button type="button" class="bt-tbtn" id="btStop" title="Stop">⏹</button>
+          <button type="button" class="bt-tbtn" id="btNext" title="Next track in the set list">⏭</button>
+          <span style="margin-left:12px; font-size:12px; color:var(--text-dim);">Volume</span>
+          <input type="range" id="btVol" min="0" max="1" step="0.01" value="0.8" style="width:110px;">
+        </div>
+        <div class="bt-seekrow"><input type="range" id="btSeek" min="0" max="1000" value="0" step="1"><span class="bt-time" id="btTime">0:00 / 0:00</span></div>
+        <div class="bt-status"><span id="btStatus"></span><button type="button" class="ac-zbtn" id="btSkip" style="display:none;">Skip wait</button></div>
+      </div>
+
+      <div class="bt-grid">
+        <div class="bt-card">
+          <div class="bt-card-h"><div class="yt-sub" style="margin:0;">History (last 20)</div><span class="hint" id="btHistInfo" style="font-size:11px;"></span></div>
+          <div class="bt-list" id="btHist"></div>
+        </div>
+        <div class="bt-card">
+          <div class="bt-card-h">
+            <div class="yt-sub" style="margin:0;">Set list</div>
+            <select id="btSetSel" style="min-width:120px;"></select>
+            <button type="button" class="bt-ib" id="btSetNew" title="New set list">New</button>
+            <button type="button" class="bt-ib" id="btSetRename" title="Rename this set list">Rename</button>
+            <button type="button" class="bt-ib del" id="btSetDel" title="Delete this set list">Delete</button>
+          </div>
+          <div class="bt-card-h">
+            <button class="btn btn-primary" id="btPlaySet">▶ Play set list</button>
+            <div class="field" style="flex-direction:row; align-items:center; gap:6px;"><label style="margin:0;">Pause between tracks</label><input type="number" id="btGap" min="0" max="300" step="0.5" value="5" style="width:70px;"><span style="font-size:12px; color:var(--text-dim);">s</span></div>
+          </div>
+          <div class="bt-list" id="btSetItems"></div>
+        </div>
+      </div>
+      <div class="hint" style="margin-top:14px; font-size:11px;">YouTube and Spotify play in their own embedded players, so both need an internet connection, and some videos can't be embedded. Spotify's embed plays 30-second previews unless you are logged in to Spotify in this browser, and has no volume control here (Spotify support is experimental). Pages like SoundCloud or Bandcamp can't be played; only direct links to audio files can.</div>
+    </div>
+  </div>
+
   <div class="panel" id="finderPanel" style="display:none;">
     <div class="pane-header"><span class="pane-dot"></span><span class="pane-label">Arpeggio / Scale Finder</span></div>
     <div class="panel-body">
@@ -846,6 +1105,7 @@
             <option value="note">Notes</option>
           </select>
         </span>
+        <button class="btn btn-primary" id="finderPracticeBtn" style="display:none;">▶ Practice this</button>
       </div>
     </div>
 
@@ -866,6 +1126,8 @@
   <footer>Organ, strings, pad, and piano — synthesized live via the Web Audio API. Drums use real samples (Public Domain TR-505 kit).</footer>
 </div>
 
+<audio id="btAudio" preload="auto" style="display:none;"></audio>
+<div id="btMini"><span id="btMiniTitle" title="Open Backing Tracks"></span><button type="button" class="bt-tbtn" id="btMiniPlay" style="padding:3px 10px; font-size:13px;">▶</button><button type="button" class="bt-tbtn" id="btMiniNext" style="padding:3px 10px; font-size:13px;" title="Next track in the set list">⏭</button></div>
 <script>
 (function(){
   const noteNames = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
@@ -1559,7 +1821,7 @@
   // Arpeggio Practice — fretboard + TAB exercise generator
   // ==================================================================
   const ARP_MAX_FRET = 15;
-  function arpPositionCount(){ return ARP_MAX_FRET - 4; } // positions starting at fret 1..11
+  function arpPositionCount(){ return ARP_MAX_FRET - 3; } // positions start at fret 0, 1, 2, ... up to (ARP_MAX_FRET-4)
   let arpPositionIndex = 0;
   let scalePositionIndex = 0;
 
@@ -1587,9 +1849,8 @@
   // which mirrors how arpeggio/scale shapes are actually learned on the neck.
   function findPositionNotes(startFret, toneSet){
     const notes = [];
-    const firstFret = (startFret === 1) ? 0 : startFret; // position 1 includes open strings
     for(let s=0; s<6; s++){
-      for(let f=firstFret; f<startFret+5; f++){
+      for(let f=startFret; f<startFret+5; f++){
         const midi = STANDARD_TUNING[s] + f;
         const pc = ((midi % 12)+12)%12;
         if(toneSet.hasOwnProperty(pc)){
@@ -1654,9 +1915,12 @@
     const parts = [];
     parts.push('<svg viewBox="0 0 '+svgW+' '+svgH+'" width="'+svgW+'" height="'+svgH+'" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace"'+(onCellClick?' style="cursor:pointer;"':'')+'>');
 
-    // Position highlight band (drawn first, behind everything else) — skipped if posStart is null
+    // Position highlight band (drawn first, behind everything else) — skipped if posStart is null.
+    // Position 1 starts at fret 0 (open strings), which has no fret wire of its own to the left of
+    // it — the band starts at the open-string zone's own left edge in that case instead.
     if(posStart != null){
-      const bandX = fretWireX(posStart-1), bandX2 = fretWireX(Math.min(fretCount, posStart-1+5));
+      const bandX = posStart <= 0 ? (boardLeft - openW) : fretWireX(posStart-1);
+      const bandX2 = fretWireX(Math.min(fretCount, posStart+4));
       parts.push('<rect x="'+bandX+'" y="'+(boardTop-8)+'" width="'+(bandX2-bandX)+'" height="'+(boardBottom-boardTop+16)+'" fill="var(--accent)" opacity="0.10"></rect>');
     }
 
@@ -1690,21 +1954,13 @@
       parts.push('<line x1="'+boardLeft+'" y1="'+stringY(s)+'" x2="'+boardRight+'" y2="'+stringY(s)+'" stroke="var(--border)" stroke-width="1"></line>');
     }
 
-    // String labels on the left — open-string chord/scale tones shown as a marker instead of a plain letter.
-    // In Finder's match view (selectedPcs given), the fret-0 column of the main grid below already
-    // shows the open note, so keep this column as plain letters to avoid a duplicate marker.
+    // String labels on the left — always plain letters. The fret-0 (open string) note, when
+    // it belongs to the chord/scale, is already drawn as its own colored circle in the main
+    // grid below (openCenterX) — this column used to *also* draw a colored marker for it,
+    // which just duplicated that same note with two circles.
     for(let s=0; s<6; s++){
       const y = stringY(s);
-      const openPc = ((STANDARD_TUNING[s] % 12)+12)%12;
-      if(!selectedPcs && toneSet.hasOwnProperty(openPc)){
-        const isRoot = toneSet[openPc] === '1';
-        const txt = showIntervals ? toneSet[openPc] : noteNames[openPc];
-        const col = colorByInterval ? intervalColor(toneSet[openPc]) : { fill: isRoot?'var(--accent)':'var(--accent2)', text: isRoot?'#1a1400':'#fff' };
-        parts.push('<circle cx="'+(leftMargin-19)+'" cy="'+y+'" r="'+noteR+'" fill="'+col.fill+'"></circle>');
-        parts.push('<text x="'+(leftMargin-19)+'" y="'+(y+4)+'" text-anchor="middle" font-size="10" font-weight="700" fill="'+col.text+'">'+txt+'</text>');
-      } else {
-        parts.push('<text x="'+(leftMargin-25)+'" y="'+(y+4)+'" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-dim)">'+STRING_LABELS[s]+'</text>');
-      }
+      parts.push('<text x="'+(leftMargin-25)+'" y="'+(y+4)+'" text-anchor="middle" font-size="13" font-weight="700" fill="var(--text-dim)">'+STRING_LABELS[s]+'</text>');
     }
 
     if(selectedPcs){
@@ -1813,7 +2069,7 @@
     const formula = CHORD_FORMULAS[quality];
     document.getElementById('arpFormula').textContent = formula ? formula.join(' - ') : '\u2014';
 
-    const startFret = arpPositionIndex + 1;
+    const startFret = arpPositionIndex;
     document.getElementById('arpPositionLabel').textContent =
       'Position ' + (arpPositionIndex+1) + ' of ' + arpPositionCount() + ' (Frets ' + startFret + '\u2013' + (startFret+4) + ')';
 
@@ -1843,7 +2099,7 @@
     const s = SCALE_TYPES[scaleType];
     document.getElementById('scaleFormula').textContent = s ? s.formula.join(' - ') : '\u2014';
 
-    const startFret = scalePositionIndex + 1;
+    const startFret = scalePositionIndex;
     document.getElementById('scalePositionLabel').textContent =
       'Position ' + (scalePositionIndex+1) + ' of ' + arpPositionCount() + ' (Frets ' + startFret + '\u2013' + (startFret+4) + ')';
 
@@ -1948,6 +2204,9 @@
       const name = m.type==='chord' ? (m.root+chordLabel[m.quality]) : (m.root+' '+SCALE_TYPES[m.scaleType].label);
       const selectedPcs = new Set(pcs);
       document.getElementById('finderLabelModeWrap').style.display = 'inline-flex';
+      const practiceBtn = document.getElementById('finderPracticeBtn');
+      practiceBtn.style.display = 'inline-block';
+      practiceBtn.textContent = '▶ Practice this ' + (m.type==='chord' ? 'Arpeggio' : 'Scale');
       summary.innerHTML = 'Showing <strong>'+name+'</strong> — solid circles are notes you selected, hollow circles (same color) are the rest of the '+(m.type==='chord'?'chord':'scale')+' you didn\'t pick. Click any note to go back to editing your own selection.';
       renderFretboard('finderFretboardWrap', null, toneSet, null, finderShowIntervals, {
         maxFret: FINDER_MAX_FRET, colorByInterval:true, selectedPcs,
@@ -1955,6 +2214,7 @@
       });
     } else {
       document.getElementById('finderLabelModeWrap').style.display = 'none';
+      document.getElementById('finderPracticeBtn').style.display = 'none';
       const allNotes = finderSelected.map(({string:s, fret:f})=>{
         const midi = STANDARD_TUNING[s] + f;
         const pc = ((midi % 12)+12)%12;
@@ -1975,6 +2235,22 @@
   document.getElementById('finderLabelMode').addEventListener('change', (e)=>{
     finderShowIntervals = e.target.value === 'interval';
     renderFinder();
+  });
+  document.getElementById('finderPracticeBtn').addEventListener('click', ()=>{
+    const m = finderShowingMatch;
+    if(!m) return;
+    rootKeySel.value = m.root;
+    if(m.type==='chord'){
+      qualitySel.value = m.quality;
+      lastPracticeMode = 'arpeggio';
+      activateSection('practice');
+      activateMode('arpeggio');
+    } else {
+      document.getElementById('scaleTypeSelect').value = m.scaleType;
+      lastPracticeMode = 'scale';
+      activateSection('practice');
+      activateMode('scale');
+    }
   });
 
   // ---------------- Shared transport fields ----------------
@@ -2090,6 +2366,73 @@
     rebuildCustomDrumPattern();
   });
   [beatsPerBarSel, beatUnitSel].forEach(el=> el.addEventListener('change', rebuildCustomDrumPattern));
+
+  // ---------------- My Patterns (hand-built custom drum patterns, saved locally) ----------------
+  const MY_PATTERNS_KEY = 'trackmaker_my_drum_patterns';
+  function loadMyPatterns(){
+    try{ return JSON.parse(localStorage.getItem(MY_PATTERNS_KEY)) || []; }
+    catch(e){ return []; }
+  }
+  function saveMyPatterns(list){
+    try{ localStorage.setItem(MY_PATTERNS_KEY, JSON.stringify(list)); }
+    catch(e){ /* storage unavailable — saved patterns just won't persist */ }
+  }
+  function populateMyPatternsSelect(){
+    const list = loadMyPatterns();
+    const sel = document.getElementById('myPatternsSelect');
+    const prevValue = sel.value;
+    sel.innerHTML = '<option value="">My Patterns… (' + list.length + ')</option>' +
+      list.map(p=> '<option value="'+p.id+'">'+p.name+' ('+p.bars+' bar'+(p.bars===1?'':'s')+')</option>').join('');
+    if(list.some(p=>String(p.id)===prevValue)) sel.value = prevValue;
+  }
+  populateMyPatternsSelect();
+
+  document.getElementById('saveMyPatternBtn').addEventListener('click', ()=>{
+    const name = prompt('Name this pattern:');
+    if(!name || !name.trim()) return;
+    const list = loadMyPatterns();
+    list.push({
+      id: Date.now(),
+      name: name.trim(),
+      bars: customDrumPatternBars,
+      beatsPerBar: beatsPerBar(),
+      pattern: Object.fromEntries(DRUM_VOICES.map(v=>[v, customDrumPattern[v].slice()]))
+    });
+    saveMyPatterns(list);
+    populateMyPatternsSelect();
+    document.getElementById('myPatternsSelect').value = String(list[list.length-1].id);
+  });
+
+  document.getElementById('loadMyPatternBtn').addEventListener('click', ()=>{
+    const id = document.getElementById('myPatternsSelect').value;
+    if(!id) return;
+    const saved = loadMyPatterns().find(p=>String(p.id)===id);
+    if(!saved) return;
+    ensureOption(beatsPerBarSel, saved.beatsPerBar);
+    beatsPerBarSel.value = saved.beatsPerBar;
+    updateSigBadge();
+    seqRoll.render();
+    customDrumPatternBars = saved.bars;
+    document.getElementById('customDrumBars').value = saved.bars;
+    DRUM_VOICES.forEach(v=> customDrumPattern[v] = (saved.pattern[v] || []).slice());
+    drumPatternSel.value = 'custom';
+    loadedGrooveEntry = null; // this is a hand-saved pattern, not an E-GMD groove
+    updateLoadedGrooveUI();
+    updateCustomDrumUIVisibility();
+    renderCustomDrumGrid();
+  });
+
+  document.getElementById('deleteMyPatternBtn').addEventListener('click', ()=>{
+    const sel = document.getElementById('myPatternsSelect');
+    const id = sel.value;
+    if(!id) return;
+    const list = loadMyPatterns();
+    const target = list.find(p=>String(p.id)===id);
+    if(!target) return;
+    if(!confirm('Delete "'+target.name+'"?')) return;
+    saveMyPatterns(list.filter(p=>String(p.id)!==id));
+    populateMyPatternsSelect();
+  });
 
   // ==================================================================
   // Reusable piano-roll: notes are explicit {id,start,length,root,quality,octave}
@@ -2506,17 +2849,20 @@
 
   // ---------------- Mode switching ----------------
   const tabs = document.querySelectorAll('.mode-tab[data-mode]');
-  const panels = { drone: document.getElementById('dronePanel'), bass: document.getElementById('bassPanel'), arpeggio: document.getElementById('arpeggioPanel'), scale: document.getElementById('scalePanel'), finder: document.getElementById('finderPanel') };
+  const panels = { drone: document.getElementById('dronePanel'), bass: document.getElementById('bassPanel'), arpeggio: document.getElementById('arpeggioPanel'), scale: document.getElementById('scalePanel'), finder: document.getElementById('finderPanel'), audiochords: document.getElementById('audioChordsPanel'), ytloop: document.getElementById('ytLoopPanel'), backing: document.getElementById('btPanel') };
   const seqPanelEl = document.getElementById('seqPanel');
   let currentMode = 'drone';
   const SOUND_TOOL_MODES = ['drone','bass','sequencer'];
   const PRACTICE_TOOL_MODES = ['arpeggio','scale','finder'];
+  const AUDIO_TOOL_MODES = ['audiochords','ytloop','backing'];
   let activeSoundMode = null; // which sound tool (if any) is actually producing audio right now
   let lastSoundMode = 'drone';
   let lastPracticeMode = 'arpeggio';
+  let lastAudioMode = 'ytloop';          // the first tab in Audio Tools
 
   function isGridMode(){ return currentMode === 'sequencer'; }
   function isPracticeMode(){ return PRACTICE_TOOL_MODES.includes(currentMode); }
+  function isAudioMode(){ return AUDIO_TOOL_MODES.includes(currentMode); }
 
   [beatsPerBarSel, beatUnitSel, barsInput].forEach(el=> el.addEventListener('change', ()=>{ updateSigBadge(); seqRoll.render(); }));
 
@@ -2528,12 +2874,16 @@
       stopAllSustained();
       stopSequence();
     }
+    if(modeKey !== 'audiochords'){ const acA = document.getElementById('acAudio'); if(acA) acA.pause(); }
+    if(modeKey !== 'ytloop') ytStopAll();
     tabs.forEach(t=> t.classList.toggle('active', t.dataset.mode===modeKey));
     currentMode = modeKey;
     if(SOUND_TOOL_MODES.includes(modeKey)) lastSoundMode = modeKey;
     if(PRACTICE_TOOL_MODES.includes(modeKey)) lastPracticeMode = modeKey;
+    if(AUDIO_TOOL_MODES.includes(modeKey)) lastAudioMode = modeKey;
 
     Object.keys(panels).forEach(k=> panels[k].style.display = (k===currentMode) ? '' : 'none');
+    try{ btUpdateMini(); }catch(e){}
     seqPanelEl.style.display = isGridMode() ? '' : 'none';
 
     rootKeyLabel.textContent = isGridMode() ? 'Key' : 'Root';
@@ -2549,11 +2899,11 @@
       autoOptionEl.hidden = true;
     }
     qualitySel.disabled = (currentMode === 'bass');
-    document.getElementById('qualityField').style.display = (currentMode === 'bass' || currentMode === 'scale' || currentMode === 'finder') ? 'none' : 'flex';
+    document.getElementById('qualityField').style.display = (currentMode === 'bass' || currentMode === 'scale' || currentMode === 'finder' || isAudioMode()) ? 'none' : 'flex';
     document.getElementById('midiMenuSection').style.display = (currentMode === 'sequencer') ? '' : 'none';
-    document.getElementById('octaveField').style.display = isPracticeMode() ? 'none' : 'flex';
-    document.getElementById('soundField').style.display = isPracticeMode() ? 'none' : 'flex';
-    document.getElementById('timeSigMetroDrumsSection').style.display = isPracticeMode() ? 'none' : '';
+    document.getElementById('octaveField').style.display = (isPracticeMode() || isAudioMode()) ? 'none' : 'flex';
+    document.getElementById('soundField').style.display = (isPracticeMode() || isAudioMode()) ? 'none' : 'flex';
+    document.getElementById('timeSigMetroDrumsSection').style.display = (isPracticeMode() || isAudioMode()) ? 'none' : '';
 
     const keyScaleRow = document.getElementById('keyScaleRootQualityRow');
     const scaleControlsRow = document.getElementById('scaleControlsRow');
@@ -2571,7 +2921,7 @@
     } else {
       voiceAnchor.parentNode.insertBefore(rootKeyFieldEl, voiceAnchor);
       voiceAnchor.parentNode.insertBefore(qualityFieldEl, voiceAnchor);
-      rootKeyFieldEl.style.display = (currentMode === 'finder') ? 'none' : 'flex';
+      rootKeyFieldEl.style.display = (currentMode === 'finder' || isAudioMode()) ? 'none' : 'flex';
     }
 
     if(currentMode === 'arpeggio') renderArpeggio();
@@ -2591,7 +2941,7 @@
     currentSection = sectionKey;
     sectionTabs.forEach(t=> t.classList.toggle('active', t.dataset.sectionTab===sectionKey));
     tabs.forEach(t=> t.style.display = (t.dataset.section===sectionKey) ? '' : 'none');
-    activateMode(sectionKey === 'sound' ? lastSoundMode : lastPracticeMode);
+    activateMode(sectionKey === 'sound' ? lastSoundMode : sectionKey === 'practice' ? lastPracticeMode : lastAudioMode);
   }
   sectionTabs.forEach(t=>{
     t.addEventListener('click', ()=> activateSection(t.dataset.sectionTab));
@@ -3556,9 +3906,1751 @@
     e.target.value = '';
   });
 
+
+  // ---------------- Audio → Chords ----------------
+  // The heavy analysis (tempo/beat tracking + chroma) runs in a Web Worker using Essentia.js
+  // (AGPL-3.0, Music Technology Group, UPF), fetched from a CDN on first use. Chord decoding
+  // (acDecode) is plain JS and instant, so changing tempo feel / sensitivity / vocabulary
+  // never needs a re-analysis.
+/* ===== Audio -> chords core. Pure JS apart from the Essentia instance passed to acExtract. ===== */
+/* ===== Audio -> chords core. Pure JS apart from the Essentia instance passed to acExtract. ===== */
+/* ===== Audio -> chords core. Pure JS apart from the Essentia instance passed to acExtract. ===== */
+var AC_NOTE_NAMES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+var AC_TYPES = {
+  'maj':  { iv:[0,4,7],    seq:'major', pen:0 },
+  'min':  { iv:[0,3,7],    seq:'minor', pen:0 },
+  '7':    { iv:[0,4,7,10], seq:'dom7',  pen:0.02 },
+  'maj7': { iv:[0,4,7,11], seq:'maj7',  pen:0.02 },
+  'min7': { iv:[0,3,7,10], seq:'min7',  pen:0.02 },
+  'sus4': { iv:[0,5,7],    seq:'sus4',  pen:0 },
+  'sus2': { iv:[0,2,7],    seq:'sus2',  pen:0 },
+  'add9': { iv:[0,4,7,14], seq:'add9',  pen:0 },
+  '6':    { iv:[0,4,7,9],  seq:'6',     pen:0 },
+  'm6':   { iv:[0,3,7,9],  seq:'m6',    pen:0 },
+  'dim':  { iv:[0,3,6],    seq:'dim',   pen:0 },
+  'aug':  { iv:[0,4,8],    seq:'aug',   pen:0 }
+};
+var AC_ROOTS = { 'C':0,'C#':1,'Db':1,'D':2,'D#':3,'Eb':3,'E':4,'F':5,'F#':6,'Gb':6,'G':7,'G#':8,'Ab':8,'A':9,'A#':10,'Bb':10,'B':11 };
+var AC_SUFFIX = { '':'maj','maj':'maj','M':'maj','m':'min','min':'min','mi':'min','-':'min','7':'7','dom7':'7','maj7':'maj7','M7':'maj7','Maj7':'maj7','m7':'min7','min7':'min7','mi7':'min7','-7':'min7',
+                  'sus':'sus4','sus4':'sus4','sus2':'sus2','2':'add9','add2':'add9','add9':'add9','6':'6','m6':'m6','min6':'m6','dim':'dim','o':'dim','aug':'aug','+':'aug' };
+/* "C F2 Am7 G/B Gsus" -> chord states; anything it can't read is returned in .bad so the UI can say so */
+function acParseChords(text){
+  var toks = String(text || '').split(/[\s,;|]+/).filter(Boolean), out = [], bad = [], seen = {};
+  toks.forEach(function(tok){
+    var m = /^([A-G][#b]?)(.*)$/.exec(tok);
+    if(!m || AC_ROOTS[m[1]] === undefined){ bad.push(tok); return; }
+    var rest = m[2], bass = null, sl = rest.indexOf('/');
+    if(sl >= 0){ var bn = rest.slice(sl+1); if(AC_ROOTS[bn] === undefined){ bad.push(tok); return; } bass = AC_ROOTS[bn]; rest = rest.slice(0, sl); }
+    var type = AC_SUFFIX[rest]; if(type === undefined){ bad.push(tok); return; }
+    var key = AC_ROOTS[m[1]] + ':' + type + ':' + bass; if(seen[key]) return; seen[key] = 1;
+    out.push({ root:AC_ROOTS[m[1]], type:type, bass:bass, name:tok });
+  });
+  return { chords:out, bad:bad };
+}
+var AC_FRAME = 8192, AC_HOP = 4096, AC_TREBLE_MIN = 200;
+
+/* ---- Stage 1 (heavy; runs in the worker): beats + 36-bin HPCP frames ---- */
+function acExtract(essentia, x, sr, report){
+  var out = {};
+  report('Detecting tempo and beats…', 0);
+  var sigVec = essentia.arrayToVector(x), rh;
+  try { rh = essentia.RhythmExtractor2013(sigVec, 208, 'multifeature', 40); }
+  finally { sigVec.delete(); }
+  out.bpm = rh.bpm;
+  out.ticks = Array.from(essentia.vectorToArray(rh.ticks));
+  ['ticks','estimates','bpmIntervals'].forEach(function(k){ try{ rh[k].delete(); }catch(e){} });
+
+  var n = Math.max(0, Math.floor((x.length - AC_FRAME)/AC_HOP) + 1);
+  var times = new Float32Array(n), treble = new Float32Array(n*36), bass = new Float32Array(n*36);
+  var buf = new Float32Array(AC_FRAME);
+  for(var i=0;i<n;i++){
+    buf.set(x.subarray(i*AC_HOP, i*AC_HOP + AC_FRAME));
+    var fv = essentia.arrayToVector(buf);
+    var w  = essentia.Windowing(fv, true, AC_FRAME, 'blackmanharris62', 0, true);
+    var sp = essentia.Spectrum(w.frame, AC_FRAME);
+    var pk = essentia.SpectralPeaks(sp.spectrum, 0.00001, 3500, 80, 40, 'magnitude', sr);
+    var ht = essentia.HPCP(pk.frequencies, pk.magnitudes, false, 500, 0, 2000, false, AC_TREBLE_MIN, false, 'none', 440, sr, 36, 'cosine', 1);
+    var hb = essentia.HPCP(pk.frequencies, pk.magnitudes, false, 500, 0, 250,  false, 40,  false, 'none', 440, sr, 36, 'cosine', 1);
+    treble.set(essentia.vectorToArray(ht.hpcp), i*36);
+    bass.set(essentia.vectorToArray(hb.hpcp), i*36);
+    times[i] = (i*AC_HOP + AC_FRAME/2) / sr;
+    fv.delete(); w.frame.delete(); sp.spectrum.delete(); pk.frequencies.delete(); pk.magnitudes.delete(); ht.hpcp.delete(); hb.hpcp.delete();
+    if(i % 16 === 0) report('Analyzing harmony…', i/n);
+  }
+  out.times = times; out.treble36 = treble; out.bass36 = bass; out.nFrames = n; out.duration = x.length/sr;
+  return out;
+}
+
+/* ---- Stage 2 (instant; main thread): everything below is plain JS ---- */
+function acTuningOffset(h36, n){
+  var s = [0,0,0];
+  for(var i=0;i<n;i++) for(var b=0;b<36;b++) s[b%3] += h36[i*36+b];
+  var best = 0; for(var j=1;j<3;j++) if(s[j] > s[best]) best = j;
+  return best;                                   // sub-bin (0..2) where in-tune energy sits; 1 bin = 33.3 cents
+}
+function acFold(h36, n, off){                    // 36-bin (A-based) -> 12 pitch classes (C = 0), tuning-corrected
+  var out = new Float32Array(n*12);
+  for(var i=0;i<n;i++) for(var pc=0; pc<12; pc++){
+    var p = (pc + 3) % 12, c = 3*p + off;        // HPCP bin 0 = A
+    out[i*12+pc] = h36[i*36 + (c+36)%36] + 0.5*(h36[i*36 + (c+35)%36] + h36[i*36 + (c+37)%36]);
+  }
+  return out;
+}
+function acTemplate(root, iv, leak){
+  if(leak===undefined) leak = 1;
+  var t = new Float32Array(12), nrm = 0, k;
+  iv.forEach(function(i){ var p=(root+i)%12; t[p]+=1.0; t[(p+7)%12]+=0.25*leak; t[(p+4)%12]+=0.10*leak; });
+  for(k=0;k<12;k++) nrm += t[k]*t[k]; nrm = Math.sqrt(nrm);
+  for(k=0;k<12;k++) t[k] /= nrm;
+  return t;
+}
+function acLowerBound(arr, x){ var lo=0, hi=arr.length; while(lo<hi){ var mid=(lo+hi)>>1; if(arr[mid]<x) lo=mid+1; else hi=mid; } return lo; }
+function acMedian(a){ var s=a.slice().sort(function(p,q){return p-q;}); return s[Math.floor(s.length/2)]; }
+
+function acBuildBeats(ticks, duration, o){
+  var beats;
+  if(o.fixedBpm){
+    var spb = 60/o.fixedBpm, st = (o.startSec!=null) ? o.startSec : (ticks.length ? ticks[0] % spb : 0);
+    beats = []; for(var t=st; t <= duration - spb*0.5; t += spb) beats.push(t);
+  } else {
+    if(ticks.length < 3) return null;
+    var iv = []; for(var i=1;i<ticks.length;i++) iv.push(ticks[i]-ticks[i-1]);
+    var med = acMedian(iv);
+    beats = ticks.slice();
+    while(beats[0] - med >= -0.02) beats.unshift(beats[0]-med);                   // extend back to the start of the audio
+    while(beats[beats.length-1] + med <= duration - med*0.5) beats.push(beats[beats.length-1]+med);   // ...and forward to the end
+    if(o.startSec!=null){ var cut = o.startSec - med*0.5; beats = beats.filter(function(b){ return b >= cut; }); }
+  }
+  if(o.feel === 'half'){ beats = beats.filter(function(_,i){ return i%2===0; }); }
+  else if(o.feel === 'double'){ var d=[]; for(var j=0;j<beats.length-1;j++){ d.push(beats[j]); d.push((beats[j]+beats[j+1])/2); } d.push(beats[beats.length-1]); beats = d; }
+  return beats.length >= 3 ? beats : null;
+}
+
+function acKeyInfo(chroma12, n){
+  var avg = new Float64Array(12); for(var i=0;i<n;i++) for(var k=0;k<12;k++) avg[k]+=chroma12[i*12+k];
+  var MAJ=[6.35,2.23,3.48,2.33,4.38,4.09,2.52,5.19,2.39,3.66,2.29,2.88], MIN=[6.33,2.68,3.52,5.38,2.60,3.53,2.54,4.75,3.98,2.69,3.34,3.17];
+  function corr(prof, r){ var mx=0,my=0,k; for(k=0;k<12;k++){ mx+=avg[(k+r)%12]; my+=prof[k]; } mx/=12; my/=12;
+    var sxy=0,sxx=0,syy=0; for(k=0;k<12;k++){ var a=avg[(k+r)%12]-mx, b=prof[k]-my; sxy+=a*b; sxx+=a*a; syy+=b*b; } return sxy/Math.sqrt(sxx*syy+1e-12); }
+  var best={r:0,minor:false,c:-2};
+  for(var r=0;r<12;r++){ var cM=corr(MAJ,r), cm=corr(MIN,r); if(cM>best.c) best={r:r,minor:false,c:cM}; if(cm>best.c) best={r:r,minor:true,c:cm}; }
+  return best;
+}
+function acDiatonicBonus(key, states){
+  var S = key.minor ? (key.r+3)%12 : key.r, set = {};
+  var deg=[0,2,4,5,7,9], tri=['maj','min','min','maj','maj','min'], sev=['maj7','min7','min7','maj7','7','min7'];
+  deg.forEach(function(d,i){ set[((S+d)%12)+':'+tri[i]]=1; set[((S+d)%12)+':'+sev[i]]=1; });
+  if(key.minor){ set[((key.r+7)%12)+':maj']=1; set[((key.r+7)%12)+':7']=1; }
+  return states.map(function(st){ return st.type ? (set[st.root+':'+st.type] ? 1 : 0) : 0; });
+}
+
+/* Steady-grid refinement: try uniform beat grids (scanning phase, then tempo) and keep the one that explains the
+   harmony best; fall back to the tracker's own beats when they explain it better (live / drifting tempo). */
+function acTickIrregularity(ticks){            // rms (seconds) of the beats' deviation from the best steady grid
+  var n=ticks.length; if(n<8) return 0;
+  var iv=[]; for(var i=1;i<n;i++) iv.push(ticks[i]-ticks[i-1]);
+  var med=acMedian(iv), idx=ticks.map(function(x){ return Math.round((x-ticks[0])/med); });
+  var sx=0,sy=0,sxx=0,sxy=0; for(var j=0;j<n;j++){ sx+=idx[j]; sy+=ticks[j]; sxx+=idx[j]*idx[j]; sxy+=idx[j]*ticks[j]; }
+  var b=(n*sxy-sx*sy)/(n*sxx-sx*sx), a=(sy-b*sx)/n, ss=0;
+  for(var k=0;k<n;k++){ var d=ticks[k]-(a+b*idx[k]); ss+=d*d; }
+  return Math.sqrt(ss/n);
+}
+function acRefineGrid(f, o, force){
+  var base = {}; for(var k0 in o) base[k0]=o[k0]; base.fixedBpm=null; base.startSec=null; base.feel='normal'; base.res='beat';
+  var tk = acDecode(f, base);
+  if(tk.error || f.ticks.length < 8) return { mode:'ticks' };
+  var irr = acTickIrregularity(f.ticks);
+  if(!force && irr < 0.030) return { mode:'ticks', irregularity:irr };     // the tracker's beats are already steady — nothing to fix
+  var iv=[]; for(var i=1;i<f.ticks.length;i++) iv.push(f.ticks[i]-f.ticks[i-1]);
+  var med = acMedian(iv), best = null;
+  function tryGrid(bpm, ph){ var o2={}; for(var k in base) o2[k]=base[k]; o2.fixedBpm=bpm; o2.startSec=ph; var r=acDecode(f,o2); if(!r.error && (!best || r.pathScore>best.score)) best={ score:r.pathScore, bpm:bpm, startSec:ph }; }
+  var n=0; for(var ph=0; ph<med-1e-9; ph+=med/24){ tryGrid(60/med, ph); n++; }
+  var bpm0=best.bpm, ph0=best.startSec;
+  for(var d=-8; d<=8; d++){ for(var dp=-1; dp<=1; dp++){ var bb=bpm0*(1+d*0.0015), pp=Math.max(0, ph0+dp*med/48); tryGrid(bb, pp); n++; } }
+  var out = { irregularity:irr, bpm:best.bpm, startSec:best.startSec, scoreUniform:best.score, scoreTicks:tk.pathScore, tried:n };
+  out.mode = (force || best.score > tk.pathScore + 0.04*Math.abs(tk.pathScore)) ? 'uniform' : 'ticks';
+  return out;
+}
+
+var AC_SENS = { fewer:7.5, normal:5.5, more:3.5 };
+
+function acViterbi(emit, M, S, penAt){
+  var delta = new Float32Array(S), nd = new Float32Array(S), ptr = new Int16Array(M*S), s0, t, s1, s3;
+  for(s0=0;s0<S;s0++) delta[s0]=emit[s0];
+  for(t=1;t<M;t++){
+    var bi2=0; for(s1=1;s1<S;s1++) if(delta[s1]>delta[bi2]) bi2=s1;
+    var bestPrev = delta[bi2] - penAt(t);
+    for(s3=0;s3<S;s3++){
+      if(delta[s3] >= bestPrev){ nd[s3]=delta[s3]+emit[t*S+s3]; ptr[t*S+s3]=s3; }
+      else { nd[s3]=bestPrev+emit[t*S+s3]; ptr[t*S+s3]=bi2; }
+    }
+    delta.set(nd);
+  }
+  var path = new Int16Array(M), cur=0, s4; for(s4=1;s4<S;s4++) if(delta[s4]>delta[cur]) cur=s4;
+  var score = delta[cur]/Math.max(M,1);
+  for(var t2=M-1;t2>=0;t2--){ path[t2]=cur; cur=ptr[t2*S+cur]; }
+  return { path:path, score:score };
+}
+var AC_TUNE = { snapOn:0.5, snapHalf:0.8, snapOff:1.6, snapMin:0.4, p7:0.08, beta:10, bassw:0.8, keyb:0.08, sub:1.0, subq:0.35, bsub:1.0, leak:1, gamma:0.5, adapt:8, gmax:6, pen:null };
+function acDecode(f, o){
+  var T = {}; for(var tk0 in AC_TUNE) T[tk0] = (o.tune && o.tune[tk0]!==undefined) ? o.tune[tk0] : AC_TUNE[tk0];
+  var beats = acBuildBeats(f.ticks, f.duration, o);
+  if(!beats) return { error:'Could not find a steady beat — try entering a fixed tempo.' };
+  var off = acTuningOffset(f.treble36, f.nFrames);
+  var tre = acFold(f.treble36, f.nFrames, off), bas = acFold(f.bass36, f.nFrames, off);
+  var unit = 1;                                           // beats per analysis step (0.5 in half-beat detail)
+  if(o.res === 'half'){ var hb=[]; for(var hi=0;hi<beats.length-1;hi++){ hb.push(beats[hi]); hb.push((beats[hi]+beats[hi+1])/2); } hb.push(beats[beats.length-1]); beats = hb; unit = 0.5; }
+  var half = (AC_FRAME/2)/44100, M = beats.length-1;
+
+  // aggregate chroma per beat segment
+  var cs = new Float32Array(M*12), bs = new Float32Array(M*12), en = new Float32Array(M);
+  for(var k=0;k<M;k++){
+    var t0=beats[k], t1=beats[k+1];
+    var lo = acLowerBound(f.times, t0+half), hi = acLowerBound(f.times, t1-half);
+    if(hi - lo <= 0){ lo = acLowerBound(f.times, t0); hi = acLowerBound(f.times, t1); }
+    if(hi - lo <= 0){ var mid=(t0+t1)/2, ni=acLowerBound(f.times, mid); if(ni>=f.nFrames) ni=f.nFrames-1; if(ni>0 && Math.abs(f.times[ni-1]-mid) < Math.abs(f.times[ni]-mid)) ni--; lo=ni; hi=ni+1; }
+    var cntF = hi - lo;
+    for(var ix=lo; ix<hi; ix++){ for(var q=0;q<12;q++){ cs[k*12+q]+=tre[ix*12+q]; bs[k*12+q]+=bas[ix*12+q]; } }
+    for(var q2=0;q2<12;q2++){ cs[k*12+q2]/=cntF; bs[k*12+q2]/=cntF; en[k]+=cs[k*12+q2]; }
+  }
+  var enSorted = Array.prototype.slice.call(en).sort(function(a,b){return a-b;});
+  var eRef = enSorted[Math.floor(enSorted.length*0.75)] || 1, silentThr = 0.06*eRef;
+
+  // observation chroma: per-beat L1-normalised, minus a fraction of the song-wide average (removes static
+  // background like pads/drones/key-wide content), clipped at 0, then optionally power-compressed
+  var pbar = new Float64Array(12), m0, q0, cols = [], qi;
+  for(q0=0;q0<12;q0++) cols.push([]);
+  for(m0=0;m0<M;m0++){ var sm=0; for(q0=0;q0<12;q0++) sm+=cs[m0*12+q0]; if(sm>0 && en[m0]>=silentThr){ for(q0=0;q0<12;q0++) cols[q0].push(cs[m0*12+q0]/sm); } }
+  for(q0=0;q0<12;q0++){ cols[q0].sort(function(a,b){return a-b;}); qi=Math.floor(T.subq*(cols[q0].length-1)); pbar[q0] = cols[q0].length ? cols[q0][qi] : 0; }   // low percentile = the level a pitch class sits at even when it is not a chord tone
+  var rs = new Float32Array(M*12);
+  for(m0=0;m0<M;m0++){ var sm2=0; for(q0=0;q0<12;q0++) sm2+=cs[m0*12+q0];
+    for(q0=0;q0<12;q0++){ var v=(sm2>0 ? cs[m0*12+q0]/sm2 : 0) - T.sub*pbar[q0]; if(v<0) v=0; rs[m0*12+q0] = (T.gamma===1) ? v : Math.pow(v, T.gamma); } }
+  var bbar = new Float64Array(12), bcols = [];
+  for(q0=0;q0<12;q0++) bcols.push([]);
+  for(m0=0;m0<M;m0++){ var sb=0; for(q0=0;q0<12;q0++) sb+=bs[m0*12+q0]; if(sb>0 && en[m0]>=silentThr){ for(q0=0;q0<12;q0++) bcols[q0].push(bs[m0*12+q0]/sb); } }
+  for(q0=0;q0<12;q0++){ bcols[q0].sort(function(a,b){return a-b;}); qi=Math.floor(T.subq*(bcols[q0].length-1)); bbar[q0] = bcols[q0].length ? bcols[q0][qi] : 0; }
+  var bres = new Float32Array(M*12);
+  for(m0=0;m0<M;m0++){ var sb2=0; for(q0=0;q0<12;q0++) sb2+=bs[m0*12+q0];
+    for(q0=0;q0<12;q0++){ var bv=(sb2>0 ? bs[m0*12+q0]/sb2 : 0) - T.bsub*bbar[q0]; bres[m0*12+q0] = bv<0 ? 0 : bv; } }
+
+  // states = vocabulary chords x 12 roots, + N
+  var typeKeys = o.vocab === 'sevenths' ? ['maj','min','7','maj7','min7'] : ['maj','min'];
+  var states = [], restricted = !!(o.chords && o.chords.length);
+  if(restricted) o.chords.forEach(function(c){ states.push({ root:c.root, type:c.type, bass:(c.bass===null||c.bass===undefined) ? undefined : c.bass, tpl:acTemplate(c.root, AC_TYPES[c.type].iv, T.leak), pen:0 }); });
+  else typeKeys.forEach(function(tk){ for(var r=0;r<12;r++) states.push({ root:r, type:tk, tpl:acTemplate(r, AC_TYPES[tk].iv, T.leak), pen:(AC_TYPES[tk].iv.length>3 ? T.p7 : 0) }); });
+  states.push({ root:-1, type:null });
+  var S = states.length, NI = S-1;
+  var key = acKeyInfo(cs, M);
+  var dia = restricted ? states.map(function(){ return 0; }) : acDiatonicBonus(key, states);   // a chord list from the user replaces the key prior
+
+  // raw per-beat scores (cosine vs template + bass support + key prior - quality bias)
+  var raw = new Float32Array(M*S), silentB = new Uint8Array(M), margins = [];
+  for(var m=0;m<M;m++){
+    var silent = en[m] < silentThr; silentB[m] = silent ? 1 : 0;
+    var cn=0, bsum=0, q3; for(q3=0;q3<12;q3++){ cn += rs[m*12+q3]*rs[m*12+q3]; bsum += bres[m*12+q3]; } cn = Math.sqrt(cn)+1e-9;
+    if(silent) continue;
+    var row=[];
+    for(var s=0;s<S-1;s++){
+      var st=states[s], dot=0; for(var q4=0;q4<12;q4++) dot += rs[m*12+q4]*st.tpl[q4];
+      var cosv = dot/cn, bsup = 0;
+      if(bsum > 1e-9){ var iv=AC_TYPES[st.type].iv; bsup = bres[m*12+(st.bass!==undefined ? st.bass : st.root)]/bsum + 0.25*(bres[m*12+(st.root+iv[1])%12]+bres[m*12+(st.root+iv[2])%12])/bsum; }
+      var sc = cosv + T.bassw*bsup + T.keyb*dia[s] - st.pen;
+      raw[m*S+s] = sc; row.push(sc);
+    }
+    row.sort(function(a,b){return a-b;});
+    margins.push(row[row.length-1] - row[Math.floor(row.length/2)]);
+  }
+  // evidence scale: amplify weak-contrast recordings so real chord changes can overcome the switch penalty
+  var g = 1;
+  if(T.adapt > 0 && margins.length){ var medMargin = acMedian(margins); g = Math.min(T.gmax, Math.max(1, T.adapt/(T.beta*Math.max(medMargin,1e-4)))); }
+  var emit = new Float32Array(M*S);
+  for(var m2=0;m2<M;m2++){
+    if(silentB[m2]){ emit[m2*S+NI] = T.beta*1.0; continue; }
+    for(var s2=0;s2<S-1;s2++) emit[m2*S+s2] = T.beta*g*raw[m2*S+s2];
+    emit[m2*S+NI] = -T.beta*0.2;
+  }
+  // Viterbi. Pass 1 uses one switch penalty everywhere; if the song's changes clearly favour one beat of the bar,
+  // pass 2 makes changes cheap on bar lines and dearer between them.
+  var pen = (T.pen!==null && T.pen!==undefined) ? T.pen : (AC_SENS[o.sens] || AC_SENS.normal);
+  var bpbSteps = Math.max(1, Math.round((o.beatsPerBar || 4)/unit));
+  var vit = acViterbi(emit, M, S, function(){ return pen; });
+  var barPhase = null, barShare = 0;
+  if(o.snap){
+    // where do this song's chord changes fall within the bar? Estimate the beat-of-bar locally (+-8 bars), because the beat
+    // tracker can drop or add a beat part-way through a song, which shifts the bar lines from then on.
+    var starts = [], rr = 1;
+    while(rr<M){ if(vit.path[rr]!==vit.path[rr-1] && vit.path[rr]!==NI) starts.push(rr); rr++; }
+    var W = 8*bpbSteps, phaseAt = new Int16Array(M).fill(-1), anyPhase = 0;
+    for(var tt=0; tt<M; tt++){
+      var hist = new Array(bpbSteps).fill(0), nn = 0;
+      for(var si=0; si<starts.length; si++){ var dd = starts[si]-tt; if(dd < -W) continue; if(dd > W) break; hist[starts[si] % bpbSteps]++; nn++; }
+      if(nn < 4) continue;
+      var bp = 0; for(var hh=1; hh<bpbSteps; hh++) if(hist[hh]>hist[bp]) bp=hh;
+      var second = 0; for(var h2=0; h2<bpbSteps; h2++) if(h2!==bp && hist[h2]>second) second=hist[h2];
+      if(hist[bp]/nn >= T.snapMin && (hist[bp]-second)/nn >= 0.15){ phaseAt[tt] = bp; anyPhase++; }
+    }
+    if(anyPhase > M*0.25){
+      var halfSteps = (bpbSteps % 2 === 0) ? bpbSteps/2 : 0;
+      vit = acViterbi(emit, M, S, function(t){ var p = phaseAt[t]; if(p < 0) return pen; var d=((t-p)%bpbSteps+bpbSteps)%bpbSteps; return pen * (d===0 ? T.snapOn : (halfSteps && d===halfSteps) ? T.snapHalf : T.snapOff); });
+      barShare = anyPhase/M;
+      for(var f0=0; f0<M; f0++) if(phaseAt[f0] >= 0){ barPhase = phaseAt[f0]; break; }     // phase near the start of the song
+    }
+  }
+  var path = vit.path, pathScore = vit.score;
+
+  // merge runs, trim leading/trailing "no chord"
+  var runs=[], i4=0;
+  while(i4<M){ var j=i4; while(j+1<M && path[j+1]===path[i4]) j++; runs.push({ s:path[i4], b0:i4, n:j-i4+1 }); i4=j+1; }
+  while(runs.length && runs[0].s===NI) runs.shift();
+  while(runs.length && runs[runs.length-1].s===NI) runs.pop();
+  if(!runs.length) return { error:'No chords found — the file may be silent or too noisy.' };
+  var base = runs[0].b0;
+  var origin = (barPhase===null) ? base : base - ((((base - barPhase) % bpbSteps) + bpbSteps) % bpbSteps);
+  var segs = runs.filter(function(r){ return r.s!==NI; }).map(function(r){
+    var st=states[r.s];
+    return { startBeat:(r.b0-origin)*unit, lenBeats:r.n*unit, root:st.root, type:st.type, bass:st.bass, startSec:beats[r.b0], endSec:beats[r.b0+r.n] };
+  });
+  var last = runs[runs.length-1], totalBeats = (last.b0 + last.n - origin)*unit;
+  // average tempo = beats per unit time over the whole track (the median interval is biased by the beat tracker's ~11.6 ms timestamp steps)
+  var avgBpm;
+  if(o.fixedBpm){ avgBpm = o.fixedBpm * (o.feel==='half' ? 0.5 : o.feel==='double' ? 2 : 1); }
+  else { avgBpm = 60*(f.ticks.length-1)/(f.ticks[f.ticks.length-1]-f.ticks[0]) * (o.feel==='half' ? 0.5 : o.feel==='double' ? 2 : 1); }
+  return { segs:segs, totalBeats:totalBeats, bpm:avgBpm, key:key, tuningCents:((off>1?off-3:off)*33.3), beatTimes:beats, firstBeatSec:beats[base], evidenceGain:g, pathScore:pathScore, barPhase:barPhase, barShare:barShare, origin:origin, bpbSteps:bpbSteps, unit:unit };
+}
+
+  const AC_CDNS = ['https://cdn.jsdelivr.net/npm/essentia.js@0.1.3/dist/', 'https://unpkg.com/essentia.js@0.1.3/dist/'];
+  const acEl = {};
+  ['File','Pick','Name','ProgRow','ProgBar','ProgText','Audio','Settings','Vocab','Sens','Feel','Bpb','Grid','Detail','Blocks','Chords','ChordsMsg','Snap','FixedChk','FixedBpm','StartSec','Summary','Error','Results','SendRow','SendBtn','SendNote','Viz','VizInfo','VizNow','VizNext','ZoomOut','ZoomFit','ZoomIn','VizScroll','VizSpacer','VizCanvas'].forEach(k=>{
+    acEl[k] = document.getElementById('ac'+k);
+  });
+  let acGridCache = {}, acGridUsed = '', acFeat = null, acResult = null, acWorker = null, acBusy = false, acObjectUrl = null, acRedoTimer = null;
+
+  function acSetProgress(pct, text){ acEl.ProgRow.style.display = 'flex'; acEl.ProgBar.style.width = pct + '%'; acEl.ProgText.textContent = text || ''; }
+  function acHideProgress(){ acEl.ProgRow.style.display = 'none'; }
+
+  // Decode to mono 44.1 kHz (what Essentia's beat tracker expects), peak-normalised
+  async function acDecodeAudio(file){
+    const arr = await file.arrayBuffer();
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if(!Ctx) throw new Error('This browser has no Web Audio support.');
+    let ctx; try{ ctx = new Ctx({ sampleRate: 44100 }); }catch(e){ ctx = new Ctx(); }
+    let buf;
+    try{ buf = await ctx.decodeAudioData(arr); }
+    catch(e){ try{ ctx.close(); }catch(_){} throw new Error('Could not decode that file — try an mp3, wav, m4a or ogg.'); }
+    try{ ctx.close(); }catch(_){}
+    let mono;
+    if(buf.sampleRate === 44100){
+      mono = new Float32Array(buf.length);
+      for(let c=0;c<buf.numberOfChannels;c++){
+        const ch = buf.getChannelData(c);
+        for(let i=0;i<buf.length;i++) mono[i] += ch[i]/buf.numberOfChannels;
+      }
+    } else {
+      const off = new OfflineAudioContext(1, Math.ceil(buf.duration*44100), 44100);
+      const src = off.createBufferSource(); src.buffer = buf; src.connect(off.destination); src.start();
+      mono = (await off.startRendering()).getChannelData(0).slice();
+    }
+    let mx = 0; for(let i=0;i<mono.length;i++){ const a = Math.abs(mono[i]); if(a > mx) mx = a; }
+    if(mx < 1e-4) throw new Error('That file looks silent.');
+    const g = 0.95/mx; for(let i=0;i<mono.length;i++) mono[i] *= g;
+    return { samples: mono, duration: mono.length/44100 };
+  }
+
+  // The worker is built from a Blob so the page stays a single file. It loads the self-contained
+  // (WASM embedded) Essentia build, which must be compiled in a worker — Chrome refuses a 2 MB
+  // synchronous WASM compile on the main thread.
+  function acWorkerUrl(){
+    const src =
+      'var AC_FRAME=' + AC_FRAME + ',AC_HOP=' + AC_HOP + ',AC_TREBLE_MIN=' + AC_TREBLE_MIN + ';\n' +
+      acExtract.toString() + '\n' +
+      'var essentia=null;\n' +
+      'self.onmessage=function(ev){var m=ev.data;try{' +
+        'if(m.cmd==="init"){self.exports={};importScripts(m.base+"essentia-wasm.umd.js");var W=self.exports.EssentiaWASM;delete self.exports;' +
+          'importScripts(m.base+"essentia.js-core.min.js");essentia=new Essentia(W);self.postMessage({type:"ready"});}' +
+        'else if(m.cmd==="analyze"){var res=acExtract(essentia,m.samples,m.sr,function(s,f){self.postMessage({type:"progress",stage:s,frac:f});});' +
+          'self.postMessage({type:"done",result:res},[res.times.buffer,res.treble36.buffer,res.bass36.buffer]);}' +
+      '}catch(err){self.postMessage({type:"error",message:String(err&&err.message||err)});}};';
+    return URL.createObjectURL(new Blob([src], { type:'application/javascript' }));
+  }
+
+  function acInitWorker(){
+    return new Promise((resolve, reject)=>{
+      let url, idx = 0;
+      try{ url = acWorkerUrl(); }catch(e){ reject(new Error('Could not prepare the analysis worker.')); return; }
+      function next(){
+        if(idx >= AC_CDNS.length){
+          URL.revokeObjectURL(url);
+          reject(new Error('Could not load the Essentia.js analysis engine (tried jsDelivr and unpkg). Check your connection, or whether those sites are blocked on this network.'));
+          return;
+        }
+        let w;
+        try{ w = new Worker(url); }catch(e){ reject(new Error('Your browser blocked the background worker needed for analysis.')); return; }
+        let done = false;
+        const fail = ()=>{ if(done) return; done = true; clearTimeout(timer); try{ w.terminate(); }catch(_){} idx++; next(); };
+        const timer = setTimeout(fail, 60000);
+        w.onmessage = (ev)=>{
+          if(ev.data.type === 'ready'){ done = true; clearTimeout(timer); URL.revokeObjectURL(url); acWorker = w; resolve(w); }
+          else if(ev.data.type === 'error') fail();
+        };
+        w.onerror = fail;
+        w.postMessage({ cmd:'init', base: AC_CDNS[idx] });
+      }
+      next();
+    });
+  }
+
+  function acRunWorker(samples){
+    return new Promise((resolve, reject)=>{
+      acWorker.onmessage = (ev)=>{
+        const m = ev.data;
+        if(m.type === 'progress'){
+          if(m.stage.indexOf('Detecting') === 0) acSetProgress(15, m.stage + ' (can take a little while on long tracks)');
+          else acSetProgress(45 + Math.round(55*m.frac), m.stage);
+        }
+        else if(m.type === 'done') resolve(m.result);
+        else if(m.type === 'error') reject(new Error(m.message));
+      };
+      acWorker.onerror = (ev)=> reject(new Error((ev && ev.message) || 'The analysis worker stopped unexpectedly (it may have run out of memory on a very long file).'));
+      acWorker.postMessage({ cmd:'analyze', samples:samples, sr:44100 }, [samples.buffer]);
+    });
+  }
+
+  async function acAnalyzeFile(file){
+    if(acBusy) return;
+    acBusy = true;
+    acFeat = null; acResult = null; acPeaks = null; acVizFresh = true; acLastAct = -2; acEl.Viz.style.display = 'none';
+    acEl.Settings.style.display = 'none'; acEl.Results.innerHTML = ''; acEl.SendRow.style.display = 'none';
+    acEl.Summary.textContent = ''; acEl.Error.textContent = '';
+    acEl.Pick.disabled = true;
+    try{
+      acEl.Name.textContent = file.name;
+      if(acObjectUrl) URL.revokeObjectURL(acObjectUrl);
+      acObjectUrl = URL.createObjectURL(file);
+      acEl.Audio.src = acObjectUrl; acEl.Audio.style.display = '';
+      acSetProgress(3, 'Decoding audio…');
+      const dec = await acDecodeAudio(file);
+      acPeaks = acMakePeaks(dec.samples);          // before the worker takes (and detaches) the samples
+      if(dec.duration < 8) throw new Error('That clip is too short to analyze — it needs at least ~8 seconds.');
+      if(dec.duration > 600 && !confirm('This track is ' + Math.round(dec.duration/60) + ' minutes long — analysis can take several minutes and a lot of memory. Continue?')) throw new Error('Cancelled.');
+      acSetProgress(8, 'Loading analysis engine…');
+      await acInitWorker();
+      acSetProgress(12, 'Starting analysis…');
+      const r = await acRunWorker(dec.samples);
+      acFeat = { ticks:r.ticks, times:r.times, treble36:r.treble36, bass36:r.bass36, nFrames:r.nFrames, duration:r.duration, bpm:r.bpm };
+      acHideProgress();
+      acEl.Settings.style.display = '';
+      // a new file starts from its own detected values, not the previous song's overrides
+      acGridCache = {}; acEl.Grid.value = 'ticks'; acEl.Detail.value = 'beat'; acEl.Grid.disabled = false;
+      acEl.FixedChk.checked = false; acEl.FixedBpm.disabled = true; acEl.Feel.disabled = false;
+      acEl.FixedBpm.value = Math.round(r.bpm*10)/10; acEl.StartSec.value = ''; acEl.Feel.value = 'normal';
+      acRedecode();
+    }catch(err){
+      acHideProgress();
+      acEl.Error.textContent = err.message || String(err);
+    }finally{
+      if(acWorker){ try{ acWorker.terminate(); }catch(_){} acWorker = null; }   // frees the WASM heap
+      acBusy = false;
+      acEl.Pick.disabled = false;
+    }
+  }
+
+  // steady-grid refinement is searched once per file (about a second for a full song) and cached
+  function acGetGrid(force){
+    const k = force ? 'f' : 'a';
+    if(!(k in acGridCache)) acGridCache[k] = acRefineGrid(acFeat, { vocab:'triads', sens:'normal' }, force);
+    return acGridCache[k];
+  }
+
+  // chord list typed by the user (from their chart); unreadable names are reported, not silently dropped
+  function acChordList(){
+    const txt = acEl.Chords.value.trim();
+    if(!txt){ acEl.ChordsMsg.textContent = 'Paste the chords from your chart and only those will be used — this makes the result much more accurate.'; return null; }
+    const p = acParseChords(txt);
+    if(!p.chords.length){ acEl.ChordsMsg.textContent = 'Couldn\'t read any chords from that — using automatic detection instead.'; return null; }
+    acEl.ChordsMsg.textContent = 'Using only: ' + p.chords.map(c=> c.name).join(', ') + (p.bad.length ? '  ·  couldn\'t read: ' + p.bad.join(', ') + ' (ignored)' : '');
+    return p.chords;
+  }
+
+  function acRedecode(){
+    if(!acFeat) return;
+    const fixedOn = acEl.FixedChk.checked;
+    const fb = parseFloat(acEl.FixedBpm.value), ss = parseFloat(acEl.StartSec.value);
+    const o = {
+      feel: acEl.Feel.value, vocab: acEl.Vocab.value, sens: acEl.Sens.value, res: acEl.Detail.value === 'half' ? 'half' : 'beat',
+      snap: acEl.Snap.checked, beatsPerBar: parseInt(acEl.Bpb.value) || 4, chords: acChordList(),
+      fixedBpm: null, startSec: (acEl.StartSec.value !== '' && isFinite(ss) && ss >= 0) ? ss : null
+    };
+    acGridUsed = 'beats';
+    if(fixedOn){ if(fb > 0){ o.fixedBpm = fb; o.feel = 'normal'; acGridUsed = 'fixed'; } }
+    else if(acEl.Grid.value !== 'ticks'){
+      const g = acGetGrid(acEl.Grid.value === 'steady');
+      if(g && g.mode === 'uniform'){ o.fixedBpm = g.bpm; if(o.startSec === null) o.startSec = g.startSec; acGridUsed = 'steady'; }
+    }
+    acResult = acDecode(acFeat, o);
+    acRender();
+  }
+
+  function acLenText(n){ return n === 1 ? '1 beat' : n === 0.5 ? '½ beat' : n + ' beats'; }
+  function acChordName(s){ return noteNames[s.root] + chordLabel[AC_TYPES[s.type].seq] + ((s.bass !== undefined && s.bass !== null && s.bass !== s.root) ? '/' + noteNames[s.bass] : ''); }
+
+  function acRender(){
+    const r = acResult;
+    acEl.Results.innerHTML = ''; acEl.SendRow.style.display = 'none'; acEl.Error.textContent = ''; acEl.SendNote.textContent = '';
+    if(!r){ acEl.Summary.textContent = ''; acVizUpdate(); return; }
+    if(r.error){ acEl.Summary.textContent = ''; acEl.Error.textContent = r.error; acVizUpdate(); return; }
+    const bpb = parseInt(acEl.Bpb.value) || 4;
+    const keyName = noteNames[r.key.r] + (r.key.minor ? ' minor' : ' major');
+    acEl.Summary.innerHTML = 'Tempo ≈ <strong>' + r.bpm.toFixed(1) + ' BPM</strong> <span class="hint">(' + (acGridUsed === 'steady' ? 'steady grid' : acGridUsed === 'fixed' ? 'your fixed tempo' : 'following detected beats') + ')</span> · key ≈ <strong>' + keyName + '</strong> · ' +
+      r.segs.length + ' chords over ' + r.totalBeats + ' beats (≈ ' + Math.ceil(r.totalBeats/bpb) + ' bars)' +
+      (Math.abs(r.tuningCents) >= 15 ? ' · tuned ≈ ' + (r.tuningCents > 0 ? '+' : '') + Math.round(r.tuningCents) + ' cents' : '') +
+      ((r.totalBeats / r.segs.length > 10 && acEl.Sens.value !== 'more') ? '<br><span class="hint">That\'s quite a few beats per chord — if the song changes chords more often than this, try <strong>Chord changes → More</strong>.</span>' : '');
+    acEl.Results.innerHTML = r.segs.map((s,i)=>
+      '<span class="ac-chip" data-i="' + i + '"><b>' + acChordName(s) + '</b><small>bar ' + (Math.floor(s.startBeat/bpb)+1) + ' · ' +
+      acLenText(s.lenBeats) + '</small></span>'
+    ).join('');
+    acEl.SendRow.style.display = 'flex';
+    acVizUpdate();
+  }
+
+  // ---------------- Timeline view: waveform + chords ----------------
+  const AC_VIZ_H = 176, AC_CHORD_Y = 22, AC_CHORD_H = 46, AC_WAVE_Y = 76, AC_DEG = ['1','b2','2','b3','3','4','b5','5','b6','6','b7','7'];
+  let acPeaks = null, acPps = 40, acBars = [], acRaf = 0, acLastUserScroll = 0, acExpectScroll = null, acLastAct = -2, acVizFresh = true;
+  const acCssCache = {};
+
+  function acMakePeaks(samples){                    // min/max per 10 ms, for drawing at any zoom
+    const B = 441, n = Math.ceil(samples.length / B);
+    const mn = new Float32Array(n), mx = new Float32Array(n);
+    for(let b = 0; b < n; b++){
+      let lo = 0, hi = 0; const e = Math.min(samples.length, (b+1)*B);
+      for(let i = b*B; i < e; i++){ const v = samples[i]; if(v < lo) lo = v; if(v > hi) hi = v; }
+      mn[b] = lo; mx[b] = hi;
+    }
+    return { min: mn, max: mx, n: n, perSec: 100 };
+  }
+  function acCss(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || '#888'; }
+  function acResolve(c){ return (typeof c === 'string' && c.indexOf('var(') === 0) ? acCss(c.slice(4, -1)) : c; }
+  function acSegAt(t){
+    const sg = acResult && acResult.segs; if(!sg || !sg.length) return -1;
+    let lo = 0, hi = sg.length - 1, ans = -1;
+    while(lo <= hi){ const m = (lo + hi) >> 1; if(sg[m].startSec <= t){ ans = m; lo = m + 1; } else hi = m - 1; }
+    return (ans >= 0 && t < sg[ans].endSec) ? ans : -1;
+  }
+  function acZoomBounds(){ const vw = acEl.VizScroll.clientWidth || 600, dur = acFeat ? acFeat.duration : 1; return { min: Math.max(1, vw / dur), max: 240 }; }
+  function acScrollTo(px){
+    const sc = acEl.VizScroll, v = Math.max(0, Math.min(px, sc.scrollWidth - sc.clientWidth));
+    acExpectScroll = v; sc.scrollLeft = v;
+  }
+  function acSetZoom(pps, anchorX){
+    if(!acFeat) return;
+    const sc = acEl.VizScroll, b = acZoomBounds(), vw = sc.clientWidth;
+    pps = Math.max(b.min, Math.min(b.max, pps));
+    if(anchorX === undefined) anchorX = vw / 2;
+    const tA = (sc.scrollLeft + anchorX) / acPps;
+    acPps = pps;
+    acEl.VizSpacer.style.width = Math.ceil(acFeat.duration * acPps) + 'px';
+    acScrollTo(tA * acPps - anchorX);
+    acVizDraw();
+  }
+  // first draw for a new file: show roughly 24 s of the song
+  function acVizEnsure(){
+    const vw = acEl.VizScroll.clientWidth;
+    if(!vw || !acFeat) return false;
+    if(acVizFresh){
+      acVizFresh = false;
+      const b = acZoomBounds();
+      acPps = Math.max(b.min, Math.min(b.max, vw / 24));
+      acEl.VizSpacer.style.width = Math.ceil(acFeat.duration * acPps) + 'px';
+      acEl.VizScroll.scrollLeft = 0; acExpectScroll = null;
+    }
+    return true;
+  }
+
+  function acVizUpdate(){
+    const r = acResult;
+    if(!r || r.error || !r.segs || !acPeaks || !acFeat){ acEl.Viz.style.display = 'none'; return; }
+    acEl.Viz.style.display = '';
+    const bpb = parseInt(acEl.Bpb.value) || 4;
+    const keyName = noteNames[r.key.r] + (r.key.minor ? ' minor' : ' major');
+    acEl.VizInfo.innerHTML = '<span><small>KEY</small><b>' + keyName + '</b></span><span><small>TEMPO</small><b>' + r.bpm.toFixed(1) + '</b> BPM</span><span><small>TIME</small><b>' + bpb + '/4</b></span>';
+    acBars = [];
+    const bt = r.beatTimes, bs = r.bpbSteps || bpb;
+    for(let k = Math.ceil(-r.origin / bs); r.origin + k*bs <= bt.length - 1; k++){
+      const idx = r.origin + k*bs;
+      if(idx >= 0) acBars.push({ t: bt[idx], n: k + 1 });
+    }
+    acLastAct = -2;
+    acUpdateActive();
+    acVizDraw();
+  }
+
+  function acUpdateActive(){
+    const r = acResult; if(!r || !r.segs) return;
+    const t = acEl.Audio.currentTime, act = acSegAt(t);
+    if(act === acLastAct) return;
+    acLastAct = act;
+    acEl.Results.querySelectorAll('.ac-chip').forEach((c, i) => c.classList.toggle('active', i === act));
+    let nxt = -1;
+    if(act >= 0) nxt = act + 1 < r.segs.length ? act + 1 : -1;
+    else { for(let i = 0; i < r.segs.length; i++){ if(r.segs[i].startSec > t){ nxt = i; break; } } }
+    acEl.VizNow.textContent = act >= 0 ? acChordName(r.segs[act]) : '–';
+    acEl.VizNext.textContent = nxt >= 0 ? 'next: ' + acChordName(r.segs[nxt]) : '';
+  }
+
+  function acVizDraw(){
+    const r = acResult, cv = acEl.VizCanvas, sc = acEl.VizScroll;
+    if(!r || r.error || !r.segs || !acPeaks || !acFeat) return;
+    if(!acVizEnsure()) return;
+    const vw = sc.clientWidth, H = AC_VIZ_H, dpr = window.devicePixelRatio || 1;
+    if(cv.width !== Math.round(vw*dpr) || cv.height !== Math.round(H*dpr)){
+      cv.width = Math.round(vw*dpr); cv.height = Math.round(H*dpr); cv.style.width = vw + 'px'; cv.style.height = H + 'px';
+    }
+    const ctx = cv.getContext('2d'); if(!ctx) return;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const sl = sc.scrollLeft, pps = acPps, t0 = sl / pps, t1 = (sl + vw) / pps;
+    const cBg = acCss('--bg'), cDim = acCss('--text-dim'), cText = acCss('--text'), cBorder = acCss('--border'), cAcc = acCss('--accent');
+    const curT = acEl.Audio.currentTime || 0, phx = curT * pps - sl, act = acSegAt(curT);
+    ctx.fillStyle = cBg; ctx.fillRect(0, 0, vw, H);
+
+    // waveform (played part in gold)
+    const wTop = AC_WAVE_Y, wBot = H - 6, mid = (wTop + wBot) / 2, amp = (wBot - wTop) / 2;
+    const pk = acPeaks, comp = v => v >= 0 ? Math.pow(v, 0.7) : -Math.pow(-v, 0.7);
+    ctx.fillStyle = cBorder; ctx.fillRect(0, mid, vw, 1);
+    let lastFill = '';
+    for(let x = 0; x < vw; x++){
+      const b0 = Math.floor((sl + x) / pps * pk.perSec); if(b0 >= pk.n) break;
+      const b1 = Math.min(pk.n, Math.max(b0 + 1, Math.ceil((sl + x + 1) / pps * pk.perSec)));
+      let lo = 0, hi = 0;
+      for(let b = Math.max(0, b0); b < b1; b++){ if(pk.min[b] < lo) lo = pk.min[b]; if(pk.max[b] > hi) hi = pk.max[b]; }
+      const fs = x < phx ? cAcc : cDim; if(fs !== lastFill){ ctx.fillStyle = fs; lastFill = fs; }
+      const y0 = mid - comp(hi) * amp, y1 = mid - comp(lo) * amp;
+      ctx.fillRect(x, y0, 1, Math.max(1, y1 - y0));
+    }
+
+    // beat ticks, bar lines and bar numbers
+    ctx.font = '10px "JetBrains Mono", monospace'; ctx.textBaseline = 'top'; ctx.textAlign = 'left';
+    const bt = r.beatTimes;
+    const stepPx = bt.length > 1 ? (bt[bt.length-1] - bt[0]) / (bt.length - 1) * pps : 0;
+    if(stepPx >= 9){
+      ctx.fillStyle = cBorder;
+      for(let i = 0; i < bt.length; i++){ const x = bt[i] * pps - sl; if(x < -1) continue; if(x > vw) break; ctx.fillRect(Math.round(x), 12, 1, 6); }
+    }
+    const barPx = acBars.length > 1 ? (acBars[acBars.length-1].t - acBars[0].t) / (acBars.length - 1) * pps : 60;
+    let every = 1; while(every * barPx < 34 && every < 64) every *= 2;
+    for(let i = 0; i < acBars.length; i++){
+      const bar = acBars[i], x = Math.round(bar.t * pps - sl);
+      if(x < -1) continue; if(x > vw) break;
+      ctx.fillStyle = cBorder; ctx.fillRect(x, 10, 1, H - 10);
+      if(bar.n >= 1 && (bar.n - 1) % every === 0){ ctx.fillStyle = cDim; ctx.fillText(String(bar.n), x + 3, 1); }
+    }
+
+    // chord boxes, coloured by degree in the key
+    const tonic = (r.key.minor ? r.key.r + 3 : r.key.r) % 12;
+    ctx.font = 'bold 13px "JetBrains Mono", monospace'; ctx.textBaseline = 'middle';
+    for(let i = 0; i < r.segs.length; i++){
+      const sg = r.segs[i];
+      if(sg.endSec < t0) continue; if(sg.startSec > t1) break;
+      const x0 = sg.startSec * pps - sl, x1 = sg.endSec * pps - sl, w = x1 - x0;
+      const col = intervalColor(AC_DEG[((sg.root - tonic) % 12 + 12) % 12]), fill = acResolve(col.fill), isAct = (i === act);
+      ctx.globalAlpha = isAct ? 1 : 0.28; ctx.fillStyle = fill; ctx.fillRect(x0 + 1, AC_CHORD_Y, Math.max(1, w - 2), AC_CHORD_H);
+      ctx.globalAlpha = 1; ctx.strokeStyle = fill; ctx.lineWidth = isAct ? 2 : 1; ctx.strokeRect(x0 + 1.5, AC_CHORD_Y + 0.5, Math.max(1, w - 3), AC_CHORD_H - 1);
+      if(w > 16){
+        const name = acChordName(sg), tw = ctx.measureText(name).width;
+        ctx.save(); ctx.beginPath(); ctx.rect(x0 + 2, AC_CHORD_Y, w - 4, AC_CHORD_H); ctx.clip();
+        ctx.fillStyle = isAct ? col.text : cText;
+        const tx = Math.min(Math.max(x0 + 7, 7), x1 - tw - 5);      // label stays in view while its box scrolls past
+        ctx.fillText(name, Math.max(tx, x0 + 5), AC_CHORD_Y + AC_CHORD_H / 2);
+        ctx.restore();
+      }
+    }
+
+    // playhead
+    if(phx >= 0 && phx <= vw){
+      ctx.fillStyle = cText; ctx.fillRect(Math.round(phx) - 1, 0, 2, H);
+      ctx.beginPath(); ctx.moveTo(phx - 5, 0); ctx.lineTo(phx + 5, 0); ctx.lineTo(phx, 7); ctx.closePath(); ctx.fill();
+    }
+  }
+
+  // keep the playhead on screen while playing (jumps a page at a time); pauses briefly after the user scrolls by hand
+  function acFollow(force){
+    const a = acEl.Audio;
+    if(!force){ if(a.paused) return; if(Date.now() - acLastUserScroll < 2500) return; }
+    const sc = acEl.VizScroll, vw = sc.clientWidth; if(!vw) return;
+    const x = a.currentTime * acPps - sc.scrollLeft;
+    if(x > vw * 0.85 || x < 0) acScrollTo(a.currentTime * acPps - vw * 0.15);
+  }
+  function acTick(){
+    acRaf = 0;
+    if(!acResult || !acResult.segs) return;
+    acFollow(false); acUpdateActive(); acVizDraw();
+    if(!acEl.Audio.paused && !acEl.Audio.ended) acRaf = requestAnimationFrame(acTick);
+  }
+  function acKick(){ if(!acRaf) acRaf = requestAnimationFrame(acTick); }
+
+  function acSend(){
+    const r = acResult;
+    if(!r || r.error) return;
+    const nBeats = parseInt(acEl.Bpb.value) || 4;
+    const maxBars = parseInt(barsInput.max) || 200, maxBeats = maxBars*nBeats;
+    let truncated = false;
+    const notes = [];
+    const perBeat = acEl.Blocks.value === 'beat';
+    function addBlock(s, from, to){
+      if(from >= maxBeats){ truncated = true; return; }
+      let len = to - from; if(from + len > maxBeats){ len = maxBeats - from; truncated = true; }
+      notes.push({ id: notes.length+1, start: Math.round(from*STEPS_PER_BEAT), length: Math.max(1, Math.round(len*STEPS_PER_BEAT)),
+                   root: noteNames[s.root], quality: AC_TYPES[s.type].seq, octave: 'mid' });
+    }
+    r.segs.forEach(s=>{
+      const end = s.startBeat + s.lenBeats;
+      if(!perBeat){ addBlock(s, s.startBeat, end); return; }
+      let pos = s.startBeat;                                   // cut at whole-beat boundaries so no block is longer than one beat
+      while(pos < end - 1e-9){ const next = Math.min(end, Math.floor(pos + 1e-9) + 1); addBlock(s, pos, next); pos = next; }
+    });
+    if(seqRoll.getNotes().length && !confirm('Replace the chords currently in the Chord Sequencer with these ' + notes.length + '?')) return;
+    stopSequence(); stopAllSustained();
+    let bpm = Math.round(r.bpm*10)/10, bpmNote = '';
+    if(bpm > 240){ bpmNote = ' The detected tempo (' + Math.round(bpm) + ' BPM) is above the sequencer\'s 240 limit, so it was set to 240 — try "Half-time".'; bpm = 240; }
+    else if(bpm < 30){ bpmNote = ' The detected tempo (' + Math.round(bpm) + ' BPM) is below the sequencer\'s 30 limit, so it was set to 30 — try "Double-time".'; bpm = 30; }
+    const keyTonic = noteNames[(r.key.minor ? r.key.r + 3 : r.key.r) % 12];
+    bpmInput.value = bpm;
+    ensureOption(beatsPerBarSel, nBeats); beatsPerBarSel.value = String(nBeats);
+    barsInput.value = Math.max(1, Math.min(maxBars, Math.ceil(Math.min(r.totalBeats, maxBeats)/nBeats)));
+    rootKeySel.value = keyTonic;
+    updateSigBadge();
+    seqRoll.setNotes(notes);
+    acEl.SendNote.textContent = 'Sent ' + notes.length + (perBeat ? ' beat-length chord blocks' : ' chords') + ' — tempo ' + bpm + ' BPM, key set to ' + keyTonic + '.' + bpmNote + (truncated ? ' (Truncated at ' + maxBars + ' bars.)' : '');
+    activateSection('sound'); activateMode('sequencer');
+  }
+
+  acEl.Pick.addEventListener('click', ()=> acEl.File.click());
+  acEl.File.addEventListener('change', (e)=>{
+    const f = e.target.files[0];
+    e.target.value = '';
+    if(f) acAnalyzeFile(f);
+  });
+  [acEl.Vocab, acEl.Sens, acEl.Feel, acEl.Grid, acEl.Detail, acEl.Snap].forEach(el=> el.addEventListener('change', acRedecode));
+  acEl.Chords.addEventListener('input', ()=>{ clearTimeout(acRedoTimer); acRedoTimer = setTimeout(acRedecode, 350); });
+  acEl.Bpb.addEventListener('change', acRedecode);
+  acEl.FixedChk.addEventListener('change', ()=>{
+    const on = acEl.FixedChk.checked;
+    acEl.FixedBpm.disabled = !on; acEl.Feel.disabled = on; acEl.Grid.disabled = on;
+    if(on && acFeat && !acEl.FixedBpm.value) acEl.FixedBpm.value = Math.round(acFeat.bpm*10)/10;
+    acRedecode();
+  });
+  [acEl.FixedBpm, acEl.StartSec].forEach(el=> el.addEventListener('input', ()=>{ clearTimeout(acRedoTimer); acRedoTimer = setTimeout(acRedecode, 250); }));
+  acEl.SendBtn.addEventListener('click', acSend);
+  acEl.Results.addEventListener('click', (e)=>{
+    const chip = e.target.closest('.ac-chip');
+    if(!chip || !acResult || !acResult.segs) return;
+    const s = acResult.segs[parseInt(chip.dataset.i)];
+    if(!s) return;
+    acEl.Audio.currentTime = s.startSec;
+    acEl.Audio.play().catch(()=>{});
+  });
+  acEl.Audio.addEventListener('timeupdate', acUpdateActive);
+  acEl.Audio.addEventListener('play', acKick);
+  ['pause','ended','seeked'].forEach(ev => acEl.Audio.addEventListener(ev, ()=>{
+    acUpdateActive(); acFollow(true); acVizDraw();
+  }));
+  acEl.VizScroll.addEventListener('scroll', ()=>{
+    if(acExpectScroll !== null && Math.abs(acEl.VizScroll.scrollLeft - acExpectScroll) < 2) acExpectScroll = null;
+    else acLastUserScroll = Date.now();
+    acVizDraw();
+  }, { passive: true });
+  acEl.VizScroll.addEventListener('wheel', (e)=>{
+    if(!(e.ctrlKey || e.metaKey)) return;
+    e.preventDefault();
+    const rect = acEl.VizScroll.getBoundingClientRect();
+    acLastUserScroll = Date.now();
+    acSetZoom(acPps * (e.deltaY < 0 ? 1.25 : 0.8), e.clientX - rect.left);
+  }, { passive: false });
+  acEl.ZoomIn.addEventListener('click', ()=> acSetZoom(acPps * 1.5));
+  acEl.ZoomOut.addEventListener('click', ()=> acSetZoom(acPps / 1.5));
+  acEl.ZoomFit.addEventListener('click', ()=> acSetZoom(0));
+  acEl.VizCanvas.addEventListener('click', (e)=>{
+    if(!acResult || !acResult.segs || !acFeat) return;
+    const rect = acEl.VizCanvas.getBoundingClientRect(), x = e.clientX - rect.left, y = e.clientY - rect.top;
+    let t = (acEl.VizScroll.scrollLeft + x) / acPps;
+    if(y >= AC_CHORD_Y && y < AC_CHORD_Y + AC_CHORD_H){ const i = acSegAt(t); if(i >= 0) t = acResult.segs[i].startSec; }
+    acEl.Audio.currentTime = Math.max(0, Math.min(t, acFeat.duration));
+    acLastUserScroll = 0;
+    acEl.Audio.play().catch(()=>{});
+    acUpdateActive(); acVizDraw();
+  });
+  if(typeof ResizeObserver !== 'undefined') new ResizeObserver(()=> acVizDraw()).observe(acEl.VizScroll);
+  else window.addEventListener('resize', acVizDraw);
+
+
+  // ---------------- YouTube Loop ----------------
+  // 'var' (not let/const) for state touched by ytStopAll(), which activateMode() can call at any time.
+  var YT_KEY = 'trackmaker_yt_recent', YT_MAX = 5;
+  var ytPlayer = null, ytPlayerPromise = null, ytApiPromise = null, ytVideoId = null, ytTitleStr = '';
+  var ytA = null, ytB = null, ytRate = 1, ytPendingRate = null, ytPollId = 0, ytCounting = false, ytCountTimers = [];
+  var ytSaveTimer = 0, ytTaps = [], ytLastWrap = 0, ytCtx = null;
+  const yt = {};
+  ['Url','LoadBtn','Error','Main','Title','Host','Bar','Region','MarkA','MarkB','Head','Time','Dur','CountDisp','LoopBtn','PlayLoopBtn','LoopOn','AIn','BIn','ANeg','APos','BNeg','BPos','ClearBtn','Rate','RatePreset','RateM5','RateM1','RateP1','RateP5','RateReset','RateNote','Count','CountBpm','Tap','CountWhen','Vol','Recent'].forEach(k=>{
+    yt[k] = document.getElementById('yt' + k);
+  });
+
+  function ytStopAll(){
+    (ytCountTimers || []).forEach(clearTimeout); ytCountTimers = []; ytCounting = false;
+    if(ytPlayer && ytPlayer.pauseVideo){ try{ ytPlayer.pauseVideo(); }catch(e){} }
+  }
+
+  // ----- helpers -----
+  function ytParseId(str){
+    str = String(str || '').trim();
+    if(/^[\w-]{11}$/.test(str)) return str;
+    try{
+      const u = new URL(/^https?:\/\//i.test(str) ? str : 'https://' + str);
+      const h = u.hostname.replace(/^(www|m)\./, '');
+      if(h === 'youtu.be'){ const id = u.pathname.slice(1).split('/')[0]; if(/^[\w-]{11}$/.test(id)) return id; }
+      if(/(^|\.)youtube(-nocookie)?\.com$/.test(h)){
+        const v = u.searchParams.get('v'); if(v && /^[\w-]{11}$/.test(v)) return v;
+        const m = u.pathname.match(/^\/(?:embed|shorts|live|v)\/([\w-]{11})/); if(m) return m[1];
+      }
+    }catch(e){}
+    return null;
+  }
+  function ytFmt(t){
+    if(t === null || t === undefined || !isFinite(t)) return '';
+    const h = Math.max(0, Math.round(t * 100)), m = Math.floor(h / 6000), sec = (h % 6000) / 100;
+    return m + ':' + sec.toFixed(2).padStart(5, '0');
+  }
+  // '' -> null (clear), garbage -> NaN, otherwise seconds. Accepts 83.45, 1:23.45, 1:01:23.45
+  function ytParseTime(str){
+    str = String(str || '').trim().replace(',', '.');
+    if(!str) return null;
+    const parts = str.split(':'); if(parts.length > 3) return NaN;
+    let total = 0;
+    for(let i = 0; i < parts.length; i++){
+      const p = parts[i].trim();
+      if(!/^(\d+(\.\d*)?|\.\d+)$/.test(p)) return NaN;
+      if(i < parts.length - 1 && p.indexOf('.') >= 0) return NaN;
+      total = total * 60 + parseFloat(p);
+    }
+    return total;
+  }
+  function ytDuration(){ try{ return (ytPlayer && ytPlayer.getDuration && ytPlayer.getDuration()) || 0; }catch(e){ return 0; } }
+  function ytNow(){ try{ return ytPlayer.getCurrentTime() || 0; }catch(e){ return 0; } }
+  function ytLoopActive(){ return yt.LoopOn.checked && ytA !== null && ytB !== null && ytB > ytA; }
+
+  // ----- YouTube API -----
+  function ytLoadApi(){
+    if(window.YT && window.YT.Player) return Promise.resolve();
+    if(ytApiPromise) return ytApiPromise;
+    ytApiPromise = new Promise((resolve, reject)=>{
+      const prev = window.onYouTubeIframeAPIReady;
+      let settled = false;
+      const fail = (msg)=>{ if(settled) return; settled = true; ytApiPromise = null; reject(new Error(msg)); };
+      window.onYouTubeIframeAPIReady = ()=>{ if(typeof prev === 'function') prev(); if(!settled){ settled = true; resolve(); } };
+      const sc = document.createElement('script');
+      sc.src = 'https://www.youtube.com/iframe_api';
+      sc.onerror = ()=> fail('Could not load the YouTube player — youtube.com may be blocked on this network.');
+      document.head.appendChild(sc);
+      setTimeout(()=>{ if(!(window.YT && window.YT.Player)) fail('Timed out loading the YouTube player. Check your connection, or whether youtube.com is blocked on this network.'); }, 15000);
+    });
+    return ytApiPromise;
+  }
+  function ytEnsurePlayer(videoId){
+    if(ytPlayerPromise) return ytPlayerPromise;
+    ytPlayerPromise = ytLoadApi().then(()=> new Promise(resolve=>{
+      const vars = { playsinline: 1, rel: 0, modestbranding: 1 };
+      if(/^https?:$/.test(location.protocol)) vars.origin = location.origin;
+      ytPlayer = new YT.Player('ytHost', {
+        videoId: videoId, playerVars: vars,
+        events: { onReady: ()=> resolve(ytPlayer), onStateChange: ytOnState, onPlaybackRateChange: ytOnRate, onError: ytOnError }
+      });
+    })).catch(err=>{ ytPlayerPromise = null; throw err; });
+    return ytPlayerPromise;
+  }
+  function ytOnError(e){
+    const code = e && e.data, msgs = {
+      2: 'That does not look like a valid YouTube video.',
+      5: 'The player hit an HTML5 playback error — try again.',
+      100: 'Video not found — it may be private or removed.',
+      101: 'The video\'s owner does not allow it to be played outside YouTube.',
+      150: 'The video\'s owner does not allow it to be played outside YouTube.',
+      153: 'YouTube refused to play the video here. Embedded playback needs the page to be opened over https (for example from GitHub Pages), not from a local file.'
+    };
+    yt.Error.textContent = msgs[code] || ('YouTube player error' + (code !== undefined ? ' (' + code + ')' : '') + '.');
+  }
+
+  // ----- player events -----
+  function ytOnState(e){
+    const S = YT.PlayerState, st = e.data;
+    if(st === S.PLAYING){
+      if(ytCounting) ytCancelCount();                         // the user pressed play themselves during a count-in
+      if(ytPendingRate !== null){ const want = ytPendingRate; try{ ytPlayer.setPlaybackRate(want); }catch(_){} ytPendingRate = null; clearTimeout(ytRateCheck); ytRateCheck = setTimeout(()=> ytVerifyRate(want), 400); }
+      ytRefreshInfo(); ytStartPoll();
+    } else if(st === S.PAUSED || st === S.CUED){
+      if(st === S.CUED) ytRefreshInfo();
+      ytStopPoll();
+    } else if(st === S.ENDED){
+      ytStopPoll();
+      if(ytLoopActive()) ytWrap();
+    }
+  }
+  function ytOnRate(){
+    try{ ytRate = ytPlayer.getPlaybackRate(); }catch(e){ return; }
+    ytRenderRate(); ytSaveSoon();
+  }
+  function ytRefreshInfo(){
+    try{
+      const d = ytPlayer.getVideoData && ytPlayer.getVideoData();
+      if(d && d.title && d.video_id === ytVideoId && d.title !== ytTitleStr){ ytTitleStr = d.title; yt.Title.textContent = d.title; clearTimeout(ytSaveTimer); ytSave(false); }
+    }catch(e){}
+    ytRenderRate(); ytRenderLoop(); ytTick(); ytSaveSoon();
+  }
+  var YT_PRESETS = [25, 50, 75, 80, 85, 90, 95, 100, 110, 125, 150, 200], ytRateCheck = 0;
+  function ytPct(r){ return Math.round(r * 1000) / 10; }
+  function ytRenderRate(){
+    const p = ytPct(ytRate);
+    if(document.activeElement !== yt.Rate) yt.Rate.value = String(p);
+    yt.RatePreset.value = YT_PRESETS.indexOf(p) >= 0 ? String(p) : 'custom';
+  }
+  // anything from 25% to 200%; YouTube may snap unusual values on some videos, so the speed it really used is read back
+  function ytSetRate(r){
+    if(!ytPlayer || !isFinite(r)) return;
+    r = Math.max(0.25, Math.min(2, Math.round(r * 1000) / 1000));
+    ytRate = r; ytPendingRate = r; yt.RateNote.textContent = '';
+    try{ ytPlayer.setPlaybackRate(r); }catch(e){}
+    ytRenderRate(); ytSaveSoon();
+    clearTimeout(ytRateCheck); ytRateCheck = setTimeout(()=> ytVerifyRate(r), 250);
+  }
+  function ytVerifyRate(want){
+    let got, st;
+    try{ got = ytPlayer.getPlaybackRate(); st = ytPlayer.getPlayerState(); }catch(e){ return; }
+    if(st !== YT.PlayerState.PLAYING && st !== YT.PlayerState.PAUSED) return;   // not started yet: applied once it plays
+    if(Math.abs(got - want) > 0.004){
+      ytRate = got; ytPendingRate = null; ytRenderRate(); ytSaveSoon();
+      yt.RateNote.textContent = 'YouTube ran this video at ' + ytPct(got) + '% instead of ' + ytPct(want) + '% — it only allows certain speeds for this video.';
+    } else { yt.RateNote.textContent = ''; }
+  }
+  // "95", "95%", "0.95" and "1.1" are all understood (small numbers are taken as multipliers)
+  function ytParseRate(str){
+    const v = parseFloat(String(str || '').replace('%', '').replace(',', '.'));
+    if(!isFinite(v) || v <= 0) return NaN;
+    return (v < 5 ? v : v / 100);
+  }
+
+  // ----- polling & looping -----
+  function ytTick(){
+    if(!ytPlayer || !ytPlayer.getCurrentTime) return;
+    const t = ytNow(), dur = ytDuration();
+    yt.Time.textContent = ytFmt(t); yt.Dur.textContent = ytFmt(dur);
+    if(dur > 0) yt.Head.style.left = Math.min(100, t / dur * 100) + '%';
+    if(!ytCounting && ytLoopActive() && t >= ytB) ytWrap();
+  }
+  function ytStartPoll(){ if(!ytPollId) ytPollId = setInterval(ytTick, 30); }
+  function ytStopPoll(){ if(ytPollId){ clearInterval(ytPollId); ytPollId = 0; } ytTick(); }
+  function ytWrap(){
+    const now = performance.now();
+    if(now - ytLastWrap < 400) return;                        // a seek takes a moment to show up in getCurrentTime
+    ytLastWrap = now;
+    if(parseInt(yt.Count.value) > 0 && yt.CountWhen.value === 'every') ytCountIn();
+    else { try{ ytPlayer.seekTo(ytA, true); if(ytPlayer.getPlayerState() !== YT.PlayerState.PLAYING) ytPlayer.playVideo(); }catch(e){} }
+  }
+
+  // ----- count-in -----
+  // the count-in has its own small audio context (created on a button press so the browser allows it); it does not touch the sequencer's engine
+  function ytAudio(){
+    try{
+      if(!ytCtx) ytCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if(ytCtx.state === 'suspended') ytCtx.resume();
+    }catch(e){ return null; }
+    return ytCtx;
+  }
+  function ytClick(time, accent){
+    const o = ytCtx.createOscillator(), g = ytCtx.createGain();
+    o.type = 'triangle'; o.frequency.value = accent ? 1200 : 880;
+    const v = Math.max(0.01, parseFloat(yt.Vol.value) || 0.7) * (accent ? 1 : 0.75);
+    g.gain.setValueAtTime(v, time); g.gain.exponentialRampToValueAtTime(0.001, time + 0.07);
+    o.connect(g); g.connect(ytCtx.destination); o.start(time); o.stop(time + 0.09);
+  }
+  function ytCancelCount(){
+    ytCountTimers.forEach(clearTimeout); ytCountTimers = []; ytCounting = false; yt.CountDisp.textContent = '';
+  }
+  // pauses, jumps to A, clicks N beats at the song tempo (scaled by the playback speed), then plays
+  function ytCountIn(){
+    const beats = parseInt(yt.Count.value) || 0;
+    ytCancelCount();
+    const startAt = ytA !== null ? ytA : ytNow();
+    if(beats <= 0){ try{ ytPlayer.seekTo(startAt, true); ytPlayer.playVideo(); }catch(e){} return; }
+    const bpm = Math.max(30, Math.min(300, parseFloat(yt.CountBpm.value) || 100)), spb = 60 / (bpm * (ytRate || 1));
+    ytCounting = true;
+    try{ ytPlayer.pauseVideo(); ytPlayer.seekTo(startAt, true); }catch(e){}
+    if(!ytAudio()){ ytCounting = false; try{ ytPlayer.seekTo(startAt, true); ytPlayer.playVideo(); }catch(e){} return; }   // no Web Audio: skip the count-in
+    const t0 = ytCtx.currentTime + 0.08;
+    for(let i = 0; i < beats; i++){
+      ytClick(t0 + i * spb, i === 0);
+      ytCountTimers.push(setTimeout(()=>{ yt.CountDisp.textContent = String(i + 1); }, 80 + i * spb * 1000));
+    }
+    ytCountTimers.push(setTimeout(()=>{
+      ytCounting = false; yt.CountDisp.textContent = ''; ytCountTimers = []; ytLastWrap = performance.now();
+      try{ ytPlayer.playVideo(); }catch(e){}
+    }, 80 + beats * spb * 1000));
+  }
+
+  // ----- loop points UI -----
+  function ytRenderLoop(){
+    yt.LoopBtn.textContent = ytA === null ? '🔁 Loop: set A' : ytB === null ? '🔁 Loop: set B' : '🔁 Loop: clear';
+    if(document.activeElement !== yt.AIn) yt.AIn.value = ytA === null ? '' : ytFmt(ytA);
+    if(document.activeElement !== yt.BIn) yt.BIn.value = ytB === null ? '' : ytFmt(ytB);
+    const dur = ytDuration(), pct = v => Math.max(0, Math.min(100, v / dur * 100)) + '%';
+    yt.MarkA.style.display = (dur > 0 && ytA !== null) ? 'block' : 'none';
+    yt.MarkB.style.display = (dur > 0 && ytB !== null) ? 'block' : 'none';
+    if(dur > 0 && ytA !== null) yt.MarkA.style.left = pct(ytA);
+    if(dur > 0 && ytB !== null) yt.MarkB.style.left = pct(ytB);
+    const both = dur > 0 && ytA !== null && ytB !== null && ytB > ytA;
+    yt.Region.style.display = both ? 'block' : 'none';
+    if(both){ yt.Region.style.left = pct(ytA); yt.Region.style.width = (Math.min(100, ytB / dur * 100) - Math.min(100, ytA / dur * 100)) + '%'; }
+  }
+  function ytLoopButton(){
+    if(!ytPlayer) return;
+    ytAudio();
+    const t = ytNow();
+    yt.Error.textContent = '';
+    if(ytA === null){ ytA = t; ytB = null; }
+    else if(ytB === null){
+      if(t <= ytA + 0.05){ yt.Error.textContent = 'B has to come after A — play on a little, then press Loop again.'; return; }
+      ytB = t;
+    } else { ytA = null; ytB = null; }
+    ytRenderLoop(); ytSaveSoon();
+  }
+  function ytCommitPoint(which){
+    const inp = which === 'a' ? yt.AIn : yt.BIn, v = ytParseTime(inp.value);
+    yt.Error.textContent = '';
+    if(Number.isNaN(v)){ yt.Error.textContent = 'Couldn\'t read that time — use minutes:seconds, like 1:23.45.'; ytRenderLoop(); return; }
+    const dur = ytDuration(), val = (v === null) ? null : (dur > 0 ? Math.min(v, dur) : v);
+    const a = which === 'a' ? val : ytA;
+    let b = which === 'b' ? val : ytB;
+    if(a !== null && b !== null && b <= a){
+      if(which === 'b'){ yt.Error.textContent = 'B has to be after A.'; ytRenderLoop(); return; }
+      b = null; yt.Error.textContent = 'A is now after the old B, so B was cleared — enter a new B.';   // moving the whole section: set A first, then B
+    }
+    ytA = a; ytB = b; ytRenderLoop(); ytSaveSoon();
+  }
+  function ytNudge(which, d){
+    const cur = which === 'a' ? ytA : ytB; if(cur === null) return;
+    const dur = ytDuration(), val = Math.max(0, Math.round((cur + d) * 100) / 100), cl = dur > 0 ? Math.min(val, dur) : val;
+    const a = which === 'a' ? cl : ytA, b = which === 'b' ? cl : ytB;
+    if(a !== null && b !== null && b <= a) return;
+    ytA = a; ytB = b; ytRenderLoop(); ytSaveSoon();
+  }
+
+  // ----- recent videos -----
+  function ytReadList(){
+    try{ const a = JSON.parse(localStorage.getItem(YT_KEY) || '[]'); return Array.isArray(a) ? a.filter(x=> x && typeof x.id === 'string').slice(0, YT_MAX) : []; }
+    catch(e){ return []; }
+  }
+  function ytWriteList(list){ try{ localStorage.setItem(YT_KEY, JSON.stringify(list.slice(0, YT_MAX))); }catch(e){} }
+  function ytSettings(){
+    return { id: ytVideoId, title: ytTitleStr, a: ytA, b: ytB, rate: ytRate, loopOn: yt.LoopOn.checked,
+             countBeats: parseInt(yt.Count.value) || 0, countBpm: parseFloat(yt.CountBpm.value) || 100, countWhen: yt.CountWhen.value, ts: Date.now() };
+  }
+  // force = true when a video is loaded (adds it); otherwise only updates a video that is still in the list,
+  // so a deleted entry stays deleted until the video is loaded again
+  function ytSave(force){
+    if(!ytVideoId) return;
+    const list = ytReadList();
+    if(!force && !list.some(x=> x.id === ytVideoId)) return;
+    const rest = list.filter(x=> x.id !== ytVideoId);
+    rest.unshift(ytSettings());
+    ytWriteList(rest); ytRenderRecent();
+  }
+  function ytSaveSoon(){ clearTimeout(ytSaveTimer); ytSaveTimer = setTimeout(()=> ytSave(false), 300); }
+  function ytRenderRecent(){
+    const list = ytReadList(); yt.Recent.innerHTML = '';
+    if(!list.length){ const h = document.createElement('div'); h.className = 'hint'; h.textContent = 'No videos yet — load one above and it will appear here.'; yt.Recent.appendChild(h); return; }
+    list.forEach(en=>{
+      const row = document.createElement('div'); row.className = 'yt-rec';
+      const main = document.createElement('div'); main.className = 'yt-rec-main' + (en.id === ytVideoId ? ' current' : ''); main.dataset.id = en.id;
+      const t = document.createElement('div'); t.className = 'yt-rec-t'; t.textContent = en.title || ('youtu.be/' + en.id);
+      const bits = [];
+      if(en.a !== null && en.a !== undefined && en.b !== null && en.b !== undefined) bits.push('loop ' + ytFmt(en.a) + ' → ' + ytFmt(en.b));
+      else if(en.a !== null && en.a !== undefined) bits.push('A ' + ytFmt(en.a));
+      if(en.rate && en.rate !== 1) bits.push(ytPct(en.rate) + '% speed');
+      if(en.countBeats > 0) bits.push('count-in ' + en.countBeats);
+      const sm = document.createElement('div'); sm.className = 'yt-rec-s'; sm.textContent = bits.length ? bits.join(' · ') : 'no loop set';
+      main.appendChild(t); main.appendChild(sm);
+      const del = document.createElement('button'); del.type = 'button'; del.className = 'yt-rec-del'; del.dataset.del = en.id; del.title = 'Remove from the list'; del.textContent = '✕';
+      row.appendChild(main); row.appendChild(del); yt.Recent.appendChild(row);
+    });
+  }
+
+  // ----- loading a video -----
+  async function ytLoad(id, saved){
+    yt.Error.textContent = '';
+    clearTimeout(ytSaveTimer); ytSave(false);                  // keep the video we are leaving up to date
+    ytStopAll(); ytCancelCount();
+    ytVideoId = id; ytTitleStr = (saved && saved.title) || '';
+    ytA = (saved && typeof saved.a === 'number') ? saved.a : null;
+    ytB = (saved && typeof saved.b === 'number') ? saved.b : null;
+    ytRate = (saved && saved.rate) || 1; ytPendingRate = ytRate !== 1 ? ytRate : null;
+    if(saved){
+      yt.LoopOn.checked = saved.loopOn !== false;
+      if(saved.countBeats !== undefined) yt.Count.value = String(saved.countBeats);
+      if(saved.countBpm) yt.CountBpm.value = saved.countBpm;
+      if(saved.countWhen) yt.CountWhen.value = saved.countWhen;
+    }
+    yt.Url.value = 'https://youtu.be/' + id;
+    yt.Main.style.display = '';
+    yt.Title.textContent = ytTitleStr || 'Loading…';
+    yt.Head.style.left = '0%'; yt.Time.textContent = '0:00.00'; yt.Dur.textContent = '';
+    ytRenderLoop(); ytRenderRate(); yt.RateNote.textContent = '';
+    try{
+      if(ytPlayer && ytPlayer.cueVideoById){ ytPlayer.cueVideoById(id); }
+      else { await ytEnsurePlayer(id); }
+    }catch(err){
+      yt.Error.textContent = err.message || String(err);
+      if(!ytPlayer) yt.Main.style.display = 'none';
+      return;
+    }
+    ytSave(true);
+  }
+  function ytLoadFromInput(){
+    ytAudio();
+    const id = ytParseId(yt.Url.value);
+    if(!id){ yt.Error.textContent = 'That doesn\'t look like a YouTube link — paste the address of a video (youtube.com/watch?v=… or youtu.be/…).'; return; }
+    if(id === ytVideoId && ytPlayer){ yt.Error.textContent = ''; return; }
+    ytLoad(id, null);
+  }
+
+  // ----- events -----
+  yt.LoadBtn.addEventListener('click', ytLoadFromInput);
+  yt.Url.addEventListener('keydown', e=>{ if(e.key === 'Enter'){ e.preventDefault(); ytLoadFromInput(); } });
+  yt.Url.addEventListener('paste', ()=> setTimeout(()=>{ if(ytParseId(yt.Url.value) && !ytPlayer) ytLoadFromInput(); }, 0));
+  yt.LoopBtn.addEventListener('click', ytLoopButton);
+  yt.ClearBtn.addEventListener('click', ()=>{ ytA = null; ytB = null; yt.Error.textContent = ''; ytRenderLoop(); ytSaveSoon(); });
+  yt.PlayLoopBtn.addEventListener('click', ()=>{
+    if(!ytPlayer) return;
+    ytAudio();
+    yt.Error.textContent = '';
+    if(ytA !== null && parseInt(yt.Count.value) > 0){ ytLastWrap = performance.now(); ytCountIn(); }
+    else { try{ if(ytA !== null) ytPlayer.seekTo(ytA, true); ytPlayer.playVideo(); }catch(e){} }
+  });
+  yt.LoopOn.addEventListener('change', ytSaveSoon);
+  [['a', yt.AIn], ['b', yt.BIn]].forEach(([w, el])=>{
+    el.addEventListener('change', ()=> ytCommitPoint(w));
+    el.addEventListener('keydown', e=>{ if(e.key === 'Enter'){ e.preventDefault(); el.blur(); } });
+  });
+  yt.ANeg.addEventListener('click', ()=> ytNudge('a', -0.1)); yt.APos.addEventListener('click', ()=> ytNudge('a', 0.1));
+  yt.BNeg.addEventListener('click', ()=> ytNudge('b', -0.1)); yt.BPos.addEventListener('click', ()=> ytNudge('b', 0.1));
+  yt.Rate.addEventListener('change', ()=>{
+    const r = ytParseRate(yt.Rate.value);
+    if(Number.isNaN(r)){ ytRenderRate(); return; }
+    ytSetRate(r);
+  });
+  yt.Rate.addEventListener('keydown', e=>{ if(e.key === 'Enter'){ e.preventDefault(); yt.Rate.blur(); } });
+  yt.RatePreset.addEventListener('change', ()=>{ if(yt.RatePreset.value !== 'custom') ytSetRate(parseFloat(yt.RatePreset.value) / 100); });
+  [['RateM5', -5], ['RateM1', -1], ['RateP1', 1], ['RateP5', 5]].forEach(([k, d])=> yt[k].addEventListener('click', ()=> ytSetRate(ytRate + d / 100)));
+  yt.RateReset.addEventListener('click', ()=> ytSetRate(1));
+  [yt.Count, yt.CountWhen].forEach(el=> el.addEventListener('change', ytSaveSoon));
+  yt.CountBpm.addEventListener('change', ytSaveSoon);
+  yt.Tap.addEventListener('click', ()=>{
+    const now = performance.now();
+    if(ytTaps.length && now - ytTaps[ytTaps.length - 1] > 2500) ytTaps = [];
+    ytTaps.push(now); if(ytTaps.length > 8) ytTaps.shift();
+    if(ytTaps.length >= 3){
+      const avg = (ytTaps[ytTaps.length - 1] - ytTaps[0]) / (ytTaps.length - 1);
+      const bpm = 60000 / avg / (ytRate || 1);                  // tapped at the current speed -> tempo at 1×
+      if(bpm >= 30 && bpm <= 300){ yt.CountBpm.value = Math.round(bpm * 10) / 10; ytSaveSoon(); }
+    }
+  });
+  yt.Bar.addEventListener('click', e=>{
+    const d = ytDuration(); if(!ytPlayer || !d) return;
+    const r = yt.Bar.getBoundingClientRect();
+    try{ ytPlayer.seekTo(Math.max(0, Math.min(d, (e.clientX - r.left) / r.width * d)), true); }catch(_){}
+    ytTick();
+  });
+  yt.Recent.addEventListener('click', e=>{
+    const del = e.target.closest('.yt-rec-del');
+    if(del){ ytWriteList(ytReadList().filter(x=> x.id !== del.dataset.del)); ytRenderRecent(); return; }
+    const main = e.target.closest('.yt-rec-main'); if(!main) return;
+    const en = ytReadList().find(x=> x.id === main.dataset.id);
+    if(en) ytLoad(en.id, en);
+  });
+  ytRenderRecent();
+
+  // ---------------- Backing Tracks ----------------
+  var BT_KEY = 'trackmaker_backing_v1', BT_HIST_MAX = 20;
+  var bt = { hist: [], sets: [], setId: null, gap: 5, vol: 0.8, cur: null, playing: false, playingSet: false, setIdx: -1, token: 0,
+             gapTimer: 0, gapEnd: 0, gapNext: -1, objUrl: null, ytp: null, spApi: null, spApiP: null, spCtl: null, spPos: 0, spDur: 0, spPaused: true,
+             spLast: null, spWantPlay: false, poll: 0, seeking: false, pending: {}, dbP: null, err: '', status: '', dragId: null };
+  const btE = {};
+  ['Url','AddLink','AddFiles','File','Error','Title','Sub','YtWrap','SpWrap','Prev','Play','Stop','Next','Vol','Seek','Time','Status','Skip','Hist','HistInfo',
+   'SetSel','SetNew','SetRename','SetDel','SetItems','PlaySet','Gap','Mini','MiniTitle','MiniPlay','MiniNext','Audio'].forEach(k=>{ btE[k] = document.getElementById('bt' + k); });
+  const BT_KINDS = { file: 'File', url: 'Link', youtube: 'YouTube', spotify: 'Spotify' };
+
+  function btUid(){ return Math.random().toString(36).slice(2, 10) + Date.now().toString(36); }
+  function btValid(t){ return !!t && typeof t.id === 'string' && Object.prototype.hasOwnProperty.call(BT_KINDS, t.kind); }
+  function btLoadState(){
+    try{
+      const o = JSON.parse(localStorage.getItem(BT_KEY) || '{}');
+      bt.hist = Array.isArray(o.hist) ? o.hist.filter(btValid).slice(0, BT_HIST_MAX) : [];
+      bt.sets = Array.isArray(o.sets) ? o.sets.filter(x=> x && x.id && Array.isArray(x.items)).map(x=> ({ id: String(x.id), name: String(x.name || 'Set list'), items: x.items.filter(btValid) })) : [];
+      bt.setId = o.setId;
+      if(isFinite(o.gap) && o.gap >= 0) bt.gap = o.gap;
+      if(isFinite(o.vol) && o.vol >= 0 && o.vol <= 1) bt.vol = o.vol;
+    }catch(e){}
+    if(!bt.sets.length) bt.sets = [{ id: btUid(), name: 'Set list 1', items: [] }];
+    if(!bt.sets.some(x=> x.id === bt.setId)) bt.setId = bt.sets[0].id;
+  }
+  function btSave(){
+    try{ localStorage.setItem(BT_KEY, JSON.stringify({ hist: bt.hist, sets: bt.sets, setId: bt.setId, gap: bt.gap, vol: bt.vol })); }
+    catch(e){ btErr('Couldn\'t save your list to the browser\'s storage.'); }
+  }
+  function btErr(m){ bt.err = m || ''; btE.Error.textContent = bt.err; }
+  function btCurSet(){ return bt.sets.find(x=> x.id === bt.setId) || bt.sets[0]; }
+  function btAllTracks(){ const a = bt.hist.slice(); bt.sets.forEach(x=> x.items.forEach(t=> a.push(t))); return a; }
+  function btFmt(t){ if(!isFinite(t) || t < 0) t = 0; const m = Math.floor(t / 60), sec = Math.floor(t % 60); return m + ':' + String(sec).padStart(2, '0'); }
+  function btFmtSize(b){ return b >= 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB'; }
+
+  // ----- stored audio files (IndexedDB) -----
+  function btDb(){
+    if(!bt.dbP) bt.dbP = new Promise((res, rej)=>{
+      if(typeof indexedDB === 'undefined'){ rej(new Error('This browser has no local storage for audio files.')); return; }
+      const r = indexedDB.open('trackmaker_backing', 1);
+      r.onupgradeneeded = ()=>{ r.result.createObjectStore('files', { keyPath: 'id' }); };
+      r.onsuccess = ()=> res(r.result);
+      r.onerror = ()=> rej(r.error || new Error('Could not open the browser storage.'));
+    }).catch(err=>{ bt.dbP = null; throw err; });
+    return bt.dbP;
+  }
+  function btIdb(mode, fn){
+    return btDb().then(db=> new Promise((res, rej)=>{
+      const tx = db.transaction('files', mode), req = fn(tx.objectStore('files'));
+      tx.oncomplete = ()=> res(req ? req.result : undefined);
+      tx.onerror = ()=> rej(tx.error || new Error('Storage error'));
+      tx.onabort = ()=> rej(tx.error || new Error('Storage is full or was refused.'));
+    }));
+  }
+  // delete stored files that no history entry or set list uses any more
+  async function btGc(){
+    try{
+      const keys = await btIdb('readonly', st=> st.getAllKeys());
+      const used = new Set(Object.keys(bt.pending));
+      btAllTracks().forEach(t=>{ if(t.fileId) used.add(t.fileId); });
+      for(const k of keys){ if(!used.has(k)) await btIdb('readwrite', st=> st.delete(k)); }
+    }catch(e){}
+  }
+
+  // ----- turning what the user typed into a track -----
+  function btParseSpotify(str){
+    let m = str.match(/^spotify:(track|episode|album|playlist|show|artist):([A-Za-z0-9]+)$/);
+    if(m) return 'spotify:' + m[1] + ':' + m[2];
+    m = str.match(/open\.spotify\.com\/(?:intl-[a-z-]+\/)?(?:embed\/)?(track|episode|album|playlist|show|artist)\/([A-Za-z0-9]+)/i);
+    return m ? 'spotify:' + m[1].toLowerCase() + ':' + m[2] : null;
+  }
+  function btTrackFromInput(str){
+    str = String(str || '').trim();
+    if(!str) return { error: 'Paste a link first.' };
+    if(/^(file:|[a-zA-Z]:[\\/]|\\\\)/.test(str)) return { error: 'A web page can\'t open a file from a typed path (C:\\…, \\\\server\\share\\… or file://). Use "Add local files…" and browse to it instead — network drives work there.' };
+    const sp = btParseSpotify(str);
+    if(sp){ const bits = sp.split(':'); return { track: { id: 'spotify:' + sp, kind: 'spotify', src: sp, title: 'Spotify ' + bits[1] + ' ' + bits[2].slice(0, 6) + '…', autoTitle: true } }; }
+    if(/(^|\/\/|\.)(youtu\.be|youtube\.com|youtube-nocookie\.com)\b/i.test(str)){
+      const id = ytParseId(str);
+      return id ? { track: { id: 'youtube:' + id, kind: 'youtube', src: id, title: 'YouTube video ' + id, autoTitle: true } } : { error: 'That YouTube link doesn\'t point to a single video.' };
+    }
+    if(/^https?:\/\//i.test(str)){
+      try{
+        const u = new URL(str);
+        let name = ''; try{ name = decodeURIComponent(u.pathname.split('/').filter(Boolean).pop() || '').replace(/\.[a-z0-9]{2,5}$/i, ''); }catch(e){}
+        return { track: { id: 'url:' + str, kind: 'url', src: str, title: name || u.hostname } };
+      }catch(e){ return { error: 'That doesn\'t look like a valid link.' }; }
+    }
+    return { error: 'Paste a link starting with https:// (a YouTube or Spotify link, or a direct link to an audio file), or use "Add local files…".' };
+  }
+
+  // ----- history and set lists -----
+  function btTouch(t){
+    const rec = Object.assign({}, t, { lastPlayed: Date.now() });
+    bt.hist = bt.hist.filter(x=> x.id !== t.id); bt.hist.unshift(rec);
+    const dropped = bt.hist.splice(BT_HIST_MAX);
+    btSave(); btRenderHist();
+    if(dropped.length) btGc();
+  }
+  function btSetTitle(id, title, auto){
+    btAllTracks().forEach(t=>{ if(t.id === id){ t.title = title; if(!auto) t.autoTitle = false; } });
+    if(bt.cur && bt.cur.id === id){ bt.cur.title = title; if(!auto) bt.cur.autoTitle = false; }
+    btSave(); btRenderHist(); btRenderSet(); btRenderPlayer();
+  }
+  function btSetInsert(track, idx){
+    const set = btCurSet(), copy = Object.assign({}, track); delete copy.lastPlayed;
+    idx = (idx === undefined || idx > set.items.length) ? set.items.length : Math.max(0, idx);
+    set.items.splice(idx, 0, copy);
+    if(bt.playingSet && idx <= bt.setIdx) bt.setIdx++;
+    btSave(); btRenderSet();
+  }
+  function btSetMove(from, to){
+    const set = btCurSet(); if(from < 0 || from >= set.items.length) return;
+    to = Math.max(0, Math.min(to, set.items.length));
+    if(to > from) to--;
+    if(to === from) return;
+    const [it] = set.items.splice(from, 1); set.items.splice(to, 0, it);
+    btResyncIdx();
+    btSave(); btRenderSet();
+  }
+  function btSetRemove(i){
+    const set = btCurSet(); if(i < 0 || i >= set.items.length) return;
+    set.items.splice(i, 1);
+    if(bt.playingSet && i < bt.setIdx) bt.setIdx--;
+    btSave(); btRenderSet(); btGc();
+  }
+
+  // ----- rendering -----
+  function btBtn(cls, txt, title, data){
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'bt-ib ' + cls; b.textContent = txt; b.title = title;
+    Object.keys(data || {}).forEach(k=>{ b.dataset[k] = data[k]; }); return b;
+  }
+  function btItemRow(t, extra){
+    const row = document.createElement('div'); row.className = 'bt-item'; row.draggable = true;
+    if(extra.num !== undefined){ const n = document.createElement('span'); n.className = 'bt-num'; n.textContent = String(extra.num); row.appendChild(n); }
+    const bd = document.createElement('span'); bd.className = 'bt-badge'; bd.textContent = BT_KINDS[t.kind]; row.appendChild(bd);
+    const tt = document.createElement('span'); tt.className = 'bt-item-t'; tt.textContent = t.title || t.src || t.id;
+    tt.title = (t.title || '') + (t.kind === 'file' && t.size ? '  ·  ' + btFmtSize(t.size) : (t.src ? '  ·  ' + t.src : '')); row.appendChild(tt);
+    return row;
+  }
+  function btRenderHist(){
+    const box = btE.Hist; box.innerHTML = '';
+    if(!bt.hist.length){ const e = document.createElement('div'); e.className = 'bt-empty'; e.textContent = 'Nothing yet — add a link or a file above and it will show up here.'; box.appendChild(e); }
+    bt.hist.forEach(t=>{
+      const row = btItemRow(t, {}); row.dataset.id = t.id;
+      if(bt.cur && bt.cur.id === t.id) row.classList.add('playing');
+      row.appendChild(btBtn('', '▶', 'Play this track', { act: 'play', id: t.id }));
+      row.appendChild(btBtn('', '+', 'Add to the set list', { act: 'add', id: t.id }));
+      row.appendChild(btBtn('', '✎', 'Rename', { act: 'rename', id: t.id }));
+      row.appendChild(btBtn('del', '✕', 'Remove from history', { act: 'del', id: t.id }));
+      box.appendChild(row);
+    });
+    const files = new Map(); btAllTracks().forEach(t=>{ if(t.fileId) files.set(t.fileId, t.size || 0); });
+    let total = 0; files.forEach(v=>{ total += v; });
+    btE.HistInfo.textContent = files.size ? files.size + ' file' + (files.size > 1 ? 's' : '') + ' stored in the browser · ' + btFmtSize(total) : '';
+  }
+  function btRenderSet(){
+    const set = btCurSet(), box = btE.SetItems;
+    btE.SetSel.innerHTML = '';
+    bt.sets.forEach(x=>{ const o = document.createElement('option'); o.value = x.id; o.textContent = x.name + ' (' + x.items.length + ')'; btE.SetSel.appendChild(o); });
+    btE.SetSel.value = set.id;
+    box.innerHTML = '';
+    if(!set.items.length){ const e = document.createElement('div'); e.className = 'bt-empty'; e.textContent = 'Drag tracks here from the history (or press + on a track).'; box.appendChild(e); }
+    set.items.forEach((t, i)=>{
+      const row = btItemRow(t, { num: i + 1 }); row.dataset.i = String(i);
+      if(bt.playingSet && bt.setIdx === i) row.classList.add('playing');
+      row.appendChild(btBtn('', '▶', 'Play the set list from here', { act: 'playfrom', i: i }));
+      row.appendChild(btBtn('', '▲', 'Move up', { act: 'up', i: i }));
+      row.appendChild(btBtn('', '▼', 'Move down', { act: 'down', i: i }));
+      row.appendChild(btBtn('del', '✕', 'Remove from the set list', { act: 'rm', i: i }));
+      box.appendChild(row);
+    });
+    btE.PlaySet.disabled = !set.items.length;
+  }
+  function btRenderPlayer(){
+    const t = bt.cur;
+    btE.Title.textContent = t ? (t.title || t.src) : 'Nothing loaded';
+    let sub = '';
+    if(t){ sub = BT_KINDS[t.kind]; if(bt.playingSet){ sub += ' · set list track ' + (bt.setIdx + 1) + ' of ' + btCurSet().items.length; } }
+    btE.Sub.textContent = sub;
+    btE.YtWrap.style.display = (t && t.kind === 'youtube') ? 'block' : 'none';
+    btE.SpWrap.style.display = (t && t.kind === 'spotify') ? 'block' : 'none';
+    btE.Vol.disabled = !!(t && t.kind === 'spotify');
+    btSyncButtons(); btRenderStatus(); btRenderHist(); btRenderSet(); btUpdateMini();
+  }
+  function btSyncButtons(){
+    const icon = bt.playing ? '⏸' : '▶';
+    btE.Play.textContent = icon; btE.MiniPlay.textContent = icon;
+    const hasSet = btCurSet().items.length > 0;
+    btE.Prev.disabled = !hasSet; btE.Next.disabled = !hasSet;
+  }
+  function btRenderStatus(){
+    let msg = '';
+    if(bt.gapTimer){
+      const set = btCurSet(), nx = set.items[bt.gapNext], left = Math.max(0, Math.ceil((bt.gapEnd - Date.now()) / 1000));
+      msg = 'Next: ' + (nx ? (nx.title || nx.src) : '') + ' in ' + left + ' s';
+    } else if(bt.err){ msg = ''; }
+    else msg = bt.status || '';
+    btE.Status.textContent = msg; btE.Skip.style.display = bt.gapTimer ? '' : 'none';
+    btE.Error.textContent = bt.err;
+  }
+  function btUpdateMini(){
+    if(!btE.Mini) return;
+    const show = !!bt.cur && currentMode !== 'backing';
+    btE.Mini.style.display = show ? 'flex' : 'none';
+    if(show) btE.MiniTitle.textContent = '♪ ' + (bt.cur.title || bt.cur.src);
+  }
+
+  // ----- engines -----
+  function btApplyVol(){
+    try{ btE.Audio.volume = bt.vol; }catch(e){}
+    try{ if(bt.ytp && bt.ytp.setVolume) bt.ytp.setVolume(Math.round(bt.vol * 100)); }catch(e){}
+  }
+  function btPos(){
+    const t = bt.cur; if(!t) return 0;
+    try{
+      if(t.kind === 'youtube') return (bt.ytp && bt.ytp.getCurrentTime()) || 0;
+      if(t.kind === 'spotify') return bt.spPos / 1000;
+    }catch(e){ return 0; }
+    return btE.Audio.currentTime || 0;
+  }
+  function btDur(){
+    const t = bt.cur; if(!t) return 0;
+    try{
+      if(t.kind === 'youtube') return (bt.ytp && bt.ytp.getDuration()) || 0;
+      if(t.kind === 'spotify') return bt.spDur / 1000;
+    }catch(e){ return 0; }
+    const d = btE.Audio.duration; return isFinite(d) ? d : 0;
+  }
+  function btTick(){
+    if(!bt.cur || bt.seeking) return;
+    const p = btPos(), d = btDur();
+    btE.Time.textContent = btFmt(p) + ' / ' + btFmt(d);
+    btE.Seek.value = d > 0 ? String(Math.round(Math.min(1, p / d) * 1000)) : '0';
+  }
+  function btStartPoll(){ if(!bt.poll) bt.poll = setInterval(btTick, 250); }
+  function btStopEngines(){
+    try{ btE.Audio.pause(); }catch(e){}
+    try{ if(bt.ytp && bt.ytp.pauseVideo) bt.ytp.pauseVideo(); }catch(e){}
+    try{ if(bt.spCtl && !bt.spPaused) bt.spCtl.pause(); }catch(e){}
+  }
+  function btPlayErr(err, track){
+    if(!err || err.name === 'AbortError') return;
+    if(err.name === 'NotAllowedError'){ bt.playingSet = false; bt.err = 'The browser blocked automatic playback — press Play to start "' + (track.title || '') + '".'; btRenderStatus(); return; }
+    btFail(err, track);
+  }
+  function btFail(err, track){
+    const msg = (err && err.message) ? err.message : String(err);
+    bt.err = msg; bt.playing = false; btSyncButtons(); btRenderStatus();
+    if(bt.playingSet) btOnEnded();                              // keep the set going; the error stays visible during the pause
+  }
+  // load a track into the player; autoplay starts it straight away
+  async function btLoad(track, autoplay){
+    const tok = ++bt.token;
+    btStopEngines(); btClearGap();
+    bt.err = ''; bt.status = ''; bt.cur = track; bt.playing = false; bt.spLast = null; bt.spPos = 0; bt.spDur = 0; bt.spPaused = true;
+    btTouch(track); btRenderPlayer(); btStartPoll(); btE.Seek.value = '0'; btE.Time.textContent = '0:00 / 0:00';
+    try{
+      if(track.kind === 'file'){
+        const rec = await btIdb('readonly', st=> st.get(track.fileId));
+        if(tok !== bt.token) return;
+        if(!rec || !rec.blob) throw new Error('This file is no longer stored in the browser — add it again with "Add local files…".');
+        if(bt.objUrl) URL.revokeObjectURL(bt.objUrl);
+        bt.objUrl = URL.createObjectURL(rec.blob);
+        btE.Audio.src = bt.objUrl; btApplyVol(); btE.Audio.load();
+        if(autoplay) await btE.Audio.play();
+      } else if(track.kind === 'url'){
+        btE.Audio.src = track.src; btApplyVol(); btE.Audio.load();
+        if(autoplay) await btE.Audio.play();
+      } else if(track.kind === 'youtube'){
+        await btLoadYt(track, autoplay, tok);
+      } else {
+        await btLoadSp(track, autoplay, tok);
+      }
+    }catch(err){ if(tok === bt.token) btPlayErr(err, track); }
+  }
+  btE.Audio.addEventListener('play', ()=>{ if(bt.cur && (bt.cur.kind === 'file' || bt.cur.kind === 'url')){ bt.playing = true; btSyncButtons(); } });
+  btE.Audio.addEventListener('pause', ()=>{ if(bt.cur && (bt.cur.kind === 'file' || bt.cur.kind === 'url')){ bt.playing = false; btSyncButtons(); } });
+  btE.Audio.addEventListener('ended', ()=>{ if(bt.cur && (bt.cur.kind === 'file' || bt.cur.kind === 'url')) btOnEnded(); });
+  btE.Audio.addEventListener('loadedmetadata', btTick);
+  btE.Audio.addEventListener('error', ()=>{
+    if(!btE.Audio.getAttribute('src') || !bt.cur) return;
+    const t = bt.cur;
+    btFail(new Error(t.kind === 'file'
+      ? 'Couldn\'t play this file — the browser may not support its format.'
+      : 'Couldn\'t play this link. Only direct links to audio files (mp3, m4a, wav, ogg, flac…) work; a page such as SoundCloud can\'t be played, and an http:// link may be blocked on an https page.'), t);
+  });
+
+  // YouTube (shares the API loader with the YouTube Loop tab)
+  async function btLoadYt(track, autoplay, tok){
+    await ytLoadApi(); if(tok !== bt.token) return;
+    if(bt.ytp && bt.ytp.cueVideoById){
+      if(autoplay) bt.ytp.loadVideoById(track.src); else bt.ytp.cueVideoById(track.src);
+      btApplyVol(); btYtInfoSoon(); return;
+    }
+    await new Promise(res=>{
+      const vars = { playsinline: 1, rel: 0, modestbranding: 1 };
+      if(/^https?:$/.test(location.protocol)) vars.origin = location.origin;
+      bt.ytp = new YT.Player('btYtHost', { videoId: track.src, playerVars: vars, events: { onReady: ()=> res(), onStateChange: btYtState, onError: btYtError } });
+    });
+    if(tok !== bt.token) return;
+    btApplyVol(); btYtInfoSoon();
+    if(autoplay){ try{ bt.ytp.playVideo(); }catch(e){} }
+  }
+  function btYtInfo(){
+    const t = bt.cur; if(!t || t.kind !== 'youtube' || !t.autoTitle) return;
+    try{ const d = bt.ytp.getVideoData(); if(d && d.title && d.video_id === t.src) btSetTitle(t.id, d.title, true); }catch(e){}
+  }
+  function btYtInfoSoon(){ [600, 2000, 5000].forEach(ms=> setTimeout(btYtInfo, ms)); }
+  function btYtState(e){
+    if(!bt.cur || bt.cur.kind !== 'youtube') return;
+    const S = YT.PlayerState, st = e.data;
+    if(st === S.PLAYING){ bt.playing = true; btApplyVol(); btYtInfo(); }
+    else if(st === S.PAUSED){ bt.playing = false; }
+    else if(st === S.CUED){ bt.playing = false; btYtInfo(); }
+    else if(st === S.ENDED){ bt.playing = false; btSyncButtons(); btOnEnded(); return; }
+    btSyncButtons(); btTick();
+  }
+  function btYtError(e){
+    const code = e && e.data, msgs = {
+      2: 'That YouTube link isn\'t a valid video.', 5: 'The YouTube player hit a playback error.', 100: 'The video wasn\'t found — it may be private or removed.',
+      101: 'The video\'s owner doesn\'t allow it to be played outside YouTube.', 150: 'The video\'s owner doesn\'t allow it to be played outside YouTube.',
+      153: 'YouTube refused to play this here — embedded playback needs the page to be opened over https (for example from GitHub Pages), not from a local file.'
+    };
+    btFail(new Error(msgs[code] || ('YouTube player error' + (code !== undefined ? ' (' + code + ')' : '') + '.')), bt.cur);
+  }
+
+  // Spotify (embedded player; experimental — written from Spotify's iFrame API documentation)
+  function btLoadSpApi(){
+    if(bt.spApi) return Promise.resolve(bt.spApi);
+    if(bt.spApiP) return bt.spApiP;
+    bt.spApiP = new Promise((resolve, reject)=>{
+      let done = false;
+      const fail = m=>{ if(done) return; done = true; bt.spApiP = null; reject(new Error(m)); };
+      window.onSpotifyIframeApiReady = api=>{ if(done) return; done = true; bt.spApi = api; resolve(api); };
+      const sc = document.createElement('script'); sc.src = 'https://open.spotify.com/embed/iframe-api/v1'; sc.async = true;
+      sc.onerror = ()=> fail('Could not load the Spotify player — open.spotify.com may be blocked on this network.');
+      document.head.appendChild(sc);
+      setTimeout(()=> fail('Timed out loading the Spotify player. Check your connection, or whether open.spotify.com is blocked on this network.'), 15000);
+    });
+    return bt.spApiP;
+  }
+  async function btLoadSp(track, autoplay, tok){
+    const api = await btLoadSpApi(); if(tok !== bt.token) return;
+    bt.spWantPlay = !!autoplay;
+    if(bt.spCtl){
+      bt.spCtl.loadUri(track.src);
+      if(autoplay) setTimeout(()=>{ if(bt.spWantPlay && bt.cur === track){ bt.spWantPlay = false; try{ bt.spCtl.play(); }catch(e){} } }, 1500);
+      return;
+    }
+    await new Promise(res=>{
+      api.createController(document.getElementById('btSpHost'), { uri: track.src, width: '100%', height: 152 }, ctl=>{
+        bt.spCtl = ctl;
+        ctl.addListener('ready', ()=>{ if(bt.spWantPlay){ bt.spWantPlay = false; try{ ctl.play(); }catch(e){} } });
+        ctl.addListener('playback_update', ev=> btSpUpdate(ev && ev.data));
+        res();
+      });
+    });
+  }
+  // position/duration arrive in ms; the end of a track is recognised from the update stream (playing near the end, then stopped at the end or back at 0)
+  function btSpUpdate(d){
+    if(!d || !bt.cur || bt.cur.kind !== 'spotify') return;
+    const now = { pos: d.position || 0, dur: d.duration || 0, paused: !!d.isPaused }, prev = bt.spLast;
+    bt.spPos = now.pos; bt.spDur = now.dur; bt.spPaused = now.paused; bt.playing = !now.paused; bt.spLast = now;
+    btSyncButtons(); btTick();
+    if(prev && !prev.paused && now.paused && prev.dur > 0 && prev.pos >= prev.dur - 3000 && (now.pos <= 0 || now.pos >= now.dur - 1000)){
+      bt.playing = false; btSyncButtons(); btOnEnded();
+    }
+  }
+
+  // ----- transport -----
+  function btPlay(){
+    const t = bt.cur; if(!t) return;
+    try{
+      if(t.kind === 'youtube') bt.ytp.playVideo();
+      else if(t.kind === 'spotify') bt.spCtl.togglePlay();
+      else { const p = btE.Audio.play(); if(p && p.catch) p.catch(err=> btPlayErr(err, t)); }
+    }catch(e){}
+  }
+  function btPause(){
+    const t = bt.cur; if(!t) return;
+    try{
+      if(t.kind === 'youtube') bt.ytp.pauseVideo();
+      else if(t.kind === 'spotify') bt.spCtl.togglePlay();
+      else btE.Audio.pause();
+    }catch(e){}
+  }
+  function btToggle(){
+    if(bt.gapTimer){ btSkipGap(); return; }
+    if(!bt.cur){ if(btCurSet().items.length) btPlaySet(0); return; }
+    if(bt.playing) btPause(); else btPlay();
+  }
+  function btStop(){
+    btClearGap(); bt.playingSet = false; bt.status = ''; bt.err = '';
+    const t = bt.cur;
+    if(t){
+      try{
+        if(t.kind === 'youtube'){ bt.ytp.pauseVideo(); bt.ytp.seekTo(0, true); }
+        else if(t.kind === 'spotify'){ if(!bt.spPaused) bt.spCtl.togglePlay(); bt.spCtl.seek(0); }
+        else { btE.Audio.pause(); btE.Audio.currentTime = 0; }
+      }catch(e){}
+    }
+    bt.playing = false; btRenderPlayer(); btTick();
+  }
+  function btSeek(sec){
+    const t = bt.cur; if(!t) return;
+    try{
+      if(t.kind === 'youtube') bt.ytp.seekTo(sec, true);
+      else if(t.kind === 'spotify') bt.spCtl.seek(sec);
+      else btE.Audio.currentTime = sec;
+    }catch(e){}
+  }
+
+  // ----- set list playback -----
+  function btClearGap(){ if(bt.gapTimer){ clearInterval(bt.gapTimer); bt.gapTimer = 0; } bt.gapNext = -1; }
+  function btResyncIdx(){
+    if(!bt.playingSet || !bt.cur) return;
+    const items = btCurSet().items;
+    if(items[bt.setIdx] && items[bt.setIdx].id === bt.cur.id) return;
+    const f = items.findIndex(x=> x.id === bt.cur.id);
+    if(f >= 0) bt.setIdx = f;
+  }
+  function btPlaySet(start){
+    const set = btCurSet(); if(!set.items.length) return;
+    btGoTo(Math.max(0, Math.min(start || 0, set.items.length - 1)));
+  }
+  function btGoTo(i){
+    btClearGap();
+    const set = btCurSet(); if(i < 0 || i >= set.items.length) return;
+    bt.setIdx = i; bt.playingSet = true;
+    btLoad(set.items[i], true);
+  }
+  function btOnEnded(){
+    bt.playing = false; btSyncButtons();
+    if(!bt.playingSet){ btRenderStatus(); return; }
+    btResyncIdx();
+    const next = bt.setIdx + 1;
+    if(next < btCurSet().items.length) btStartGap(next);
+    else { bt.playingSet = false; bt.status = 'Set list finished.'; btRenderPlayer(); }
+  }
+  function btStartGap(next){
+    btClearGap();
+    if(bt.gap <= 0){ btGoTo(next); return; }
+    bt.gapNext = next; bt.gapEnd = Date.now() + bt.gap * 1000;
+    bt.gapTimer = setInterval(()=>{ if(bt.gapEnd - Date.now() <= 0) btGoTo(bt.gapNext); else btRenderStatus(); }, 200);
+    btRenderStatus();
+  }
+  function btSkipGap(){ if(bt.gapTimer) btGoTo(bt.gapNext); }
+  function btStep(dir){
+    const items = btCurSet().items; if(!items.length) return;
+    if(bt.gapTimer){ btGoTo(Math.max(0, Math.min(items.length - 1, bt.gapNext + (dir < 0 ? -1 : 0)))); return; }
+    btResyncIdx();
+    let idx = bt.playingSet ? bt.setIdx : (bt.cur ? items.findIndex(x=> x.id === bt.cur.id) : -1);
+    if(idx < 0) idx = dir > 0 ? -1 : items.length;
+    const target = idx + dir;
+    if(target < 0){ btSeek(0); return; }
+    if(target >= items.length) return;
+    btGoTo(target);
+  }
+
+  // ----- adding tracks -----
+  async function btAddFiles(files){
+    btErr('');
+    try{ if(navigator.storage && navigator.storage.persist) navigator.storage.persist(); }catch(e){}
+    let first = null, added = 0;
+    for(const f of files){
+      const dupe = btAllTracks().find(t=> t.kind === 'file' && t.name === f.name && t.size === f.size);
+      let track;
+      if(dupe){ track = Object.assign({}, dupe); }
+      else {
+        const fid = btUid(); bt.pending[fid] = 1;
+        try{ await btIdb('readwrite', st=> st.put({ id: fid, name: f.name, size: f.size, type: f.type, blob: f })); }
+        catch(err){ delete bt.pending[fid]; btErr('Couldn\'t store "' + f.name + '" in the browser (' + (err && err.message ? err.message : 'storage full?') + ').'); continue; }
+        track = { id: 'file:' + fid, kind: 'file', fileId: fid, name: f.name, size: f.size, title: f.name.replace(/\.[a-z0-9]{2,5}$/i, '') };
+        bt.hist.unshift(Object.assign({}, track, { lastPlayed: Date.now() }));      // in state before the pending flag is lifted
+        delete bt.pending[fid];
+      }
+      btTouch(track); added++;
+      if(!first) first = track;
+    }
+    btE.File.value = '';
+    if(first) btLoad(first, false);
+    return added;
+  }
+  function btAddLinkFromInput(){
+    btErr('');
+    const r = btTrackFromInput(btE.Url.value);
+    if(r.error){ btErr(r.error); return; }
+    btE.Url.value = '';
+    const known = btAllTracks().find(t=> t.id === r.track.id);
+    btLoad(known ? Object.assign({}, known) : r.track, false);
+  }
+
+  // ----- events -----
+  btE.AddLink.addEventListener('click', btAddLinkFromInput);
+  btE.Url.addEventListener('keydown', e=>{ if(e.key === 'Enter'){ e.preventDefault(); btAddLinkFromInput(); } });
+  btE.AddFiles.addEventListener('click', ()=> btE.File.click());
+  btE.File.addEventListener('change', ()=>{ const fl = Array.from(btE.File.files || []); if(fl.length) btAddFiles(fl); });
+  btE.Play.addEventListener('click', btToggle);
+  btE.MiniPlay.addEventListener('click', btToggle);
+  btE.Stop.addEventListener('click', btStop);
+  btE.Next.addEventListener('click', ()=> btStep(1));
+  btE.MiniNext.addEventListener('click', ()=> btStep(1));
+  btE.Prev.addEventListener('click', ()=> btStep(-1));
+  btE.Skip.addEventListener('click', btSkipGap);
+  btE.MiniTitle.addEventListener('click', ()=> { const tab = document.querySelector('.mode-tab[data-mode="backing"]'); if(tab) tab.click(); });
+  btE.Vol.addEventListener('input', ()=>{ bt.vol = parseFloat(btE.Vol.value); btApplyVol(); btSave(); });
+  btE.Seek.addEventListener('input', ()=>{ bt.seeking = true; const d = btDur(); btE.Time.textContent = btFmt(parseFloat(btE.Seek.value) / 1000 * d) + ' / ' + btFmt(d); });
+  btE.Seek.addEventListener('change', ()=>{ const d = btDur(); btSeek(parseFloat(btE.Seek.value) / 1000 * d); bt.seeking = false; setTimeout(btTick, 150); });
+  btE.Gap.addEventListener('change', ()=>{ const v = parseFloat(btE.Gap.value); bt.gap = (isFinite(v) && v >= 0) ? Math.min(300, v) : bt.gap; btE.Gap.value = String(bt.gap); btSave(); });
+  btE.PlaySet.addEventListener('click', ()=> btPlaySet(0));
+  btE.SetSel.addEventListener('change', ()=>{ bt.setId = btE.SetSel.value; bt.playingSet = false; btClearGap(); btSave(); btRenderPlayer(); });
+  btE.SetNew.addEventListener('click', ()=>{
+    const name = window.prompt('Name for the new set list:', 'Set list ' + (bt.sets.length + 1)); if(name === null || !name.trim()) return;
+    const s2 = { id: btUid(), name: name.trim(), items: [] }; bt.sets.push(s2); bt.setId = s2.id; bt.playingSet = false; btClearGap(); btSave(); btRenderPlayer();
+  });
+  btE.SetRename.addEventListener('click', ()=>{
+    const set = btCurSet(), name = window.prompt('Rename the set list:', set.name); if(name === null || !name.trim()) return;
+    set.name = name.trim(); btSave(); btRenderSet();
+  });
+  btE.SetDel.addEventListener('click', ()=>{
+    const set = btCurSet(); if(!window.confirm('Delete the set list "' + set.name + '"? The tracks stay in the history if they are still there.')) return;
+    bt.sets = bt.sets.filter(x=> x.id !== set.id); if(!bt.sets.length) bt.sets = [{ id: btUid(), name: 'Set list 1', items: [] }];
+    bt.setId = bt.sets[0].id; bt.playingSet = false; btClearGap(); btSave(); btRenderPlayer(); btGc();
+  });
+  btE.Hist.addEventListener('click', e=>{
+    const b = e.target.closest('button'); if(!b) return;
+    const id = b.dataset.id, t = bt.hist.find(x=> x.id === id); if(!t) return;
+    if(b.dataset.act === 'play'){ bt.playingSet = false; btLoad(Object.assign({}, t), true); }
+    else if(b.dataset.act === 'add') btSetInsert(t);
+    else if(b.dataset.act === 'rename'){ const n = window.prompt('Track name:', t.title || ''); if(n !== null && n.trim()) btSetTitle(id, n.trim(), false); }
+    else if(b.dataset.act === 'del'){ bt.hist = bt.hist.filter(x=> x.id !== id); btSave(); btRenderHist(); btGc(); }
+  });
+  btE.SetItems.addEventListener('click', e=>{
+    const b = e.target.closest('button'); if(!b) return;
+    const i = parseInt(b.dataset.i), a = b.dataset.act;
+    if(a === 'playfrom') btPlaySet(i);
+    else if(a === 'up') btSetMove(i, i - 1);
+    else if(a === 'down') btSetMove(i, i + 2);
+    else if(a === 'rm') btSetRemove(i);
+  });
+  // drag and drop: history -> set list (copy), and re-ordering inside the set list
+  function btDropIndex(e){
+    const kids = Array.from(btE.SetItems.querySelectorAll('.bt-item'));
+    for(let i = 0; i < kids.length; i++){ const r = kids[i].getBoundingClientRect(); if(e.clientY < r.top + r.height / 2) return i; }
+    return kids.length;
+  }
+  function btClearDrop(){ btE.SetItems.classList.remove('drop-end'); btE.SetItems.querySelectorAll('.drop-before').forEach(x=> x.classList.remove('drop-before')); }
+  btE.Hist.addEventListener('dragstart', e=>{
+    const row = e.target.closest && e.target.closest('.bt-item'); if(!row || !e.dataTransfer) return;
+    bt.dragId = { s: 'h', id: row.dataset.id }; e.dataTransfer.setData('text/plain', 'trackmaker-bt'); e.dataTransfer.effectAllowed = 'copy'; row.classList.add('dragging');
+  });
+  btE.SetItems.addEventListener('dragstart', e=>{
+    const row = e.target.closest && e.target.closest('.bt-item'); if(!row || !e.dataTransfer) return;
+    bt.dragId = { s: 's', i: parseInt(row.dataset.i) }; e.dataTransfer.setData('text/plain', 'trackmaker-bt'); e.dataTransfer.effectAllowed = 'move'; row.classList.add('dragging');
+  });
+  [btE.Hist, btE.SetItems].forEach(el=> el.addEventListener('dragend', ()=>{ bt.dragId = null; btClearDrop(); el.querySelectorAll('.dragging').forEach(x=> x.classList.remove('dragging')); }));
+  btE.SetItems.addEventListener('dragover', e=>{
+    if(!bt.dragId) return;
+    e.preventDefault(); if(e.dataTransfer) e.dataTransfer.dropEffect = bt.dragId.s === 'h' ? 'copy' : 'move';
+    btClearDrop();
+    const idx = btDropIndex(e), kids = btE.SetItems.querySelectorAll('.bt-item');
+    if(idx < kids.length) kids[idx].classList.add('drop-before'); else btE.SetItems.classList.add('drop-end');
+  });
+  btE.SetItems.addEventListener('dragleave', e=>{ if(!btE.SetItems.contains(e.relatedTarget)) btClearDrop(); });
+  btE.SetItems.addEventListener('drop', e=>{
+    if(!bt.dragId) return;
+    e.preventDefault();
+    const idx = btDropIndex(e), d = bt.dragId; bt.dragId = null; btClearDrop();
+    if(d.s === 'h'){ const t = bt.hist.find(x=> x.id === d.id); if(t) btSetInsert(t, idx); }
+    else if(d.s === 's') btSetMove(d.i, idx);
+  });
+
+  btLoadState();
+  btE.Vol.value = String(bt.vol); btE.Gap.value = String(bt.gap); btApplyVol();
+  btRenderHist(); btRenderSet(); btSyncButtons();
+
   // ---------------- Help modal ----------------
   // Version reflects the date this file was generated/updated — bump it on every new revision.
-  const APP_VERSION = '2026.07.14.9';
+  const APP_VERSION = '2026.11.09.1';
 
   const TAB_OVERVIEW = {
     drone: 'Sustains a chord that loops until stopped — good for pads, ambient backing, or holding a tonal center.',
@@ -3566,7 +5658,10 @@
     sequencer: 'A full piano-roll for building chord progressions and arrangements, with tempo, time signature, metronome, drum patterns, and MIDI import/export.',
     arpeggio: 'Fretboard diagrams and TAB exercises for practicing a chord\'s arpeggio up the neck, position by position, on a real guitar.',
     scale: 'Fretboard diagrams and TAB exercises for practicing a scale up the neck, same position-by-position approach as Arpeggios.',
-    finder: 'Click notes anywhere on a 24-fret fretboard and it finds every chord and scale that contains them — a reverse lookup for working out what you\'re playing.'
+    finder: 'Click notes anywhere on a 24-fret fretboard and it finds every chord and scale that contains them — a reverse lookup for working out what you\'re playing.',
+    backing: 'Play a backing track from a file, a network drive or a link (YouTube, Spotify, direct audio link). The last 20 are kept in a history; drag tracks into a set list and play it with a pause between tracks.',
+    ytloop: 'Load a YouTube video, mark a section with A and B, and loop it at any speed from 25% to 200% (pitch stays the same) with an optional count-in. Your last 5 videos and their settings are remembered.',
+    audiochords: 'Load an audio file and Track Maker estimates its tempo and chord changes, then sends them to the Chord Sequencer as a first draft to tidy up.'
   };
 
   const TAB_HELP = {
@@ -3634,17 +5729,62 @@
       <ul>
         <li>Pick <strong>Root</strong> and <strong>Chord Quality</strong> at the top, same controls as Drone. The <strong>Formula</strong> box shows the interval formula for that chord (e.g. 1 - 3 - 5, or 1 - b3 - 5 - b7).</li>
         <li><strong>Fretboard shows</strong> toggles the diagram between actual note names and interval labels (1, b3, 5, b7…).</li>
-        <li><strong>Position</strong> walks the exercise up the neck five frets at a time — Position 1 covers frets 1–5 plus the open strings (they're right there in reach), Position 2 covers frets 2–6, and so on. Use Prev/Next to move between them.</li>
-        <li>The <strong>Fretboard</strong> diagram shows every chord tone across frets 1–12, root notes highlighted, with the current position highlighted in gold.</li>
+        <li><strong>Position</strong> walks the exercise up the neck five frets at a time — Position 1 covers the open strings plus frets 1–4 (frets 0–4), Position 2 covers frets 1–5, Position 3 covers frets 2–6, and so on up to frets 11–15. Use Prev/Next to move between them.</li>
+        <li>The <strong>Fretboard</strong> diagram shows every chord tone from the open strings up to fret 15, root notes highlighted, with the current position highlighted in gold.</li>
         <li>The <strong>Exercise (TAB)</strong> below it is a rolling 4-note sequence (1234, 2345, 3456…) climbing through the position and mirrored back down — more musical than a straight run up and down. TAB always shows fret numbers, regardless of the note/interval toggle above.</li>
       </ul>
+    `,
+    backing: `
+      <h4>Backing Tracks</h4>
+      <p>A player for the backing tracks you play along with, with a history and set lists. Everything is saved in this browser.</p>
+      <ul>
+        <li><strong>Add link</strong> — paste a YouTube link, a Spotify link (track or episode), or a direct link to an audio file (mp3, m4a, wav, ogg…). Pages like SoundCloud or Bandcamp can't be played.</li>
+        <li><strong>Add local files…</strong> — choose one or more audio files. The file window can browse network drives too (a typed path like \\server\share can't be opened by a web page). Chosen files are <em>copied into this browser's storage</em>, so they play without the original being available and without permission prompts. The history shows how much space they use; removing a track from the history and every set list frees its copy.</li>
+        <li><strong>History</strong> — the last 20 tracks you added or played. ▶ plays one, + adds it to the current set list, ✎ renames it, ✕ removes it. You can also drag a track into the set list.</li>
+        <li><strong>Set lists</strong> — make as many as you like (New / Rename / Delete). Drag tracks in from the history, drag them up and down to re-order (or use ▲ ▼), ✕ takes one out. <strong>Play set list</strong> plays the tracks one after another, waiting the number of seconds in <em>Pause between tracks</em> (0 for none). While it waits you'll see a countdown with a Skip button. ▶ on a track starts the list from there; ⏮ ⏭ step through it.</li>
+        <li><strong>Playing</strong> — the transport has play/pause, stop, a seek bar and volume. A track keeps playing if you switch to another tab, and a small "now playing" bar with play/pause and next appears so you can control it from there.</li>
+      </ul>
+      <p style="color:var(--text-dim);">YouTube and Spotify play inside their own embedded players, so they need an internet connection, and the volume slider doesn't control Spotify. Spotify's embed plays 30-second previews unless you are logged in to Spotify in this browser (Spotify support is experimental). If a track fails during a set list, the error is shown and the list carries on with the next track. Some browsers refuse to start a track on their own without a click; if so, press Play.</p>
+    `,
+    ytloop: `
+      <h4>YouTube Loop</h4>
+      <p>Practise along with a YouTube video: loop a tricky section, slow it down without changing the pitch, and get counted in before each pass. Nothing is uploaded — the video plays in YouTube's own embedded player.</p>
+      <ul>
+        <li><strong>Load</strong> — paste a video link (youtube.com/watch?v=…, youtu.be/…, Shorts and embed links all work) and press Load or Enter.</li>
+        <li><strong>Loop button</strong> — press once at the start of the section (A), a second time at the end (B), and a third time to clear both. The video then repeats from A each time it reaches B. <strong>Loop A–B</strong> switches the repeating off without losing your points.</li>
+        <li><strong>A and B boxes</strong> — type a time directly as minutes:seconds with decimals (<em>1:23.45</em>) or just seconds (<em>83.45</em>); the − / + buttons nudge a point by 0.1 s. You can also click the bar under the video to jump around; the shaded part is your loop.</li>
+        <li><strong>Speed</strong> — type any speed from 25% to 200% (for example <em>95</em> for 95% speed; <em>0.95</em> works too), nudge it with −5 / −1 / +1 / +5, or pick a preset. Pitch is preserved as you slow down or speed up — YouTube's player does the correction. If YouTube won't run a video at the exact speed you ask for, the speed it actually used is shown underneath.</li>
+        <li><strong>Count-in</strong> — choose how many beats to click before the video starts at A, and enter the song's tempo (or tap along with it — Tap takes the current speed into account). The clicks follow the playback speed. <em>Before every loop</em> counts in on each repeat; <em>Only on ▶ Play loop</em> counts in just when you press that button.</li>
+        <li><strong>Recent videos</strong> — the last 5 videos you loaded are kept on this device with their loop points, speed and count-in settings. Click one to reload it; ✕ removes it.</li>
+      </ul>
+      <p style="color:var(--text-dim);">Loop points are checked about 30 times a second, so a repeat can land a few hundredths of a second off, and the video takes a moment to restart after each jump. If YouTube says it can't play the video here, the owner may have turned off embedding — or the page may need to be opened over https (for example from GitHub Pages) rather than as a local file.</p>
+    `,
+    audiochords: `
+      <h4>Audio → Chords</h4>
+      <p><strong>Work in progress:</strong> this feature is still being developed, so expect rough edges and changes.</p>
+      <p>Turns a recording into a draft chord chart. Everything happens in your browser — the audio file is never uploaded. The first analysis downloads the Essentia.js engine from a CDN (a few MB, then cached).</p>
+      <ul>
+        <li><strong>Choose audio file</strong> — mp3, wav, m4a or ogg. A typical song takes roughly 20–60 seconds; a progress bar shows where it is. The file plays in the player below so you can check the result by ear — click any chord to jump to that spot, and the chord being played lights up.</li>
+        <li><strong>Timeline</strong> — once analysed, the waveform appears with the chords drawn above it, plus the key and tempo. During playback the current chord is shown large with the next one beside it, and the view follows the song. Click the waveform to jump to that point, click a chord box to hear that chord, drag the scrollbar to look around, and use − / + / Fit (or Ctrl + scroll) to zoom. Chord colours show each chord's place in the key, and the numbers along the top are bars.</li>
+        <li><strong>Chords</strong> — Major / minor is the reliable setting. "+ 7th chords" is experimental: it misses many 7ths and can invent a few, so only use it if you specifically want to try it.</li>
+        <li><strong>Chord changes</strong> — Fewer smooths out brief flickers; More follows quick changes more closely. If the result looks like long stretches of one chord, try More.</li>
+        <li><strong>Tempo feel</strong> — if the detected tempo is double or half of what you feel, switch to Half-time or Double-time (chords are then counted per half- or double-speed beat).</li>
+        <li><strong>Chords in this song</strong> — the single biggest accuracy boost: paste the chords from your chart (e.g. <em>C F2 Am7 G Em Gsus Fmaj7</em>) and only those chords will be considered. It understands m, 7, maj7, m7, sus2, sus4, 2/add9, 6, dim, aug and slash chords (C/E). Anything it can't read is listed and ignored.</li>
+        <li><strong>Prefer chord changes on bar lines</strong> — most songs change chord at the start of a bar, so changes mid-bar are made less likely. This tidies up chords that came out 7 or 9 beats long. Turn it off for songs that change chords on odd beats.</li>
+        <li><strong>Beat grid</strong> — <em>Follow detected beats</em> is the best at working out which chord is playing. The beat tracker can occasionally drop or add a beat though, so if chord changes drift off the bar lines part-way through, try <em>Steady tempo</em> (a perfectly even tempo — good for studio recordings with a click). <em>Auto</em> switches to the steady grid when the detected beats look uneven.</li>
+        <li><strong>Chord detail</strong> — Per beat is the reliable setting. Half-beat lets a chord change between beats, but it's experimental and tends to add stray changes.</li>
+        <li><strong>Blocks in sequencer</strong> — "One per beat" places a separate chord block on every beat (none longer than a beat), so the sequencer re-strikes the chord each beat like a strummed part. "Merged" holds each chord as one long block.</li>
+        <li><strong>Fixed tempo</strong> — for live or free-time tracks where beat detection wanders, tick this, enter the BPM, and optionally the time (in seconds) where bar 1 starts.</li>
+        <li><strong>Send to Chord Sequencer</strong> — replaces the sequencer's chords and sets the tempo, number of bars, beats per bar and key to match. From there you can fix mistakes with the usual tools (Merge, Split, Copy/Paste, drag) and use Export MIDI.</li>
+      </ul>
+      <p style="color:var(--text-dim);">It estimates root and major/minor quality from the overall harmony, so expect errors on dense mixes, heavy distortion, key changes and chords with unusual extensions or inversions. It's a head start, not a transcription.</p>
     `,
     scale: `
       <h4>Scale Practice</h4>
       <p>Same idea as Arpeggios, applied to scales — fretboard diagram, formula, and a position-by-position TAB exercise. The same <strong>Drone / Note / Seq</strong> backing-track controls are here too, kept in sync with Arpeggios and the main Sound Tools panel.</p>
       <ul>
         <li>Pick a <strong>Root</strong> and <strong>Scale Type</strong> — major, natural/harmonic/melodic minor, major and minor pentatonic, blues, and the modes (Dorian, Phrygian, Lydian, Mixolydian, Locrian). The <strong>Formula</strong> box shows the interval formula (e.g. 1 - 2 - b3 - 4 - 5 - 6 - b7 for Dorian).</li>
-        <li>Everything else — the fretboard, positions, TAB — works identically to Arpeggios: Prev/Next walks the neck five frets at a time, the fretboard is a full 1–12 fret reference with the active position highlighted, and the TAB is the same rolling 4-note cascading sequence.</li>
+        <li>Everything else — the fretboard, positions, TAB — works identically to Arpeggios: Prev/Next walks the neck five frets at a time, the fretboard is a full open-strings-to-fret-15 reference with the active position highlighted, and the TAB is the same rolling 4-note cascading sequence.</li>
       </ul>
     `
   };
@@ -3659,6 +5799,10 @@
         '<div style="margin:10px 0 4px;"><strong style="color:var(--text);">Practice Tools</strong></div>' +
         '<div><strong>Arpeggios</strong> — ' + TAB_OVERVIEW.arpeggio + '</div>' +
         '<div><strong>Scales</strong> — ' + TAB_OVERVIEW.scale + '</div>' +
+        '<div style="margin:10px 0 4px;"><strong style="color:var(--text);">Audio Tools</strong></div>' +
+        '<div><strong>YouTube Loop</strong> — ' + TAB_OVERVIEW.ytloop + '</div>' +
+        '<div><strong>Backing Tracks</strong> — ' + TAB_OVERVIEW.backing + '</div>' +
+        '<div><strong>Audio → Chords</strong> — ' + TAB_OVERVIEW.audiochords + '</div>' +
       '</div>';
     document.getElementById('helpModalBody').innerHTML = overviewHtml + TAB_HELP[currentMode];
     document.getElementById('helpModalTitle').innerHTML = 'Help <span class="modal-version">v' + APP_VERSION + '</span>';
