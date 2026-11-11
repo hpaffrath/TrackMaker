@@ -284,6 +284,7 @@
   .ac-chip:hover{ border-color:var(--text-dim); }
   .ac-chip.active{ background:var(--accent); border-color:var(--accent); }
   .ac-chip.active b, .ac-chip.active small{ color:#1a1400; }
+  .ac-chip.active{ opacity:1 !important; }
   .ac-viz{ background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:10px; margin-top:14px; }
   .ac-viz-head{ display:flex; flex-wrap:wrap; align-items:center; gap:8px 18px; margin-bottom:8px; }
   .ac-viz-info{ display:flex; flex-wrap:wrap; gap:4px 16px; font-size:13px; color:var(--text); }
@@ -347,6 +348,42 @@
   .bt-ib:hover{ color:var(--text); border-color:var(--text-dim); }
   .bt-ib.del:hover{ color:var(--accent2); border-color:var(--accent2); }
   .bt-empty{ font-size:12px; color:var(--text-dim); padding:14px 6px; text-align:center; border:1px dashed var(--border); border-radius:6px; }
+  .cf-wrap{ display:flex; flex-wrap:wrap; gap:22px; align-items:flex-start; margin-top:6px; }
+  .cf-wheelbox{ flex:0 1 460px; min-width:280px; }
+  #cfSvg{ width:100%; height:auto; max-width:460px; display:block; outline:none; }
+  #cfSvg:focus-visible{ outline:2px solid var(--accent); outline-offset:4px; border-radius:8px; }
+  .cf-seg path{ fill:var(--surface2); stroke:var(--bg); stroke-width:2; cursor:pointer; transition:fill .12s; }
+  .cf-seg:hover path{ fill:var(--border); }
+  .cf-seg text{ fill:var(--text); font-size:17px; font-weight:600; text-anchor:middle; dominant-baseline:central; pointer-events:none; }
+  .cf-seg.min text{ font-size:13px; font-weight:500; }
+  .cf-seg.blk path{ fill:rgba(232,184,75,.22); }
+  .cf-seg.rel path{ fill:rgba(232,184,75,.5); }
+  .cf-seg.rel text{ fill:#1a1400; }
+  .cf-seg.sel path{ fill:var(--accent); }
+  .cf-seg.sel text{ fill:#1a1400; font-weight:800; }
+  .cf-seg.hot path{ fill:var(--accent2); }
+  .cf-seg.hot text{ fill:#fff; }
+  .cf-sig{ fill:var(--text-dim); font-size:11px; text-anchor:middle; dominant-baseline:central; pointer-events:none; }
+  .cf-center-t{ fill:var(--text); font-size:21px; font-weight:700; text-anchor:middle; }
+  .cf-center-s{ fill:var(--text-dim); font-size:12px; text-anchor:middle; }
+  .cf-side{ flex:1 1 320px; min-width:280px; max-width:560px; }
+  .cf-keyname{ font-size:22px; font-weight:700; color:var(--text); }
+  .cf-keysub{ font-size:13px; color:var(--text-dim); margin-top:2px; line-height:1.5; }
+  .cf-nbrs{ display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 14px; }
+  .cf-nbr{ background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:4px 9px; font-size:12px; color:var(--text); cursor:pointer; }
+  .cf-nbr small{ color:var(--text-dim); margin-right:5px; font-size:10px; text-transform:uppercase; letter-spacing:.05em; }
+  .cf-nbr:hover{ border-color:var(--accent); }
+  .cf-chips{ display:grid; grid-template-columns:repeat(auto-fill, minmax(74px, 1fr)); gap:7px; margin-bottom:12px; }
+  .cf-chip{ background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:7px 4px 6px; text-align:center; cursor:pointer; color:var(--text); }
+  .cf-chip:hover{ border-color:var(--text-dim); }
+  .cf-chip.playing{ border-color:var(--accent2); background:rgba(196,92,58,.25); }
+  .cf-chip .r{ display:block; font-size:11px; color:var(--text-dim); }
+  .cf-chip .n{ display:block; font-size:16px; font-weight:700; margin:1px 0; }
+  .cf-chip .f{ display:block; font-size:9px; letter-spacing:.04em; text-transform:uppercase; color:var(--text-dim); }
+  .cf-prog{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:8px 12px; margin-bottom:6px; max-width:760px; }
+  .cf-prog .t{ font-size:12px; color:var(--text-dim); min-width:130px; }
+  .cf-prog .c{ flex:1; min-width:160px; font-size:14px; font-weight:600; color:var(--text); }
+  .cf-prog.playing{ border-color:var(--accent2); }
   #btMini{ position:fixed; right:14px; bottom:14px; z-index:60; display:none; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--accent); border-radius:22px; padding:5px 8px 5px 14px; box-shadow:0 4px 18px rgba(0,0,0,.35); max-width:min(92vw, 380px); }
   #btMiniTitle{ font-size:12px; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; cursor:pointer; max-width:210px; }
   .tab-grid{ display:inline-grid; gap:0; }
@@ -496,6 +533,7 @@
       <div class="mode-tab" data-mode="arpeggio" data-section="practice" style="display:none;">Arpeggios</div>
       <div class="mode-tab" data-mode="scale" data-section="practice" style="display:none;">Scales</div>
       <div class="mode-tab" data-mode="finder" data-section="practice" style="display:none;">Finder</div>
+      <div class="mode-tab" data-mode="circle" data-section="practice" style="display:none;">Circle of Fifths</div>
       <div class="mode-tab" data-mode="ytloop" data-section="audio" style="display:none;">YouTube Loop</div>
       <div class="mode-tab" data-mode="backing" data-section="audio" style="display:none;">Backing Tracks</div>
       <div class="mode-tab" data-mode="audiochords" data-section="audio" style="display:none;">Audio → Chords</div>
@@ -725,7 +763,11 @@
           </select>
         </div>
         <button class="btn btn-ghost" id="clearGridBtn">Clear all notes</button>
+        <button class="btn btn-ghost" id="seqSaveProjBtn" title="Save the chords, drums and tempo to a file">💾 Save project</button>
+        <button class="btn btn-ghost" id="seqLoadProjBtn" title="Load a project saved from Track Maker">📂 Load project</button>
+        <input type="file" id="seqProjFile" accept=".json,application/json" style="display:none;">
       </div>
+      <div class="hint" id="seqProjMsg" style="margin-top:8px;"></div>
     </div>
 
     <div class="pane-header"><span class="pane-dot"></span><span class="pane-label">Key &amp; Scale</span></div>
@@ -762,7 +804,13 @@
             <label>Zoom</label>
             <input type="range" id="seqZoom" min="4" max="30" value="18" style="width:110px;">
           </div>
+          <button class="btn btn-ghost" id="seqUndoBtn" disabled title="Undo (Ctrl+Z)">↶ Undo</button>
+          <button class="btn btn-ghost" id="seqRedoBtn" disabled title="Redo (Ctrl+Y)">↷ Redo</button>
           <button class="btn btn-ghost" id="seqPasteBtn" disabled>📋 Paste</button>
+          <div class="row" id="seqShadeWrap" style="display:none; gap:10px;">
+            <div class="checkbox-field"><input type="checkbox" id="seqShade" checked><label for="seqShade" title="Chords the analysis was unsure about are drawn fainter">Shade uncertain chords</label></div>
+            <button class="btn btn-ghost" id="seqClearConfBtn" title="Treat every chord as checked — removes the shading">Clear shading</button>
+          </div>
           <div class="row" id="seqActionBar" style="display:none;">
             <span class="hint" id="seqSelectionInfo">0 selected</span>
             <button class="btn btn-ghost" id="seqCopyBtn">Copy</button>
@@ -962,6 +1010,12 @@
         </div>
         <div class="hint" id="acChordsMsg" style="margin:-4px 0 8px;">Paste the chords from your chart and only those will be used — this makes the result much more accurate.</div>
         <div class="row">
+          <div class="field"><label>Repeated sections</label>
+            <select id="acPool"><option value="on" selected>Share evidence between repeats</option><option value="off">Treat each part separately</option></select></div>
+          <div class="checkbox-field"><input type="checkbox" id="acShade" checked><label for="acShade">Shade uncertain chords</label></div>
+        </div>
+        <div class="hint" style="margin:-2px 0 8px;">Sharing evidence lets a chorus that repeats be judged on all of its repeats together, which fixes some one-off mistakes. Uncertain chords are drawn fainter (and dashed on the timeline) so you know which ones to check.</div>
+        <div class="row">
           <div class="checkbox-field"><input type="checkbox" id="acFixedChk"><label for="acFixedChk">Use a fixed tempo instead of the detected beats</label></div>
           <div class="field"><label>BPM</label><input type="number" id="acFixedBpm" min="30" max="300" step="0.1" disabled style="width:90px;"></div>
           <div class="field"><label>Start of bar 1 (sec)</label><input type="number" id="acStartSec" min="0" step="0.01" placeholder="auto" style="width:110px;"></div>
@@ -1083,10 +1137,52 @@
             <button class="btn btn-primary" id="btPlaySet">▶ Play set list</button>
             <div class="field" style="flex-direction:row; align-items:center; gap:6px;"><label style="margin:0;">Pause between tracks</label><input type="number" id="btGap" min="0" max="300" step="0.5" value="5" style="width:70px;"><span style="font-size:12px; color:var(--text-dim);">s</span></div>
           </div>
+          <div class="bt-card-h">
+            <div class="checkbox-field"><input type="checkbox" id="btRepeat"><label for="btRepeat">Repeat the set list</label></div>
+            <div class="field" style="flex-direction:row; align-items:center; gap:6px;"><label style="margin:0;" title="Each track fades in at its start and out at its end while a set list plays (not for Spotify)">Fade in / out</label><input type="number" id="btFade" min="0" max="20" step="0.5" value="0" style="width:70px;"><span style="font-size:12px; color:var(--text-dim);">s (0 = off)</span></div>
+          </div>
           <div class="bt-list" id="btSetItems"></div>
         </div>
       </div>
       <div class="hint" style="margin-top:14px; font-size:11px;">YouTube and Spotify play in their own embedded players, so both need an internet connection, and some videos can't be embedded. Spotify's embed plays 30-second previews unless you are logged in to Spotify in this browser, and has no volume control here (Spotify support is experimental). Pages like SoundCloud or Bandcamp can't be played; only direct links to audio files can.</div>
+    </div>
+  </div>
+
+  <div class="panel" id="circlePanel" style="display:none;">
+    <div class="pane-header"><span class="pane-dot"></span><span class="pane-label">Circle of Fifths</span></div>
+    <div class="panel-body">
+      <div class="hint" style="margin-bottom:12px;">Click a key on the wheel — outer ring major, inner ring its relative minor. The shaded block is the family of closely related keys, and the chords below are the ones that belong to the key. Click a chord to hear it.</div>
+      <div class="cf-wrap">
+        <div class="cf-wheelbox">
+          <svg id="cfSvg" viewBox="0 0 480 480" role="img" aria-label="Circle of fifths" tabindex="0"></svg>
+          <div class="hint" style="font-size:11px; text-align:center;">Arrow keys: ◀ ▶ move round the circle, ▲ ▼ switch major / minor</div>
+        </div>
+        <div class="cf-side">
+          <div class="cf-keyname" id="cfKeyName"></div>
+          <div class="cf-keysub" id="cfKeySub"></div>
+          <div class="cf-nbrs" id="cfNbrs"></div>
+          <div class="yt-sub">Chords in this key</div>
+          <div class="cf-chips" id="cfChips"></div>
+          <div class="row" style="gap:14px;">
+            <div class="checkbox-field"><input type="checkbox" id="cfSev"><label for="cfSev">7th chords</label></div>
+            <div class="checkbox-field" id="cfHvWrap" style="display:none;"><input type="checkbox" id="cfHv"><label for="cfHv" title="Raise the 7th note: the v chord becomes a major V and VII becomes vii°">Major V (harmonic minor)</label></div>
+            <div class="checkbox-field"><input type="checkbox" id="cfSnd" checked><label for="cfSnd">Sound on click</label></div>
+            <button type="button" class="ac-zbtn" id="cfEnh" style="display:none;"></button>
+          </div>
+          <div class="row" style="margin-top:6px;">
+            <button class="btn btn-ghost" id="cfScaleBtn">♪ Hear the scale</button>
+            <button class="btn btn-ghost" id="cfSetKeyBtn" title="Use this key in the Chord Sequencer">🎹 Set as sequencer key</button>
+            <button class="btn btn-ghost" id="cfPracScaleBtn">▶ Practice this scale</button>
+            <button class="btn btn-ghost" id="cfPracArpBtn">▶ Practice the tonic chord</button>
+          </div>
+          <div class="hint" id="cfMsg" style="margin-top:8px; min-height:18px;"></div>
+        </div>
+      </div>
+      <div style="margin-top:22px;">
+        <div class="yt-sub">Common progressions in this key</div>
+        <div id="cfProgs"></div>
+        <div class="hint" style="font-size:11px; margin-top:6px;">▶ plays the progression at the Chord Sequencer's tempo. ＋ adds it to the Chord Sequencer after any chords already there, one bar per chord (note names there use sharps).</div>
+      </div>
     </div>
   </div>
 
@@ -1141,7 +1237,7 @@
   const chordLabel = {
     single:'', major:'', minor:'m', dim:'dim', aug:'aug',
     sus2:'sus2', sus4:'sus4', '6':'6', m6:'m6',
-    dom7:'7', maj7:'maj7', min7:'m7', m7b5:'m7\u26355', dim7:'dim7',
+    dom7:'7', maj7:'maj7', min7:'m7', m7b5:'m7\u266d5', dim7:'dim7',
     '7sus4':'7sus4',
     add9:'add9', dom9:'9', maj9:'maj9', min9:'m9'
   };
@@ -2499,6 +2595,8 @@
       const first = selected[0];
       const totalLen = selected.reduce((s,n)=>s+n.length, 0);
       const merged = { id: state.nextId++, start: first.start, length: totalLen, root: first.root, quality: first.quality, octave: first.octave };
+      const mconfs = selected.map(n=>n.conf).filter(c=>typeof c === 'number');
+      if(mconfs.length === selected.length) merged.conf = Math.min.apply(null, mconfs);
       const removeIds = new Set(ids);
       state.notes = state.notes.filter(n=>!removeIds.has(n.id));
       state.notes.push(merged);
@@ -2514,7 +2612,9 @@
       const partLen = note.length/numParts;
       state.notes = state.notes.filter(n=>n.id!==note.id);
       for(let p=0;p<numParts;p++){
-        state.notes.push({ id: state.nextId++, start: note.start+p*partLen, length: partLen, root: note.root, quality: note.quality, octave: note.octave });
+        const part = { id: state.nextId++, start: note.start+p*partLen, length: partLen, root: note.root, quality: note.quality, octave: note.octave };
+        if(typeof note.conf === 'number') part.conf = note.conf;
+        state.notes.push(part);
       }
       clearSelection();
       render();
@@ -2551,7 +2651,7 @@
       if(ids.length === 0) return;
       const selected = ids.map(id=>state.notes.find(n=>n.id===id)).filter(Boolean).sort((a,b)=>a.start-b.start);
       const base = selected[0].start;
-      state.clipboard = selected.map(n=>({ offset:n.start-base, length:n.length, root:n.root, quality:n.quality, octave:n.octave }));
+      state.clipboard = selected.map(n=>({ offset:n.start-base, length:n.length, root:n.root, quality:n.quality, octave:n.octave, conf:n.conf }));
       state.pasteArmed = false;
       updatePasteButtonUI();
     }
@@ -2566,7 +2666,9 @@
         const start = anchorStep + frag.offset;
         if(start < 0 || start >= total) return; // falls off the end — skip just that chord
         const length = Math.min(frag.length, total - start);
-        placeNote({ id: state.nextId++, start, length, root: frag.root, quality: frag.quality, octave: frag.octave });
+        const pasted = { id: state.nextId++, start, length, root: frag.root, quality: frag.quality, octave: frag.octave };
+        if(typeof frag.conf === 'number') pasted.conf = frag.conf;
+        placeNote(pasted);
       });
       state.pasteArmed = false;
       updatePasteButtonUI();
@@ -2646,6 +2748,10 @@
         el.style.left = (note.start*state.pixelsPerStep) + 'px';
         el.style.width = Math.max(4, note.length*state.pixelsPerStep - 2) + 'px';
         el.textContent = note.root + chordLabel[note.quality];
+        if(typeof note.conf === 'number' && (!cfg.shadeEl || cfg.shadeEl.checked)){
+          el.style.opacity = String(confOpacity(note.conf));
+          el.title = 'Detected with ' + Math.round(note.conf * 100) + '% confidence' + (note.conf < 0.7 ? ' — worth checking' : '');
+        }
         if(state.selectedIds.has(note.id)) el.classList.add('selected');
         noteElsById[note.id] = el;
 
@@ -2844,16 +2950,19 @@
     mergeBtnEl: document.getElementById('seqMergeBtn'), splitFieldEl: document.getElementById('seqSplitField'),
     splitSelectEl: document.getElementById('seqSplitSelect'), deleteBtnEl: document.getElementById('seqDeleteBtn'),
     cancelBtnEl: document.getElementById('seqCancelBtn'), copyBtnEl: document.getElementById('seqCopyBtn'),
-    cutBtnEl: document.getElementById('seqCutBtn'), pasteBtnEl: document.getElementById('seqPasteBtn')
+    cutBtnEl: document.getElementById('seqCutBtn'), pasteBtnEl: document.getElementById('seqPasteBtn'),
+    shadeEl: document.getElementById('seqShade')
   });
+  // how faint a chord is drawn for a given detection confidence (0..1): solid from 0.9 up, never fainter than 0.4
+  function confOpacity(c){ return c >= 0.9 ? 1 : 0.4 + 0.6 * Math.max(0, Math.min(1, (c - 0.3) / 0.6)); }
 
   // ---------------- Mode switching ----------------
   const tabs = document.querySelectorAll('.mode-tab[data-mode]');
-  const panels = { drone: document.getElementById('dronePanel'), bass: document.getElementById('bassPanel'), arpeggio: document.getElementById('arpeggioPanel'), scale: document.getElementById('scalePanel'), finder: document.getElementById('finderPanel'), audiochords: document.getElementById('audioChordsPanel'), ytloop: document.getElementById('ytLoopPanel'), backing: document.getElementById('btPanel') };
+  const panels = { drone: document.getElementById('dronePanel'), bass: document.getElementById('bassPanel'), arpeggio: document.getElementById('arpeggioPanel'), scale: document.getElementById('scalePanel'), finder: document.getElementById('finderPanel'), circle: document.getElementById('circlePanel'), audiochords: document.getElementById('audioChordsPanel'), ytloop: document.getElementById('ytLoopPanel'), backing: document.getElementById('btPanel') };
   const seqPanelEl = document.getElementById('seqPanel');
   let currentMode = 'drone';
   const SOUND_TOOL_MODES = ['drone','bass','sequencer'];
-  const PRACTICE_TOOL_MODES = ['arpeggio','scale','finder'];
+  const PRACTICE_TOOL_MODES = ['arpeggio','scale','finder','circle'];
   const AUDIO_TOOL_MODES = ['audiochords','ytloop','backing'];
   let activeSoundMode = null; // which sound tool (if any) is actually producing audio right now
   let lastSoundMode = 'drone';
@@ -2884,6 +2993,7 @@
 
     Object.keys(panels).forEach(k=> panels[k].style.display = (k===currentMode) ? '' : 'none');
     try{ btUpdateMini(); }catch(e){}
+    try{ circleOnMode(modeKey); }catch(e){}
     seqPanelEl.style.display = isGridMode() ? '' : 'none';
 
     rootKeyLabel.textContent = isGridMode() ? 'Key' : 'Root';
@@ -4090,7 +4200,65 @@ function acViterbi(emit, M, S, penAt){
   for(var t2=M-1;t2>=0;t2--){ path[t2]=cur; cur=ptr[t2*S+cur]; }
   return { path:path, score:score };
 }
-var AC_TUNE = { snapOn:0.5, snapHalf:0.8, snapOff:1.6, snapMin:0.4, p7:0.08, beta:10, bassw:0.8, keyb:0.08, sub:1.0, subq:0.35, bsub:1.0, leak:1, gamma:0.5, adapt:8, gmax:6, pen:null };
+var AC_TUNE = { snapOn:0.5, snapHalf:0.8, snapOff:1.6, snapMin:0.4, p7:0.08, beta:10, bassw:0.8, keyb:0.08, sub:1.0, subq:0.35, bsub:1.0, leak:1, gamma:0.5, adapt:8, gmax:6, pen:null, ctemp:2.0, poolBars:4, poolMinCh:2, poolThr:0.8, poolK:3, poolLam:0.3 };
+// Forward-backward over the same model Viterbi uses (staying is free, any switch costs penAt(t)), giving the probability of each chord at each step.
+function acPosterior(emit, M, S, penAt){
+  var a = new Float64Array(M*S), b = new Float64Array(M*S), e = new Float64Array(M*S), t, s, sum, mx;
+  for(t=0;t<M;t++){ mx=-1e30; for(s=0;s<S;s++) if(emit[t*S+s]>mx) mx=emit[t*S+s]; for(s=0;s<S;s++) e[t*S+s]=Math.exp(emit[t*S+s]-mx); }
+  sum=0; for(s=0;s<S;s++){ a[s]=e[s]; sum+=a[s]; } for(s=0;s<S;s++) a[s]/=sum;
+  for(t=1;t<M;t++){
+    var A=0, w=Math.exp(-penAt(t)); for(s=0;s<S;s++) A+=a[(t-1)*S+s];
+    sum=0; for(s=0;s<S;s++){ var v=e[t*S+s]*(a[(t-1)*S+s] + w*(A-a[(t-1)*S+s])); a[t*S+s]=v; sum+=v; }
+    for(s=0;s<S;s++) a[t*S+s]/=sum;
+  }
+  for(s=0;s<S;s++) b[(M-1)*S+s]=1;
+  for(t=M-2;t>=0;t--){
+    var w2=Math.exp(-penAt(t+1)), B=0; for(s=0;s<S;s++) B+=e[(t+1)*S+s]*b[(t+1)*S+s];
+    sum=0; for(s=0;s<S;s++){ var x=e[(t+1)*S+s]*b[(t+1)*S+s], v2=x + w2*(B-x); b[t*S+s]=v2; sum+=v2; }
+    for(s=0;s<S;s++) b[t*S+s]/=sum;
+  }
+  var g = new Float32Array(M*S);
+  for(t=0;t<M;t++){ var z=0; for(s=0;s<S;s++){ var q=a[t*S+s]*b[t*S+s]; g[t*S+s]=q; z+=q; } for(s=0;s<S;s++) g[t*S+s]/=(z||1); }
+  return g;
+}
+// Repeat pooling. After a first decode, stretches of the song whose chord sequence repeats elsewhere (poolBars bars, mostly the same chords,
+// with real chord changes in them) are treated as the same music: each beat's chord evidence is blended with the evidence from the
+// same place in its repeats, so a chorus heard three times is judged on all three hearings. Returns a new emit matrix, or null.
+function acPoolEmit(emit, path, M, S, NI, bpbSteps, T){
+  var W = Math.max(4, Math.round(T.poolBars * bpbSteps));
+  if(M < 2*W + 2) return null;
+  var nW = M - W + 1, changes = new Int16Array(nW), a, b, i, c;
+  for(a=0;a<nW;a++){ c = 0; for(i=1;i<W;i++) if(path[a+i] !== path[a+i-1]) c++; changes[a] = c; }
+  var partners = []; for(i=0;i<M;i++) partners.push(null);
+  function addPartner(t, u, sc){
+    var list = partners[t]; if(!list) list = partners[t] = [];
+    for(var k=0;k<list.length;k++) if(list[k][0] === u){ if(sc > list[k][1]) list[k][1] = sc; return; }
+    list.push([u, sc]);
+  }
+  var found = 0;
+  for(a=0;a<nW;a++){
+    if(changes[a] < T.poolMinCh) continue;
+    for(b=a+W;b<nW;b++){
+      if(changes[b] < T.poolMinCh) continue;
+      var agree = 0, valid = 0;
+      for(i=0;i<W;i++){ var x = path[a+i], y = path[b+i]; if(x === NI || y === NI) continue; valid++; if(x === y) agree++; }
+      if(valid < W*0.75) continue;
+      var frac = agree/valid; if(frac < T.poolThr) continue;
+      found++;
+      for(i=0;i<W;i++){ addPartner(a+i, b+i, frac); addPartner(b+i, a+i, frac); }
+    }
+  }
+  if(!found) return null;
+  var out = new Float32Array(emit), pooled = 0;
+  for(var t=0;t<M;t++){
+    var list = partners[t]; if(!list) continue;
+    list.sort(function(p, q){ return q[1]-p[1]; }); if(list.length > T.poolK) list.length = T.poolK;
+    var wsum = 0, s2; for(var j=0;j<list.length;j++) wsum += list[j][1];
+    for(s2=0;s2<S;s2++){ var acc = 0; for(var j2=0;j2<list.length;j2++) acc += list[j2][1]*emit[list[j2][0]*S+s2]; out[t*S+s2] = (1-T.poolLam)*emit[t*S+s2] + T.poolLam*acc/wsum; }
+    pooled++;
+  }
+  return { emit: out, pooled: pooled };
+}
 function acDecode(f, o){
   var T = {}; for(var tk0 in AC_TUNE) T[tk0] = (o.tune && o.tune[tk0]!==undefined) ? o.tune[tk0] : AC_TUNE[tk0];
   var beats = acBuildBeats(f.ticks, f.duration, o);
@@ -4132,6 +4300,8 @@ function acDecode(f, o){
   for(m0=0;m0<M;m0++){ var sb2=0; for(q0=0;q0<12;q0++) sb2+=bs[m0*12+q0];
     for(q0=0;q0<12;q0++){ var bv=(sb2>0 ? bs[m0*12+q0]/sb2 : 0) - T.bsub*bbar[q0]; bres[m0*12+q0] = bv<0 ? 0 : bv; } }
 
+  var pooled = 0;
+
   // states = vocabulary chords x 12 roots, + N
   var typeKeys = o.vocab === 'sevenths' ? ['maj','min','7','maj7','min7'] : ['maj','min'];
   var states = [], restricted = !!(o.chords && o.chords.length);
@@ -4172,7 +4342,12 @@ function acDecode(f, o){
   // pass 2 makes changes cheap on bar lines and dearer between them.
   var pen = (T.pen!==null && T.pen!==undefined) ? T.pen : (AC_SENS[o.sens] || AC_SENS.normal);
   var bpbSteps = Math.max(1, Math.round((o.beatsPerBar || 4)/unit));
-  var vit = acViterbi(emit, M, S, function(){ return pen; });
+  var penFn = function(){ return pen; };
+  var vit = acViterbi(emit, M, S, penFn);
+  if(o.pool === 'on'){
+    var pe = acPoolEmit(emit, vit.path, M, S, NI, bpbSteps, T);
+    if(pe){ emit = pe.emit; pooled = pe.pooled; vit = acViterbi(emit, M, S, penFn); }
+  }
   var barPhase = null, barShare = 0;
   if(o.snap){
     // where do this song's chord changes fall within the bar? Estimate the beat-of-bar locally (+-8 bars), because the beat
@@ -4190,7 +4365,8 @@ function acDecode(f, o){
     }
     if(anyPhase > M*0.25){
       var halfSteps = (bpbSteps % 2 === 0) ? bpbSteps/2 : 0;
-      vit = acViterbi(emit, M, S, function(t){ var p = phaseAt[t]; if(p < 0) return pen; var d=((t-p)%bpbSteps+bpbSteps)%bpbSteps; return pen * (d===0 ? T.snapOn : (halfSteps && d===halfSteps) ? T.snapHalf : T.snapOff); });
+      penFn = function(t){ var p = phaseAt[t]; if(p < 0) return pen; var d=((t-p)%bpbSteps+bpbSteps)%bpbSteps; return pen * (d===0 ? T.snapOn : (halfSteps && d===halfSteps) ? T.snapHalf : T.snapOff); };
+      vit = acViterbi(emit, M, S, penFn);
       barShare = anyPhase/M;
       for(var f0=0; f0<M; f0++) if(phaseAt[f0] >= 0){ barPhase = phaseAt[f0]; break; }     // phase near the start of the song
     }
@@ -4205,21 +4381,24 @@ function acDecode(f, o){
   if(!runs.length) return { error:'No chords found — the file may be silent or too noisy.' };
   var base = runs[0].b0;
   var origin = (barPhase===null) ? base : base - ((((base - barPhase) % bpbSteps) + bpbSteps) % bpbSteps);
+  // confidence = how probable the chosen chord is over its beats, given everything else the model considered (tempered so it is not all 100%)
+  var emitC = new Float32Array(M*S), ct = Math.max(0.5, T.ctemp); for(var ei=0; ei<emitC.length; ei++) emitC[ei] = emit[ei]/ct;
+  var post = acPosterior(emitC, M, S, function(t){ return penFn(t)/ct; });
   var segs = runs.filter(function(r){ return r.s!==NI; }).map(function(r){
-    var st=states[r.s];
-    return { startBeat:(r.b0-origin)*unit, lenBeats:r.n*unit, root:st.root, type:st.type, bass:st.bass, startSec:beats[r.b0], endSec:beats[r.b0+r.n] };
+    var st=states[r.s], cs2 = 0; for(var ci=r.b0; ci<r.b0+r.n; ci++) cs2 += post[ci*S+r.s];
+    return { startBeat:(r.b0-origin)*unit, lenBeats:r.n*unit, root:st.root, type:st.type, bass:st.bass, startSec:beats[r.b0], endSec:beats[r.b0+r.n], conf: Math.round(cs2/r.n*100)/100 };
   });
   var last = runs[runs.length-1], totalBeats = (last.b0 + last.n - origin)*unit;
   // average tempo = beats per unit time over the whole track (the median interval is biased by the beat tracker's ~11.6 ms timestamp steps)
   var avgBpm;
   if(o.fixedBpm){ avgBpm = o.fixedBpm * (o.feel==='half' ? 0.5 : o.feel==='double' ? 2 : 1); }
   else { avgBpm = 60*(f.ticks.length-1)/(f.ticks[f.ticks.length-1]-f.ticks[0]) * (o.feel==='half' ? 0.5 : o.feel==='double' ? 2 : 1); }
-  return { segs:segs, totalBeats:totalBeats, bpm:avgBpm, key:key, tuningCents:((off>1?off-3:off)*33.3), beatTimes:beats, firstBeatSec:beats[base], evidenceGain:g, pathScore:pathScore, barPhase:barPhase, barShare:barShare, origin:origin, bpbSteps:bpbSteps, unit:unit };
+  return { segs:segs, totalBeats:totalBeats, bpm:avgBpm, key:key, tuningCents:((off>1?off-3:off)*33.3), beatTimes:beats, firstBeatSec:beats[base], evidenceGain:g, pathScore:pathScore, barPhase:barPhase, barShare:barShare, origin:origin, bpbSteps:bpbSteps, unit:unit, pooledBeats:pooled };
 }
 
   const AC_CDNS = ['https://cdn.jsdelivr.net/npm/essentia.js@0.1.3/dist/', 'https://unpkg.com/essentia.js@0.1.3/dist/'];
   const acEl = {};
-  ['File','Pick','Name','ProgRow','ProgBar','ProgText','Audio','Settings','Vocab','Sens','Feel','Bpb','Grid','Detail','Blocks','Chords','ChordsMsg','Snap','FixedChk','FixedBpm','StartSec','Summary','Error','Results','SendRow','SendBtn','SendNote','Viz','VizInfo','VizNow','VizNext','ZoomOut','ZoomFit','ZoomIn','VizScroll','VizSpacer','VizCanvas'].forEach(k=>{
+  ['File','Pick','Name','ProgRow','ProgBar','ProgText','Audio','Settings','Vocab','Sens','Feel','Bpb','Grid','Detail','Blocks','Chords','ChordsMsg','Snap','FixedChk','FixedBpm','StartSec','Summary','Error','Results','SendRow','SendBtn','SendNote','Pool','Shade','Viz','VizInfo','VizNow','VizNext','ZoomOut','ZoomFit','ZoomIn','VizScroll','VizSpacer','VizCanvas'].forEach(k=>{
     acEl[k] = document.getElementById('ac'+k);
   });
   let acGridCache = {}, acGridUsed = '', acFeat = null, acResult = null, acWorker = null, acBusy = false, acObjectUrl = null, acRedoTimer = null;
@@ -4376,7 +4555,7 @@ function acDecode(f, o){
     const fb = parseFloat(acEl.FixedBpm.value), ss = parseFloat(acEl.StartSec.value);
     const o = {
       feel: acEl.Feel.value, vocab: acEl.Vocab.value, sens: acEl.Sens.value, res: acEl.Detail.value === 'half' ? 'half' : 'beat',
-      snap: acEl.Snap.checked, beatsPerBar: parseInt(acEl.Bpb.value) || 4, chords: acChordList(),
+      snap: acEl.Snap.checked, pool: acEl.Pool.value, beatsPerBar: parseInt(acEl.Bpb.value) || 4, chords: acChordList(),
       fixedBpm: null, startSec: (acEl.StartSec.value !== '' && isFinite(ss) && ss >= 0) ? ss : null
     };
     acGridUsed = 'beats';
@@ -4403,10 +4582,16 @@ function acDecode(f, o){
       r.segs.length + ' chords over ' + r.totalBeats + ' beats (≈ ' + Math.ceil(r.totalBeats/bpb) + ' bars)' +
       (Math.abs(r.tuningCents) >= 15 ? ' · tuned ≈ ' + (r.tuningCents > 0 ? '+' : '') + Math.round(r.tuningCents) + ' cents' : '') +
       ((r.totalBeats / r.segs.length > 10 && acEl.Sens.value !== 'more') ? '<br><span class="hint">That\'s quite a few beats per chord — if the song changes chords more often than this, try <strong>Chord changes → More</strong>.</span>' : '');
-    acEl.Results.innerHTML = r.segs.map((s,i)=>
-      '<span class="ac-chip" data-i="' + i + '"><b>' + acChordName(s) + '</b><small>bar ' + (Math.floor(s.startBeat/bpb)+1) + ' · ' +
-      acLenText(s.lenBeats) + '</small></span>'
-    ).join('');
+    const shade = acEl.Shade.checked;
+    acEl.Results.innerHTML = r.segs.map((s,i)=>{
+      const has = typeof s.conf === 'number', op = (shade && has) ? confOpacity(s.conf) : 1;
+      return '<span class="ac-chip" data-i="' + i + '"' + (op < 1 ? ' style="opacity:' + op.toFixed(2) + '"' : '') +
+        (has ? ' title="Detected with ' + Math.round(s.conf*100) + '% confidence' + (s.conf < 0.7 ? ' — worth checking' : '') + '"' : '') + '><b>' + acChordName(s) + (shade && has && s.conf < 0.6 ? '?' : '') + '</b><small>bar ' + (Math.floor(s.startBeat/bpb)+1) + ' · ' +
+        acLenText(s.lenBeats) + '</small></span>';
+    }).join('');
+    const unsure = r.segs.filter(s=> typeof s.conf === 'number' && s.conf < 0.7).length;
+    if(unsure) acEl.Summary.innerHTML += '<br><span class="hint">' + unsure + ' of ' + r.segs.length + ' chords ' + (unsure === 1 ? 'is' : 'are') + ' uncertain' + (shade ? ' (drawn fainter)' : '') + ' — those are the ones to check by ear.</span>';
+    if(r.pooledBeats) acEl.Summary.innerHTML += '<br><span class="hint">Repeated sections shared their evidence (' + r.pooledBeats + ' beats).</span>';
     acEl.SendRow.style.display = 'flex';
     acVizUpdate();
   }
@@ -4550,16 +4735,22 @@ function acDecode(f, o){
       if(sg.endSec < t0) continue; if(sg.startSec > t1) break;
       const x0 = sg.startSec * pps - sl, x1 = sg.endSec * pps - sl, w = x1 - x0;
       const col = intervalColor(AC_DEG[((sg.root - tonic) % 12 + 12) % 12]), fill = acResolve(col.fill), isAct = (i === act);
-      ctx.globalAlpha = isAct ? 1 : 0.28; ctx.fillStyle = fill; ctx.fillRect(x0 + 1, AC_CHORD_Y, Math.max(1, w - 2), AC_CHORD_H);
-      ctx.globalAlpha = 1; ctx.strokeStyle = fill; ctx.lineWidth = isAct ? 2 : 1; ctx.strokeRect(x0 + 1.5, AC_CHORD_Y + 0.5, Math.max(1, w - 3), AC_CHORD_H - 1);
+      const cf = (acEl.Shade.checked && typeof sg.conf === 'number') ? confOpacity(sg.conf) : 1, unsure = cf < 0.85;
+      ctx.globalAlpha = (isAct ? 1 : 0.28) * cf; ctx.fillStyle = fill; ctx.fillRect(x0 + 1, AC_CHORD_Y, Math.max(1, w - 2), AC_CHORD_H);
+      ctx.globalAlpha = cf; ctx.strokeStyle = fill; ctx.lineWidth = isAct ? 2 : 1;
+      if(unsure && ctx.setLineDash) ctx.setLineDash([4, 3]);
+      ctx.strokeRect(x0 + 1.5, AC_CHORD_Y + 0.5, Math.max(1, w - 3), AC_CHORD_H - 1);
+      if(ctx.setLineDash) ctx.setLineDash([]);
+      ctx.globalAlpha = Math.max(0.6, cf);
       if(w > 16){
         const name = acChordName(sg), tw = ctx.measureText(name).width;
         ctx.save(); ctx.beginPath(); ctx.rect(x0 + 2, AC_CHORD_Y, w - 4, AC_CHORD_H); ctx.clip();
         ctx.fillStyle = isAct ? col.text : cText;
         const tx = Math.min(Math.max(x0 + 7, 7), x1 - tw - 5);      // label stays in view while its box scrolls past
-        ctx.fillText(name, Math.max(tx, x0 + 5), AC_CHORD_Y + AC_CHORD_H / 2);
+        ctx.fillText(name + ((unsure && sg.conf < 0.6) ? '?' : ''), Math.max(tx, x0 + 5), AC_CHORD_Y + AC_CHORD_H / 2);
         ctx.restore();
       }
+      ctx.globalAlpha = 1;
     }
 
     // playhead
@@ -4596,8 +4787,10 @@ function acDecode(f, o){
     function addBlock(s, from, to){
       if(from >= maxBeats){ truncated = true; return; }
       let len = to - from; if(from + len > maxBeats){ len = maxBeats - from; truncated = true; }
-      notes.push({ id: notes.length+1, start: Math.round(from*STEPS_PER_BEAT), length: Math.max(1, Math.round(len*STEPS_PER_BEAT)),
-                   root: noteNames[s.root], quality: AC_TYPES[s.type].seq, octave: 'mid' });
+      const nt = { id: notes.length+1, start: Math.round(from*STEPS_PER_BEAT), length: Math.max(1, Math.round(len*STEPS_PER_BEAT)),
+                   root: noteNames[s.root], quality: AC_TYPES[s.type].seq, octave: 'mid' };
+      if(typeof s.conf === 'number' && acEl.Shade.checked) nt.conf = s.conf;
+      notes.push(nt);
     }
     r.segs.forEach(s=>{
       const end = s.startBeat + s.lenBeats;
@@ -4617,7 +4810,8 @@ function acDecode(f, o){
     rootKeySel.value = keyTonic;
     updateSigBadge();
     seqRoll.setNotes(notes);
-    acEl.SendNote.textContent = 'Sent ' + notes.length + (perBeat ? ' beat-length chord blocks' : ' chords') + ' — tempo ' + bpm + ' BPM, key set to ' + keyTonic + '.' + bpmNote + (truncated ? ' (Truncated at ' + maxBars + ' bars.)' : '');
+    acEl.SendNote.textContent = 'Sent ' + notes.length + (perBeat ? ' beat-length chord blocks' : ' chords') + ' — tempo ' + bpm + ' BPM, key set to ' + keyTonic + '.' + bpmNote + (truncated ? ' (Truncated at ' + maxBars + ' bars.)' : '') +
+      (r.segs.some(sg=> typeof sg.conf === 'number' && sg.conf < 0.7) && acEl.Shade.checked ? ' Chords the analysis was unsure of are drawn fainter there.' : '');
     activateSection('sound'); activateMode('sequencer');
   }
 
@@ -4627,7 +4821,8 @@ function acDecode(f, o){
     e.target.value = '';
     if(f) acAnalyzeFile(f);
   });
-  [acEl.Vocab, acEl.Sens, acEl.Feel, acEl.Grid, acEl.Detail, acEl.Snap].forEach(el=> el.addEventListener('change', acRedecode));
+  [acEl.Vocab, acEl.Sens, acEl.Feel, acEl.Grid, acEl.Detail, acEl.Snap, acEl.Pool].forEach(el=> el.addEventListener('change', acRedecode));
+  acEl.Shade.addEventListener('change', ()=>{ acRender(); });
   acEl.Chords.addEventListener('input', ()=>{ clearTimeout(acRedoTimer); acRedoTimer = setTimeout(acRedecode, 350); });
   acEl.Bpb.addEventListener('change', acRedecode);
   acEl.FixedChk.addEventListener('change', ()=>{
@@ -4685,7 +4880,7 @@ function acDecode(f, o){
   var YT_KEY = 'trackmaker_yt_recent', YT_MAX = 5;
   var ytPlayer = null, ytPlayerPromise = null, ytApiPromise = null, ytVideoId = null, ytTitleStr = '';
   var ytA = null, ytB = null, ytRate = 1, ytPendingRate = null, ytPollId = 0, ytCounting = false, ytCountTimers = [];
-  var ytSaveTimer = 0, ytTaps = [], ytLastWrap = 0, ytCtx = null;
+  var ytSaveTimer = 0, ytTaps = [], ytLastWrap = 0, ytCtx = null, ytPos = 0, ytState = 'cued', ytPosTick = 0;
   const yt = {};
   ['Url','LoadBtn','Error','Main','Title','Host','Bar','Region','MarkA','MarkB','Head','Time','Dur','CountDisp','LoopBtn','PlayLoopBtn','LoopOn','AIn','BIn','ANeg','APos','BNeg','BPos','ClearBtn','Rate','RatePreset','RateM5','RateM1','RateP1','RateP5','RateReset','RateNote','Count','CountBpm','Tap','CountWhen','Vol','Recent'].forEach(k=>{
     yt[k] = document.getElementById('yt' + k);
@@ -4779,13 +4974,17 @@ function acDecode(f, o){
   function ytOnState(e){
     const S = YT.PlayerState, st = e.data;
     if(st === S.PLAYING){
+      ytState = 'playing';
       if(ytCounting) ytCancelCount();                         // the user pressed play themselves during a count-in
       if(ytPendingRate !== null){ const want = ytPendingRate; try{ ytPlayer.setPlaybackRate(want); }catch(_){} ytPendingRate = null; clearTimeout(ytRateCheck); ytRateCheck = setTimeout(()=> ytVerifyRate(want), 400); }
       ytRefreshInfo(); ytStartPoll();
     } else if(st === S.PAUSED || st === S.CUED){
+      ytState = (st === S.CUED) ? 'cued' : 'paused';
       if(st === S.CUED) ytRefreshInfo();
       ytStopPoll();
+      if(st === S.PAUSED) ytSaveSoon();                        // remember where we stopped
     } else if(st === S.ENDED){
+      ytState = 'ended'; ytPos = 0; ytSaveSoon();
       ytStopPoll();
       if(ytLoopActive()) ytWrap();
     }
@@ -4836,10 +5035,16 @@ function acDecode(f, o){
   // ----- polling & looping -----
   function ytTick(){
     if(!ytPlayer || !ytPlayer.getCurrentTime) return;
-    const t = ytNow(), dur = ytDuration();
+    const real = ytNow(), dur = ytDuration();
+    let t = real;
+    if(ytState === 'cued' && ytPos > 0) t = ytPos;                // a resumed video that has not started yet shows where it will pick up
+    else if(ytState === 'playing' || ytState === 'paused'){
+      ytPos = (dur > 0 && real > dur - 3) ? 0 : real;              // remembered position (nothing to resume once it is nearly over)
+      if(ytState === 'playing' && ++ytPosTick >= 170){ ytPosTick = 0; ytSaveSoon(); }
+    }
     yt.Time.textContent = ytFmt(t); yt.Dur.textContent = ytFmt(dur);
     if(dur > 0) yt.Head.style.left = Math.min(100, t / dur * 100) + '%';
-    if(!ytCounting && ytLoopActive() && t >= ytB) ytWrap();
+    if(!ytCounting && ytLoopActive() && real >= ytB) ytWrap();
   }
   function ytStartPoll(){ if(!ytPollId) ytPollId = setInterval(ytTick, 30); }
   function ytStopPoll(){ if(ytPollId){ clearInterval(ytPollId); ytPollId = 0; } ytTick(); }
@@ -4946,7 +5151,7 @@ function acDecode(f, o){
   function ytWriteList(list){ try{ localStorage.setItem(YT_KEY, JSON.stringify(list.slice(0, YT_MAX))); }catch(e){} }
   function ytSettings(){
     return { id: ytVideoId, title: ytTitleStr, a: ytA, b: ytB, rate: ytRate, loopOn: yt.LoopOn.checked,
-             countBeats: parseInt(yt.Count.value) || 0, countBpm: parseFloat(yt.CountBpm.value) || 100, countWhen: yt.CountWhen.value, ts: Date.now() };
+             countBeats: parseInt(yt.Count.value) || 0, countBpm: parseFloat(yt.CountBpm.value) || 100, countWhen: yt.CountWhen.value, pos: Math.round(ytPos * 10) / 10, ts: Date.now() };
   }
   // force = true when a video is loaded (adds it); otherwise only updates a video that is still in the list,
   // so a deleted entry stays deleted until the video is loaded again
@@ -4971,6 +5176,7 @@ function acDecode(f, o){
       else if(en.a !== null && en.a !== undefined) bits.push('A ' + ytFmt(en.a));
       if(en.rate && en.rate !== 1) bits.push(ytPct(en.rate) + '% speed');
       if(en.countBeats > 0) bits.push('count-in ' + en.countBeats);
+      if(en.pos > 3) bits.push('resumes at ' + ytFmt(en.pos));
       const sm = document.createElement('div'); sm.className = 'yt-rec-s'; sm.textContent = bits.length ? bits.join(' · ') : 'no loop set';
       main.appendChild(t); main.appendChild(sm);
       const del = document.createElement('button'); del.type = 'button'; del.className = 'yt-rec-del'; del.dataset.del = en.id; del.title = 'Remove from the list'; del.textContent = '✕';
@@ -4987,6 +5193,7 @@ function acDecode(f, o){
     ytA = (saved && typeof saved.a === 'number') ? saved.a : null;
     ytB = (saved && typeof saved.b === 'number') ? saved.b : null;
     ytRate = (saved && saved.rate) || 1; ytPendingRate = ytRate !== 1 ? ytRate : null;
+    ytPos = (saved && saved.pos > 0) ? saved.pos : 0; ytState = 'cued'; ytPosTick = 0;
     if(saved){
       yt.LoopOn.checked = saved.loopOn !== false;
       if(saved.countBeats !== undefined) yt.Count.value = String(saved.countBeats);
@@ -4999,8 +5206,8 @@ function acDecode(f, o){
     yt.Head.style.left = '0%'; yt.Time.textContent = '0:00.00'; yt.Dur.textContent = '';
     ytRenderLoop(); ytRenderRate(); yt.RateNote.textContent = '';
     try{
-      if(ytPlayer && ytPlayer.cueVideoById){ ytPlayer.cueVideoById(id); }
-      else { await ytEnsurePlayer(id); }
+      if(ytPlayer && ytPlayer.cueVideoById){ ytPlayer.cueVideoById(ytPos > 0 ? { videoId: id, startSeconds: ytPos } : id); }
+      else { await ytEnsurePlayer(id); if(ytPos > 0 && ytPlayer && ytPlayer.cueVideoById) ytPlayer.cueVideoById({ videoId: id, startSeconds: ytPos }); }
     }catch(err){
       yt.Error.textContent = err.message || String(err);
       if(!ytPlayer) yt.Main.style.display = 'none';
@@ -5013,7 +5220,7 @@ function acDecode(f, o){
     const id = ytParseId(yt.Url.value);
     if(!id){ yt.Error.textContent = 'That doesn\'t look like a YouTube link — paste the address of a video (youtube.com/watch?v=… or youtu.be/…).'; return; }
     if(id === ytVideoId && ytPlayer){ yt.Error.textContent = ''; return; }
-    ytLoad(id, null);
+    ytLoad(id, ytReadList().find(x=> x.id === id) || null);        // a video seen before comes back with its loop, speed, count-in and position
   }
 
   // ----- events -----
@@ -5074,12 +5281,12 @@ function acDecode(f, o){
 
   // ---------------- Backing Tracks ----------------
   var BT_KEY = 'trackmaker_backing_v1', BT_HIST_MAX = 20;
-  var bt = { hist: [], sets: [], setId: null, gap: 5, vol: 0.8, cur: null, playing: false, playingSet: false, setIdx: -1, token: 0,
-             gapTimer: 0, gapEnd: 0, gapNext: -1, objUrl: null, ytp: null, spApi: null, spApiP: null, spCtl: null, spPos: 0, spDur: 0, spPaused: true,
+  var bt = { hist: [], sets: [], setId: null, gap: 5, vol: 0.8, repeat: false, fade: 0, fadeF: 1, errRun: 0, cur: null, playing: false, playingSet: false, setIdx: -1, token: 0,
+             gapTimer: 0, gapGo: 0, gapEnd: 0, gapNext: -1, objUrl: null, ytp: null, spApi: null, spApiP: null, spCtl: null, spPos: 0, spDur: 0, spPaused: true,
              spLast: null, spWantPlay: false, poll: 0, seeking: false, pending: {}, dbP: null, err: '', status: '', dragId: null };
   const btE = {};
   ['Url','AddLink','AddFiles','File','Error','Title','Sub','YtWrap','SpWrap','Prev','Play','Stop','Next','Vol','Seek','Time','Status','Skip','Hist','HistInfo',
-   'SetSel','SetNew','SetRename','SetDel','SetItems','PlaySet','Gap','Mini','MiniTitle','MiniPlay','MiniNext','Audio'].forEach(k=>{ btE[k] = document.getElementById('bt' + k); });
+   'SetSel','SetNew','SetRename','SetDel','SetItems','PlaySet','Gap','Repeat','Fade','Mini','MiniTitle','MiniPlay','MiniNext','Audio'].forEach(k=>{ btE[k] = document.getElementById('bt' + k); });
   const BT_KINDS = { file: 'File', url: 'Link', youtube: 'YouTube', spotify: 'Spotify' };
 
   function btUid(){ return Math.random().toString(36).slice(2, 10) + Date.now().toString(36); }
@@ -5092,12 +5299,13 @@ function acDecode(f, o){
       bt.setId = o.setId;
       if(isFinite(o.gap) && o.gap >= 0) bt.gap = o.gap;
       if(isFinite(o.vol) && o.vol >= 0 && o.vol <= 1) bt.vol = o.vol;
+      bt.repeat = !!o.repeat; if(isFinite(o.fade) && o.fade >= 0 && o.fade <= 20) bt.fade = o.fade;
     }catch(e){}
     if(!bt.sets.length) bt.sets = [{ id: btUid(), name: 'Set list 1', items: [] }];
     if(!bt.sets.some(x=> x.id === bt.setId)) bt.setId = bt.sets[0].id;
   }
   function btSave(){
-    try{ localStorage.setItem(BT_KEY, JSON.stringify({ hist: bt.hist, sets: bt.sets, setId: bt.setId, gap: bt.gap, vol: bt.vol })); }
+    try{ localStorage.setItem(BT_KEY, JSON.stringify({ hist: bt.hist, sets: bt.sets, setId: bt.setId, gap: bt.gap, vol: bt.vol, repeat: bt.repeat, fade: bt.fade })); }
     catch(e){ btErr('Couldn\'t save your list to the browser\'s storage.'); }
   }
   function btErr(m){ bt.err = m || ''; btE.Error.textContent = bt.err; }
@@ -5249,7 +5457,7 @@ function acDecode(f, o){
     const t = bt.cur;
     btE.Title.textContent = t ? (t.title || t.src) : 'Nothing loaded';
     let sub = '';
-    if(t){ sub = BT_KINDS[t.kind]; if(bt.playingSet){ sub += ' · set list track ' + (bt.setIdx + 1) + ' of ' + btCurSet().items.length; } }
+    if(t){ sub = BT_KINDS[t.kind]; if(bt.playingSet){ sub += ' · set list track ' + (bt.setIdx + 1) + ' of ' + btCurSet().items.length + (bt.repeat ? ' · repeating' : ''); } }
     btE.Sub.textContent = sub;
     btE.YtWrap.style.display = (t && t.kind === 'youtube') ? 'block' : 'none';
     btE.SpWrap.style.display = (t && t.kind === 'spotify') ? 'block' : 'none';
@@ -5267,8 +5475,7 @@ function acDecode(f, o){
     if(bt.gapTimer){
       const set = btCurSet(), nx = set.items[bt.gapNext], left = Math.max(0, Math.ceil((bt.gapEnd - Date.now()) / 1000));
       msg = 'Next: ' + (nx ? (nx.title || nx.src) : '') + ' in ' + left + ' s';
-    } else if(bt.err){ msg = ''; }
-    else msg = bt.status || '';
+    } else msg = bt.status || '';
     btE.Status.textContent = msg; btE.Skip.style.display = bt.gapTimer ? '' : 'none';
     btE.Error.textContent = bt.err;
   }
@@ -5281,8 +5488,9 @@ function acDecode(f, o){
 
   // ----- engines -----
   function btApplyVol(){
-    try{ btE.Audio.volume = bt.vol; }catch(e){}
-    try{ if(bt.ytp && bt.ytp.setVolume) bt.ytp.setVolume(Math.round(bt.vol * 100)); }catch(e){}
+    const v = Math.max(0, Math.min(1, bt.vol * bt.fadeF));
+    try{ btE.Audio.volume = v; }catch(e){}
+    try{ if(bt.ytp && bt.ytp.setVolume) bt.ytp.setVolume(Math.round(v * 100)); }catch(e){}
   }
   function btPos(){
     const t = bt.cur; if(!t) return 0;
@@ -5307,6 +5515,18 @@ function acDecode(f, o){
     btE.Seek.value = d > 0 ? String(Math.round(Math.min(1, p / d) * 1000)) : '0';
   }
   function btStartPoll(){ if(!bt.poll) bt.poll = setInterval(btTick, 250); }
+  // fade in at the start and out at the end of each track while a set list plays (an embedded Spotify player has no volume control)
+  function btFadeTick(){
+    const t = bt.cur, on = !!t && bt.fade > 0 && bt.playingSet && t.kind !== 'spotify';
+    if(!on){ if(bt.fadeF !== 1){ bt.fadeF = 1; btApplyVol(); } return; }
+    if(!bt.playing) return;
+    const p = btPos(), d = btDur();
+    let f = Math.min(1, p / bt.fade);
+    if(d > 0) f = Math.min(f, (d - p) / bt.fade);
+    f = Math.round(Math.max(0, Math.min(1, f)) * 100) / 100;
+    if(Math.abs(f - bt.fadeF) >= 0.01){ bt.fadeF = f; btApplyVol(); }
+  }
+  setInterval(btFadeTick, 80);
   function btStopEngines(){
     try{ btE.Audio.pause(); }catch(e){}
     try{ if(bt.ytp && bt.ytp.pauseVideo) bt.ytp.pauseVideo(); }catch(e){}
@@ -5320,13 +5540,19 @@ function acDecode(f, o){
   function btFail(err, track){
     const msg = (err && err.message) ? err.message : String(err);
     bt.err = msg; bt.playing = false; btSyncButtons(); btRenderStatus();
-    if(bt.playingSet) btOnEnded();                              // keep the set going; the error stays visible during the pause
+    if(!bt.playingSet) return;
+    bt.errRun++;
+    if(bt.errRun >= Math.max(1, btCurSet().items.length)){       // every track in a row failed: don't loop forever
+      bt.playingSet = false; btClearGap(); bt.status = 'Stopped — none of the tracks in the set list could be played.'; btRenderPlayer(); return;
+    }
+    btOnEnded();                                                // keep the set going; the error stays visible during the pause
   }
   // load a track into the player; autoplay starts it straight away
   async function btLoad(track, autoplay){
     const tok = ++bt.token;
     btStopEngines(); btClearGap();
     bt.err = ''; bt.status = ''; bt.cur = track; bt.playing = false; bt.spLast = null; bt.spPos = 0; bt.spDur = 0; bt.spPaused = true;
+    bt.fadeF = (bt.fade > 0 && bt.playingSet && track.kind !== 'spotify') ? 0 : 1;          // a faded track starts silent
     btTouch(track); btRenderPlayer(); btStartPoll(); btE.Seek.value = '0'; btE.Time.textContent = '0:00 / 0:00';
     try{
       if(track.kind === 'file'){
@@ -5350,6 +5576,7 @@ function acDecode(f, o){
   btE.Audio.addEventListener('play', ()=>{ if(bt.cur && (bt.cur.kind === 'file' || bt.cur.kind === 'url')){ bt.playing = true; btSyncButtons(); } });
   btE.Audio.addEventListener('pause', ()=>{ if(bt.cur && (bt.cur.kind === 'file' || bt.cur.kind === 'url')){ bt.playing = false; btSyncButtons(); } });
   btE.Audio.addEventListener('ended', ()=>{ if(bt.cur && (bt.cur.kind === 'file' || bt.cur.kind === 'url')) btOnEnded(); });
+  btE.Audio.addEventListener('playing', ()=>{ bt.errRun = 0; });
   btE.Audio.addEventListener('loadedmetadata', btTick);
   btE.Audio.addEventListener('error', ()=>{
     if(!btE.Audio.getAttribute('src') || !bt.cur) return;
@@ -5383,7 +5610,7 @@ function acDecode(f, o){
   function btYtState(e){
     if(!bt.cur || bt.cur.kind !== 'youtube') return;
     const S = YT.PlayerState, st = e.data;
-    if(st === S.PLAYING){ bt.playing = true; btApplyVol(); btYtInfo(); }
+    if(st === S.PLAYING){ bt.playing = true; bt.errRun = 0; btApplyVol(); btYtInfo(); }
     else if(st === S.PAUSED){ bt.playing = false; }
     else if(st === S.CUED){ bt.playing = false; btYtInfo(); }
     else if(st === S.ENDED){ bt.playing = false; btSyncButtons(); btOnEnded(); return; }
@@ -5434,7 +5661,7 @@ function acDecode(f, o){
   function btSpUpdate(d){
     if(!d || !bt.cur || bt.cur.kind !== 'spotify') return;
     const now = { pos: d.position || 0, dur: d.duration || 0, paused: !!d.isPaused }, prev = bt.spLast;
-    bt.spPos = now.pos; bt.spDur = now.dur; bt.spPaused = now.paused; bt.playing = !now.paused; bt.spLast = now;
+    bt.spPos = now.pos; bt.spDur = now.dur; bt.spPaused = now.paused; bt.playing = !now.paused; bt.spLast = now; if(bt.playing) bt.errRun = 0;
     btSyncButtons(); btTick();
     if(prev && !prev.paused && now.paused && prev.dur > 0 && prev.pos >= prev.dur - 3000 && (now.pos <= 0 || now.pos >= now.dur - 1000)){
       bt.playing = false; btSyncButtons(); btOnEnded();
@@ -5473,7 +5700,7 @@ function acDecode(f, o){
         else { btE.Audio.pause(); btE.Audio.currentTime = 0; }
       }catch(e){}
     }
-    bt.playing = false; btRenderPlayer(); btTick();
+    bt.playing = false; bt.fadeF = 1; btApplyVol(); btRenderPlayer(); btTick();
   }
   function btSeek(sec){
     const t = bt.cur; if(!t) return;
@@ -5485,7 +5712,7 @@ function acDecode(f, o){
   }
 
   // ----- set list playback -----
-  function btClearGap(){ if(bt.gapTimer){ clearInterval(bt.gapTimer); bt.gapTimer = 0; } bt.gapNext = -1; }
+  function btClearGap(){ if(bt.gapTimer){ clearInterval(bt.gapTimer); bt.gapTimer = 0; } if(bt.gapGo){ clearTimeout(bt.gapGo); bt.gapGo = 0; } bt.gapNext = -1; }
   function btResyncIdx(){
     if(!bt.playingSet || !bt.cur) return;
     const items = btCurSet().items;
@@ -5495,6 +5722,7 @@ function acDecode(f, o){
   }
   function btPlaySet(start){
     const set = btCurSet(); if(!set.items.length) return;
+    bt.errRun = 0;
     btGoTo(Math.max(0, Math.min(start || 0, set.items.length - 1)));
   }
   function btGoTo(i){
@@ -5509,13 +5737,15 @@ function acDecode(f, o){
     btResyncIdx();
     const next = bt.setIdx + 1;
     if(next < btCurSet().items.length) btStartGap(next);
-    else { bt.playingSet = false; bt.status = 'Set list finished.'; btRenderPlayer(); }
+    else if(bt.repeat && btCurSet().items.length) btStartGap(0);        // back to the top of the list
+    else { bt.playingSet = false; bt.status = 'Set list finished.'; bt.fadeF = 1; btApplyVol(); btRenderPlayer(); }
   }
   function btStartGap(next){
     btClearGap();
     if(bt.gap <= 0){ btGoTo(next); return; }
     bt.gapNext = next; bt.gapEnd = Date.now() + bt.gap * 1000;
-    bt.gapTimer = setInterval(()=>{ if(bt.gapEnd - Date.now() <= 0) btGoTo(bt.gapNext); else btRenderStatus(); }, 200);
+    bt.gapTimer = setInterval(btRenderStatus, 200);                                   // the countdown text
+    bt.gapGo = setTimeout(()=>{ if(bt.gapTimer) btGoTo(bt.gapNext); }, bt.gap * 1000);   // the next track starts exactly when the pause is over
     btRenderStatus();
   }
   function btSkipGap(){ if(bt.gapTimer) btGoTo(bt.gapNext); }
@@ -5581,6 +5811,8 @@ function acDecode(f, o){
   btE.Seek.addEventListener('input', ()=>{ bt.seeking = true; const d = btDur(); btE.Time.textContent = btFmt(parseFloat(btE.Seek.value) / 1000 * d) + ' / ' + btFmt(d); });
   btE.Seek.addEventListener('change', ()=>{ const d = btDur(); btSeek(parseFloat(btE.Seek.value) / 1000 * d); bt.seeking = false; setTimeout(btTick, 150); });
   btE.Gap.addEventListener('change', ()=>{ const v = parseFloat(btE.Gap.value); bt.gap = (isFinite(v) && v >= 0) ? Math.min(300, v) : bt.gap; btE.Gap.value = String(bt.gap); btSave(); });
+  btE.Repeat.addEventListener('change', ()=>{ bt.repeat = btE.Repeat.checked; btSave(); btRenderPlayer(); });
+  btE.Fade.addEventListener('change', ()=>{ const v = parseFloat(btE.Fade.value); bt.fade = (isFinite(v) && v >= 0) ? Math.min(20, v) : bt.fade; btE.Fade.value = String(bt.fade); btSave(); btFadeTick(); });
   btE.PlaySet.addEventListener('click', ()=> btPlaySet(0));
   btE.SetSel.addEventListener('change', ()=>{ bt.setId = btE.SetSel.value; bt.playingSet = false; btClearGap(); btSave(); btRenderPlayer(); });
   btE.SetNew.addEventListener('click', ()=>{
@@ -5645,12 +5877,451 @@ function acDecode(f, o){
   });
 
   btLoadState();
-  btE.Vol.value = String(bt.vol); btE.Gap.value = String(bt.gap); btApplyVol();
+  btE.Vol.value = String(bt.vol); btE.Gap.value = String(bt.gap); btE.Repeat.checked = bt.repeat; btE.Fade.value = String(bt.fade); btApplyVol();
   btRenderHist(); btRenderSet(); btSyncButtons();
+
+  // ---------------- Chord Sequencer project: undo / redo and save / load ----------------
+  const PROJ_FORMAT = 'trackmaker-project', PROJ_VERSION = 1;
+  const seqE = {};
+  ['UndoBtn','RedoBtn','SaveProjBtn','LoadProjBtn','ProjFile','ProjMsg','Shade','ShadeWrap','ClearConfBtn'].forEach(k=>{ seqE[k] = document.getElementById('seq' + k); });
+  const metroTickSel = document.getElementById('tickType');
+
+  // Everything that makes up the sequencer's work: chords, drums, tempo, bars, time signature, key. Used for undo/redo and for project files.
+  function seqCaptureProject(){
+    const hits = {};
+    DRUM_VOICES.forEach(v=>{ const a = customDrumPattern[v] || [], h = []; for(let i = 0; i < a.length; i++) if(a[i]) h.push(i); hits[v] = h; });
+    return {
+      key: { root: rootKeySel.value, scale: scaleTypeSel.value, sevenths: useSeventhsBox.checked },
+      sound: soundTypeSel.value,
+      tempo: parseFloat(bpmInput.value) || null, bars: parseInt(barsInput.value) || null,
+      beatsPerBar: parseInt(beatsPerBarSel.value) || null, beatUnit: parseInt(beatUnitSel.value) || null,
+      chords: seqRoll.getNotes().slice().sort((a, b)=> a.start - b.start || a.length - b.length).map(c=>{
+        const o = { start: c.start, length: c.length, root: c.root, quality: c.quality, octave: c.octave };
+        if(typeof c.conf === 'number') o.conf = Math.round(c.conf * 100) / 100;
+        return o;
+      }),
+      drums: { pattern: drumPatternSel.value, bars: customDrumPatternBars, hits: hits },
+      metronome: { on: metronomeOnBox.checked, tick: metroTickSel.value, accentFirst: accentFirstBox.checked, volume: parseFloat(metroVolumeSlider.value) }
+    };
+  }
+  function seqSetCtl(el, val, isCheck){
+    if(!el || val === null || val === undefined) return;
+    if(isCheck){ if(el.checked !== !!val){ el.checked = !!val; el.dispatchEvent(new Event('change', { bubbles: true })); } }
+    else if(String(el.value) !== String(val)){ el.value = val; el.dispatchEvent(new Event('change', { bubbles: true })); }
+  }
+  // Only controls whose value really differs get a change event, so an undo of a chord edit does not touch playback.
+  function seqApplyProject(p, opts){
+    if(opts && opts.stop){ try{ stopSequence(); stopAllSustained(); }catch(e){} }
+    if(p.key){ seqSetCtl(rootKeySel, p.key.root); seqSetCtl(scaleTypeSel, p.key.scale); seqSetCtl(useSeventhsBox, p.key.sevenths, true); }
+    if(p.sound && Array.from(soundTypeSel.options).some(o=> o.value === p.sound && !o.disabled)) seqSetCtl(soundTypeSel, p.sound);
+    if(p.beatsPerBar){ ensureOption(beatsPerBarSel, p.beatsPerBar); seqSetCtl(beatsPerBarSel, p.beatsPerBar); }
+    if(p.beatUnit){ ensureOption(beatUnitSel, p.beatUnit); seqSetCtl(beatUnitSel, p.beatUnit); }
+    if(p.bars) seqSetCtl(barsInput, p.bars);
+    if(p.tempo) seqSetCtl(bpmInput, p.tempo);
+    if(p.metronome){
+      seqSetCtl(metronomeOnBox, p.metronome.on, true); seqSetCtl(accentFirstBox, p.metronome.accentFirst, true);
+      if(Array.from(metroTickSel.options).some(o=> o.value === p.metronome.tick)) seqSetCtl(metroTickSel, p.metronome.tick);
+      if(Number.isFinite(p.metronome.volume) && metroVolumeSlider.value !== String(p.metronome.volume)){ metroVolumeSlider.value = p.metronome.volume; metroVolumeSlider.dispatchEvent(new Event('input', { bubbles: true })); }
+    }
+    if(p.drums){
+      const dr = p.drums, known = Array.from(drumPatternSel.options).some(o=> o.value === dr.pattern);
+      const pat = known ? dr.pattern : 'custom';
+      if(drumPatternSel.value !== pat){ drumPatternSel.value = pat; drumPatternSel.dispatchEvent(new Event('change')); }   // may load a preset into the grid; replaced just below
+      customDrumPatternBars = Math.max(1, Math.min(32, parseInt(dr.bars) || 1));
+      document.getElementById('customDrumBars').value = customDrumPatternBars;
+      const n = customDrumTotalSteps();
+      DRUM_VOICES.forEach(v=>{ const a = new Array(n).fill(false); ((dr.hits && dr.hits[v]) || []).forEach(i=>{ if(i >= 0 && i < n) a[i] = true; }); customDrumPattern[v] = a; });
+      loadedGrooveEntry = null; updateLoadedGrooveUI(); updateCustomDrumUIVisibility();
+    }
+    seqRoll.setNotes((p.chords || []).map((c, i)=>{
+      const o = { id: i + 1, start: c.start, length: c.length, root: c.root, quality: c.quality, octave: c.octave };
+      if(typeof c.conf === 'number') o.conf = c.conf;
+      return o;
+    }));
+    updateSigBadge(); seqRoll.render();
+  }
+
+  // ----- undo / redo: the state is compared a few times a second; a change that has settled becomes one undo step -----
+  const seqHist = { undo: [], redo: [], cur: null, last: null, applying: false, max: 80 };
+  let seqPointerDownAt = 0;
+  ['pointerdown', 'mousedown', 'touchstart'].forEach(ev=> document.addEventListener(ev, ()=>{ seqPointerDownAt = Date.now(); }, true));
+  ['pointerup', 'pointercancel', 'mouseup', 'touchend', 'touchcancel', 'dragend', 'blur'].forEach(ev=> window.addEventListener(ev, ()=>{ seqPointerDownAt = 0; }, true));
+  function seqUpdateHistBtns(){
+    seqE.UndoBtn.disabled = !seqHist.undo.length; seqE.RedoBtn.disabled = !seqHist.redo.length;
+    seqE.UndoBtn.title = 'Undo (Ctrl+Z)' + (seqHist.undo.length ? ' — ' + seqHist.undo.length + ' step' + (seqHist.undo.length > 1 ? 's' : '') : '');
+    seqE.RedoBtn.title = 'Redo (Ctrl+Y)' + (seqHist.redo.length ? ' — ' + seqHist.redo.length + ' step' + (seqHist.redo.length > 1 ? 's' : '') : '');
+  }
+  function seqHistTick(force){
+    if(seqHist.applying || seqHist.cur === null) return;
+    if(!force && seqPointerDownAt && Date.now() - seqPointerDownAt < 15000) return;   // mid-drag: wait until the pointer is released
+    const now = JSON.stringify(seqCaptureProject());
+    if(now === seqHist.cur){ seqHist.last = now; return; }
+    if(force || now === seqHist.last){
+      seqHist.undo.push(seqHist.cur); if(seqHist.undo.length > seqHist.max) seqHist.undo.shift();
+      seqHist.redo = []; seqHist.cur = now; seqHist.last = now; seqUpdateHistBtns();
+    } else seqHist.last = now;
+  }
+  function seqHistGo(dir){
+    seqHistTick(true);
+    const from = dir < 0 ? seqHist.undo : seqHist.redo, to = dir < 0 ? seqHist.redo : seqHist.undo;
+    if(!from.length) return false;
+    const snap = from.pop(); to.push(seqHist.cur);
+    seqHist.applying = true;
+    try{ seqApplyProject(JSON.parse(snap)); } finally { seqHist.applying = false; }
+    seqHist.cur = seqHist.last = JSON.stringify(seqCaptureProject());                // what is really there now
+    seqUpdateHistBtns(); seqUpdateShadeUI();
+    return true;
+  }
+  seqE.UndoBtn.addEventListener('click', ()=> seqHistGo(-1));
+  seqE.RedoBtn.addEventListener('click', ()=> seqHistGo(1));
+  document.addEventListener('keydown', e=>{
+    if(currentMode !== 'sequencer' || !(e.ctrlKey || e.metaKey) || e.altKey) return;
+    const t = e.target, tag = t && t.tagName;
+    if(tag === 'TEXTAREA' || (t && t.isContentEditable) || (tag === 'INPUT' && !['checkbox', 'range', 'button'].includes(t.type))) return;   // text fields keep their own undo
+    const k = String(e.key).toLowerCase();
+    if(k === 'z' && !e.shiftKey){ e.preventDefault(); seqHistGo(-1); }
+    else if(k === 'y' || (k === 'z' && e.shiftKey)){ e.preventDefault(); seqHistGo(1); }
+  });
+
+  // ----- confidence shading controls -----
+  function seqUpdateShadeUI(){ seqE.ShadeWrap.style.display = seqRoll.getNotes().some(n=> typeof n.conf === 'number') ? 'flex' : 'none'; }
+  seqE.Shade.addEventListener('change', ()=> seqRoll.render());
+  seqE.ClearConfBtn.addEventListener('click', ()=>{
+    seqRoll.getNotes().forEach(n=>{ delete n.conf; });
+    seqRoll.render(); seqUpdateShadeUI(); seqHistTick(true);
+  });
+
+  // ----- save / load a project file -----
+  function seqSaveProject(){
+    seqHistTick(true);
+    let name = 'trackmaker-project';
+    try{ name = localStorage.getItem('trackmaker_last_project_name') || name; }catch(e){}
+    const ans = window.prompt('Name for the project file:', name); if(ans === null) return;
+    name = ans.trim() || 'trackmaker-project';
+    try{ localStorage.setItem('trackmaker_last_project_name', name); }catch(e){}
+    const proj = Object.assign({ format: PROJ_FORMAT, version: PROJ_VERSION, app: APP_VERSION, name: name, saved: new Date().toISOString() }, seqCaptureProject());
+    const blob = new Blob([JSON.stringify(proj, null, 1)], { type: 'application/json' });
+    const fileName = name.replace(/[^\w\- ]+/g, '_').trim().replace(/\s+/g, '-') + '.trackmaker.json';
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = fileName;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=> URL.revokeObjectURL(a.href), 3000);
+    seqE.ProjMsg.textContent = 'Saved "' + fileName + '" — ' + proj.chords.length + ' chord' + (proj.chords.length === 1 ? '' : 's') + ', ' + (proj.tempo || '?') + ' BPM.';
+  }
+  // checks a loaded file and fixes what it can; anything unusable is dropped and counted
+  function seqSanitizeProject(raw){
+    if(!raw || typeof raw !== 'object' || raw.format !== PROJ_FORMAT) throw new Error('That isn\'t a Track Maker project file.');
+    if(!(raw.version >= 1) || raw.version > PROJ_VERSION) throw new Error('That project was saved by a newer version of Track Maker (file format ' + raw.version + ').');
+    const warns = [], clamp = (v, lo, hi)=> Number.isFinite(v) ? Math.max(lo, Math.min(hi, v)) : null;
+    const out = {};
+    if(raw.key && typeof raw.key === 'object') out.key = { root: noteNames.includes(raw.key.root) ? raw.key.root : rootKeySel.value, scale: raw.key.scale === 'minor' ? 'minor' : 'major', sevenths: !!raw.key.sevenths };
+    out.sound = typeof raw.sound === 'string' ? raw.sound : null;
+    out.tempo = clamp(raw.tempo, 30, 240); out.bars = Number.isFinite(raw.bars) ? Math.round(clamp(raw.bars, 1, parseInt(barsInput.max) || 200)) : null;
+    out.beatsPerBar = Number.isFinite(raw.beatsPerBar) ? Math.round(clamp(raw.beatsPerBar, 1, 16)) : null;
+    out.beatUnit = [2, 4, 8, 16].includes(raw.beatUnit) ? raw.beatUnit : null;
+    const bars = out.bars || parseInt(barsInput.value) || 1, bpb = out.beatsPerBar || beatsPerBar(), total = bars * bpb * STEPS_PER_BEAT;
+    const okQ = Object.keys(chordLabel), chords = []; let dropped = 0, trimmed = 0;
+    (Array.isArray(raw.chords) ? raw.chords : []).forEach(c=>{
+      if(!c || !noteNames.includes(c.root) || !okQ.includes(c.quality) || !['low', 'mid', 'high'].includes(c.octave) || !Number.isFinite(c.start) || !Number.isFinite(c.length) || c.start < 0 || c.length < 1 || c.start >= total){ dropped++; return; }
+      let len = Math.round(c.length); if(c.start + len > total){ len = total - Math.round(c.start); trimmed++; }
+      const o = { start: Math.round(c.start), length: len, root: c.root, quality: c.quality, octave: c.octave };
+      if(Number.isFinite(c.conf)) o.conf = Math.max(0, Math.min(1, c.conf));
+      chords.push(o);
+    });
+    out.chords = chords;
+    if(dropped) warns.push(dropped + ' chord' + (dropped > 1 ? 's' : '') + ' could not be read and ' + (dropped > 1 ? 'were' : 'was') + ' skipped');
+    if(trimmed) warns.push(trimmed + ' chord' + (trimmed > 1 ? 's' : '') + ' ran past the end and ' + (trimmed > 1 ? 'were' : 'was') + ' shortened');
+    if(raw.drums && typeof raw.drums === 'object'){
+      const hits = {}; DRUM_VOICES.forEach(v=>{ hits[v] = Array.isArray(raw.drums.hits && raw.drums.hits[v]) ? raw.drums.hits[v].filter(i=> Number.isInteger(i) && i >= 0) : []; });
+      out.drums = { pattern: typeof raw.drums.pattern === 'string' ? raw.drums.pattern : 'none', bars: clamp(parseInt(raw.drums.bars), 1, 32) || 1, hits: hits };
+    }
+    if(raw.metronome && typeof raw.metronome === 'object') out.metronome = { on: !!raw.metronome.on, tick: raw.metronome.tick, accentFirst: raw.metronome.accentFirst !== false, volume: Number.isFinite(raw.metronome.volume) ? Math.max(0, Math.min(1, raw.metronome.volume)) : null };
+    return { project: out, warnings: warns };
+  }
+  async function seqLoadProjectFile(file){
+    try{
+      let raw; try{ raw = JSON.parse(await file.text()); }catch(e){ throw new Error('That file isn\'t valid JSON, so it can\'t be a Track Maker project.'); }
+      const r = seqSanitizeProject(raw);
+      seqHistTick(true);                                                // anything not yet recorded stays undoable
+      seqApplyProject(r.project, { stop: true });
+      seqHistTick(true); seqUpdateShadeUI();
+      seqE.ProjMsg.textContent = 'Loaded "' + (file.name || 'project') + '" — ' + r.project.chords.length + ' chord' + (r.project.chords.length === 1 ? '' : 's') +
+        (r.project.tempo ? ', ' + r.project.tempo + ' BPM' : '') + '.' + (r.warnings.length ? ' (' + r.warnings.join('; ') + '.)' : '') + ' Ctrl+Z undoes the load.';
+    }catch(err){ seqE.ProjMsg.textContent = 'Could not load the project: ' + (err && err.message ? err.message : err); }
+  }
+  seqE.SaveProjBtn.addEventListener('click', seqSaveProject);
+  seqE.LoadProjBtn.addEventListener('click', ()=> seqE.ProjFile.click());
+  seqE.ProjFile.addEventListener('change', ()=>{ const f = seqE.ProjFile.files && seqE.ProjFile.files[0]; seqE.ProjFile.value = ''; if(f) seqLoadProjectFile(f); });
+
+  seqHist.cur = seqHist.last = JSON.stringify(seqCaptureProject());
+  seqUpdateHistBtns(); seqUpdateShadeUI();
+  setInterval(()=>{ seqHistTick(false); seqUpdateShadeUI(); }, 250);
+
+  // ---------------- Circle of Fifths ----------------
+  // 'var' for state that circleOnMode() touches, because activateMode() can call it at any time.
+  var CF_KEY = 'trackmaker_circle_v1';
+  var cf = { p: 0, minor: false, flat6: false, sev: false, hv: false, snd: true };
+  var cfTimers = [], cfSeenKey = null, cfSvgBuilt = false;
+  const CF_MAJ = ['C','G','D','A','E','B','F#','Db','Ab','Eb','Bb','F'];
+  const CF_MIN = ['A','E','B','F#','C#','G#','D#','Bb','F','C','G','D'];
+  const CF_LETTERS = ['C','D','E','F','G','A','B'], CF_NAT = { C:0, D:2, E:4, F:5, G:7, A:9, B:11 };
+  const CF_FUNC = { major: ['Tonic','Pre-dominant','Tonic','Subdominant','Dominant','Tonic','Dominant'], minor: ['Tonic','Pre-dominant','Tonic','Subdominant','Dominant','Subdominant','Dominant'] };
+  const CF_SIG_SHARPS = ['F','C','G','D','A','E','B'], CF_SIG_FLATS = ['B','E','A','D','G','C','F'];
+  const CF_PROGS = {
+    major: [ { n:'I – IV – V', d:[0,3,4] }, { n:'I – V – vi – IV', d:[0,4,5,3] }, { n:'vi – IV – I – V', d:[5,3,0,4] }, { n:'I – vi – IV – V', d:[0,5,3,4] },
+             { n:'ii – V – I', d:[1,4,0] }, { n:'12-bar blues (7ths)', d:[0,0,0,0,3,3,0,0,4,3,0,4], q:'dom7' } ],
+    minor: [ { n:'i – iv – v', d:[0,3,4] }, { n:'i – VI – III – VII', d:[0,5,2,6] }, { n:'i – VII – VI – VII', d:[0,6,5,6] }, { n:'i – iv – V', d:[0,3,4], majorV:true },
+             { n:'ii° – V – i', d:[1,4,0], majorV:true } ]
+  };
+  const cfE = {};
+  ['Svg','KeyName','KeySub','Nbrs','Chips','Sev','Hv','HvWrap','Snd','Enh','ScaleBtn','SetKeyBtn','PracScaleBtn','PracArpBtn','Msg','Progs'].forEach(k=>{ cfE[k] = document.getElementById('cf' + k); });
+
+  function cfPcOf(name){ const m = name.match(/^([A-G])([#b]?)$/); return (CF_NAT[m[1]] + (m[2] === '#' ? 1 : m[2] === 'b' ? -1 : 0) + 12) % 12; }
+  function cfAcc(n){ return n === 0 ? '' : n > 0 ? '\u266f'.repeat(n) : '\u266d'.repeat(-n); }
+  function cfPretty(name){ return name.replace('#', '\u266f').replace(/([A-G])b/, '$1\u266d'); }
+  function cfPosMajor(pc){ return (pc * 7) % 12; }                           // where a major key sits on the circle
+  function cfTonicName(){ let n = cf.minor ? CF_MIN[cf.p] : CF_MAJ[cf.p]; if(cf.p === 6 && cf.flat6) n = cf.minor ? 'Eb' : 'Gb'; return n; }
+  // spell the notes of a scale with one letter per degree (so G major has F♯, not G♭)
+  function cfSpell(tonic, semis){
+    const m = tonic.match(/^([A-G])([#b]?)$/), li = CF_LETTERS.indexOf(m[1]), tpc = cfPcOf(tonic);
+    return semis.map((st, i)=>{ const L = CF_LETTERS[(li + i) % 7], d = ((((tpc + st) % 12) - CF_NAT[L] + 18) % 12) - 6; return L + cfAcc(d); });
+  }
+  function cfDegrees(){
+    const sc = SCALES[cf.minor ? 'minor' : 'major'], tonic = cfTonicName(), tpc = cfPcOf(tonic);
+    const semis = sc.semitones.slice(), quals = (cf.sev ? sc.seventh : sc.triad).slice(), romans = sc.romans.slice();
+    if(cf.minor && cf.hv){ quals[4] = cf.sev ? 'dom7' : 'major'; romans[4] = 'V'; semis[6] = 11; quals[6] = cf.sev ? 'dim7' : 'dim'; romans[6] = 'vii\u00b0'; }
+    const names = cfSpell(tonic, semis);
+    return semis.map((st, i)=> ({ roman: romans[i], name: names[i], pc: (tpc + st) % 12, quality: quals[i], func: CF_FUNC[cf.minor ? 'minor' : 'major'][i], label: names[i] + chordLabel[quals[i]] }));
+  }
+  function cfSig(){
+    const sharp = cf.p < 6 || (cf.p === 6 && !cf.flat6), n = cf.p === 0 ? 0 : (cf.p <= 6 ? cf.p : 12 - cf.p);
+    return { n: n, sharp: sharp, notes: (sharp ? CF_SIG_SHARPS : CF_SIG_FLATS).slice(0, n).map(x=> x + (sharp ? '\u266f' : '\u266d')) };
+  }
+  function cfNeighbours(){
+    const tpc = cfPcOf(cfTonicName()), out = [], mk = (role, p, minor)=> out.push({ role: role, p: p, minor: minor, label: cfPretty(cf6(p, minor)) + (minor ? ' minor' : ' major') });
+    function cf6(p, minor){ return (p === 6 && cf.flat6) ? (minor ? 'Eb' : 'Gb') : (minor ? CF_MIN[p] : CF_MAJ[p]); }
+    mk('Dominant (V)', (cf.p + 1) % 12, cf.minor); mk('Subdominant (IV)', (cf.p + 11) % 12, cf.minor);
+    mk('Relative', cf.p, !cf.minor);
+    mk('Parallel', cf.minor ? cfPosMajor(tpc) : cfPosMajor((tpc + 3) % 12), !cf.minor);
+    return out;
+  }
+
+  // ----- the wheel -----
+  function cfArc(cx, cy, r0, r1, a0, a1){
+    const pt = (r, a)=>{ const t = (a - 90) * Math.PI / 180; return [cx + r * Math.cos(t), cy + r * Math.sin(t)]; };
+    const A = pt(r1, a0), B = pt(r1, a1), C = pt(r0, a1), D = pt(r0, a0);
+    return 'M' + A[0].toFixed(1) + ',' + A[1].toFixed(1) + ' A' + r1 + ',' + r1 + ' 0 0 1 ' + B[0].toFixed(1) + ',' + B[1].toFixed(1) +
+           ' L' + C[0].toFixed(1) + ',' + C[1].toFixed(1) + ' A' + r0 + ',' + r0 + ' 0 0 0 ' + D[0].toFixed(1) + ',' + D[1].toFixed(1) + ' Z';
+  }
+  function cfBuildSvg(){
+    const NS = 'http://www.w3.org/2000/svg', svg = cfE.Svg, cx = 240, cy = 240;
+    const mk = (tag, attrs, txt)=>{ const e = document.createElementNS(NS, tag); Object.keys(attrs || {}).forEach(k=> e.setAttribute(k, attrs[k])); if(txt !== undefined) e.textContent = txt; return e; };
+    const majL = ['C','G','D','A','E','B','F\u266f/G\u266d','D\u266d','A\u266d','E\u266d','B\u266d','F'];
+    const minL = ['Am','Em','Bm','F\u266fm','C\u266fm','G\u266fm','D\u266fm/E\u266dm','B\u266dm','Fm','Cm','Gm','Dm'];
+    const sigL = ['0','1\u266f','2\u266f','3\u266f','4\u266f','5\u266f','6\u266f/6\u266d','5\u266d','4\u266d','3\u266d','2\u266d','1\u266d'];
+    for(let p = 0; p < 12; p++){
+      const a = p * 30, rad = (a - 90) * Math.PI / 180, pos = r=> [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
+      [['maj', 135, 190, majL[p]], ['min', 85, 135, minL[p]]].forEach(([ring, r0, r1, label])=>{
+        const g = mk('g', { 'class': 'cf-seg ' + ring, 'data-p': p, 'data-ring': ring, role: 'button', 'aria-label': label + (ring === 'maj' ? ' major' : ' minor') });
+        g.appendChild(mk('path', { d: cfArc(cx, cy, r0, r1, a - 15, a + 15) }));
+        const tp = pos((r0 + r1) / 2), t = mk('text', { x: tp[0].toFixed(1), y: tp[1].toFixed(1) }, label);
+        if(label.length > 4) t.setAttribute('style', 'font-size:' + (ring === 'maj' ? 13 : 10) + 'px');
+        g.appendChild(t); svg.appendChild(g);
+      });
+      const sp = pos(213); svg.appendChild(mk('text', { 'class': 'cf-sig', x: sp[0].toFixed(1), y: sp[1].toFixed(1) }, sigL[p]));
+    }
+    svg.appendChild(mk('text', { 'class': 'cf-center-t', id: 'cfCenterT', x: cx, y: cy - 2 }, ''));
+    svg.appendChild(mk('text', { 'class': 'cf-center-s', id: 'cfCenterS', x: cx, y: cy + 20 }, ''));
+    svg.addEventListener('click', e=>{
+      const g = e.target.closest && e.target.closest('.cf-seg'); if(!g) return;
+      cfSelect(parseInt(g.getAttribute('data-p')), g.getAttribute('data-ring') === 'min', true);
+    });
+    svg.addEventListener('keydown', e=>{
+      const k = e.key; let handled = true;
+      if(k === 'ArrowRight') cfSelect((cf.p + 1) % 12, cf.minor, true);
+      else if(k === 'ArrowLeft') cfSelect((cf.p + 11) % 12, cf.minor, true);
+      else if(k === 'ArrowUp' || k === 'ArrowDown') cfSelect(cf.p, !cf.minor, true);
+      else handled = false;
+      if(handled) e.preventDefault();
+    });
+    cfSvgBuilt = true;
+  }
+
+  // ----- selecting / drawing -----
+  function cfSelect(p, minor, sound){
+    cf.p = ((p % 12) + 12) % 12; cf.minor = !!minor; if(cf.p !== 6) cf.flat6 = false;
+    cfStop(); cfRefresh();
+    if(sound && cf.snd) cfPlayChord(cfPcOf(cfTonicName()), cf.minor ? 'minor' : 'major');
+  }
+  function cfRefresh(){
+    if(!cfSvgBuilt) return;
+    const tonic = cfTonicName(), sig = cfSig(), deg = cfDegrees();
+    cfE.Svg.querySelectorAll('.cf-seg').forEach(g=>{
+      const p = parseInt(g.getAttribute('data-p')), min = g.getAttribute('data-ring') === 'min', diff = Math.min((p - cf.p + 12) % 12, (cf.p - p + 12) % 12);
+      g.classList.remove('sel', 'rel', 'blk', 'hot');
+      if(p === cf.p && min === cf.minor) g.classList.add('sel');
+      else if(p === cf.p) g.classList.add('rel');
+      else if(diff === 1) g.classList.add('blk');
+    });
+    const T = document.getElementById('cfCenterT'), S = document.getElementById('cfCenterS');
+    T.textContent = cfPretty(tonic) + (cf.minor ? ' minor' : ' major');
+    S.textContent = sig.n === 0 ? 'no sharps or flats' : sig.n + (sig.sharp ? ' sharp' : ' flat') + (sig.n > 1 ? 's' : '');
+    cfE.KeyName.textContent = cfPretty(tonic) + (cf.minor ? ' minor' : ' major');
+    const rel = cfNeighbours().find(n=> n.role === 'Relative');
+    cfE.KeySub.innerHTML = '';
+    const l1 = document.createElement('div'); l1.textContent = (sig.n === 0 ? 'No sharps or flats' : sig.n + (sig.sharp ? ' sharp' : ' flat') + (sig.n > 1 ? 's' : '') + ': ' + sig.notes.join(' ')) + ' · relative ' + (cf.minor ? 'major' : 'minor') + ': ' + rel.label.replace(/ (major|minor)$/, '');
+    const l2 = document.createElement('div'); l2.textContent = 'Notes: ' + deg.map(d=> cfPretty(d.name)).join(' ') + (cf.minor ? '  (natural minor)' : '');
+    cfE.KeySub.appendChild(l1); cfE.KeySub.appendChild(l2);
+    // neighbouring keys
+    cfE.Nbrs.innerHTML = '';
+    cfNeighbours().forEach(n=>{
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'cf-nbr'; b.dataset.p = n.p; b.dataset.minor = n.minor ? '1' : '0';
+      const sm = document.createElement('small'); sm.textContent = n.role; b.appendChild(sm); b.appendChild(document.createTextNode(n.label)); cfE.Nbrs.appendChild(b);
+    });
+    // enharmonic toggle for the 6-sharp / 6-flat key
+    cfE.Enh.style.display = cf.p === 6 ? '' : 'none';
+    if(cf.p === 6) cfE.Enh.textContent = 'Spell as ' + cfPretty(cf.minor ? (cf.flat6 ? 'D#' : 'Eb') : (cf.flat6 ? 'F#' : 'Gb')) + (cf.minor ? ' minor' : ' major');
+    cfE.HvWrap.style.display = cf.minor ? '' : 'none';
+    cfE.Sev.checked = cf.sev; cfE.Hv.checked = cf.hv; cfE.Snd.checked = cf.snd;
+    // chords of the key
+    cfE.Chips.innerHTML = '';
+    deg.forEach((d, i)=>{
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'cf-chip'; b.dataset.i = i;
+      b.innerHTML = '<span class="r"></span><span class="n"></span><span class="f"></span>';
+      b.children[0].textContent = d.roman; b.children[1].textContent = cfPretty(d.label); b.children[2].textContent = d.func; cfE.Chips.appendChild(b);
+    });
+    cfRenderProgs();
+  }
+  function cfHot(chord, on){                      // light up where a chord sits on the wheel (diminished chords have no spot)
+    cfE.Svg.querySelectorAll('.cf-seg.hot').forEach(g=> g.classList.remove('hot'));
+    if(!on || !chord) return;
+    const minorish = /^(minor|min7|m6|min9)$/.test(chord.quality), majorish = /^(major|dom7|maj7|6|add9|dom9|maj9|sus2|sus4|7sus4|aug)$/.test(chord.quality);
+    let ring = null, p = null;
+    if(majorish){ ring = 'maj'; p = cfPosMajor(chord.pc); } else if(minorish){ ring = 'min'; p = cfPosMajor((chord.pc + 3) % 12); }
+    if(ring === null) return;
+    const g = cfE.Svg.querySelector('.cf-seg[data-ring="' + ring + '"][data-p="' + p + '"]'); if(g) g.classList.add('hot');
+  }
+
+  // ----- sound -----
+  function cfStop(){
+    cfTimers.forEach(clearTimeout); cfTimers = [];
+    if(cfE && cfE.Chips){ cfE.Chips.querySelectorAll('.playing').forEach(x=> x.classList.remove('playing')); cfE.Progs.querySelectorAll('.playing').forEach(x=> x.classList.remove('playing')); cfHot(null, false); }
+    if(cfE && cfE.Progs){ cfE.Progs.querySelectorAll('[data-act="play"]').forEach(b=>{ b.textContent = '\u25b6'; }); }
+  }
+  function cfPlayChord(pc, quality, dur){
+    try{ ensureCtx(); if(audioCtx.state === 'suspended') audioCtx.resume(); playChordVoices(chordFreqs(noteNames[pc], quality, 'mid'), audioCtx.currentTime + 0.02, dur || 1.6); }catch(e){}
+  }
+  function cfBeatSec(){ const b = parseFloat(bpmInput.value); return 60 / ((isFinite(b) && b >= 30) ? Math.min(240, b) : 96); }
+  function cfChordFlash(i, chord, secs){
+    const chip = cfE.Chips.children[i];
+    if(chip){ chip.classList.add('playing'); cfTimers.push(setTimeout(()=> chip.classList.remove('playing'), secs * 1000)); }
+    cfHot(chord, true);
+  }
+  cfE.Chips.addEventListener('click', e=>{
+    const b = e.target.closest('.cf-chip'); if(!b) return;
+    const d = cfDegrees()[parseInt(b.dataset.i)]; cfStop();
+    if(cf.snd) cfPlayChord(d.pc, d.quality);
+    cfChordFlash(parseInt(b.dataset.i), d, 1.4);
+  });
+  cfE.ScaleBtn.addEventListener('click', ()=>{
+    cfStop(); const deg = cfDegrees(), tonic = cfTonicName(), tpc = cfPcOf(tonic);
+    const sc = SCALES[cf.minor ? 'minor' : 'major'], semis = sc.semitones.concat([12]), step = cfBeatSec() * 0.5;
+    ensureCtx(); if(audioCtx.state === 'suspended') audioCtx.resume();
+    semis.forEach((st, i)=> cfTimers.push(setTimeout(()=>{ try{ playNote(freqFromMidi(60 + tpc + st), audioCtx.currentTime + 0.02, step * 1.6); }catch(e){} }, i * step * 1000)));
+    cfE.Msg.textContent = 'Playing ' + cfPretty(tonic) + (cf.minor ? ' natural minor' : ' major') + ' up one octave.';
+  });
+
+  // ----- progressions -----
+  function cfProgChords(prog){
+    const deg = cfDegrees();
+    return prog.d.map(i=>{
+      const d = Object.assign({}, deg[i]);
+      if(prog.majorV && cf.minor && i === 4){ d.quality = cf.sev ? 'dom7' : 'major'; d.roman = 'V'; d.label = d.name + chordLabel[d.quality]; }
+      if(prog.q){ d.quality = prog.q; d.label = d.name + chordLabel[d.quality]; }
+      return d;
+    });
+  }
+  function cfRenderProgs(){
+    cfE.Progs.innerHTML = '';
+    CF_PROGS[cf.minor ? 'minor' : 'major'].forEach((prog, pi)=>{
+      const chords = cfProgChords(prog), row = document.createElement('div'); row.className = 'cf-prog'; row.dataset.pi = pi;
+      const t = document.createElement('span'); t.className = 't'; t.textContent = prog.n;
+      const c = document.createElement('span'); c.className = 'c'; c.textContent = chords.map(x=> cfPretty(x.label)).join('   ');
+      const pl = document.createElement('button'); pl.type = 'button'; pl.className = 'bt-ib'; pl.dataset.act = 'play'; pl.textContent = '\u25b6'; pl.title = 'Play';
+      const ad = document.createElement('button'); ad.type = 'button'; ad.className = 'bt-ib'; ad.dataset.act = 'add'; ad.textContent = '\uff0b'; ad.title = 'Add to the Chord Sequencer';
+      row.appendChild(t); row.appendChild(c); row.appendChild(pl); row.appendChild(ad); cfE.Progs.appendChild(row);
+    });
+  }
+  function cfPlayProg(pi, row){
+    cfStop();
+    const prog = CF_PROGS[cf.minor ? 'minor' : 'major'][pi], chords = cfProgChords(prog), per = cfBeatSec() * 2;
+    row.classList.add('playing'); row.querySelector('[data-act="play"]').textContent = '\u25a0';
+    chords.forEach((ch, i)=> cfTimers.push(setTimeout(()=>{ cfPlayChord(ch.pc, ch.quality, per * 0.95); cfHot(ch, true); }, i * per * 1000)));
+    cfTimers.push(setTimeout(cfStop, chords.length * per * 1000 + 100));
+  }
+  // appends chords to the Chord Sequencer, one bar each, after whatever is already there
+  function cfAddToSequencer(chords){
+    const notes = seqRoll.getNotes().map(n=> Object.assign({}, n));
+    const barSteps = beatsPerBar() * STEPS_PER_BEAT, maxBars = parseInt(barsInput.max) || 200;
+    let end = 0; notes.forEach(n=>{ end = Math.max(end, n.start + n.length); });
+    let start = Math.ceil(end / barSteps) * barSteps, added = 0;
+    const firstBar = Math.floor(start / barSteps) + 1;
+    chords.forEach(ch=>{
+      if(start / barSteps + 1 > maxBars) return;
+      notes.push({ id: 0, start: start, length: barSteps, root: noteNames[ch.pc], quality: ch.quality, octave: 'mid' }); start += barSteps; added++;
+    });
+    if(!added) return { added: 0, firstBar: firstBar };
+    notes.forEach((n, i)=>{ n.id = i + 1; });
+    const needBars = Math.ceil(start / barSteps);
+    if(needBars > (parseInt(barsInput.value) || 0)){ barsInput.value = Math.min(maxBars, needBars); barsInput.dispatchEvent(new Event('change', { bubbles: true })); }
+    seqRoll.setNotes(notes); seqRoll.render();
+    return { added: added, firstBar: firstBar, skipped: chords.length - added };
+  }
+  cfE.Progs.addEventListener('click', e=>{
+    const b = e.target.closest('button'); if(!b) return;
+    const row = b.closest('.cf-prog'), pi = parseInt(row.dataset.pi);
+    if(b.dataset.act === 'play'){ if(row.classList.contains('playing')) cfStop(); else cfPlayProg(pi, row); }
+    else if(b.dataset.act === 'add'){
+      const r = cfAddToSequencer(cfProgChords(CF_PROGS[cf.minor ? 'minor' : 'major'][pi]));
+      cfE.Msg.textContent = r.added ? 'Added ' + r.added + ' chord' + (r.added > 1 ? 's' : '') + ' to the Chord Sequencer (bar' + (r.added > 1 ? 's ' + r.firstBar + '–' + (r.firstBar + r.added - 1) : ' ' + r.firstBar) + ')' + (r.skipped ? ' — the rest did not fit in 200 bars' : '') + '. Open Sound Tools → Chord Sequencer to hear and edit it (Ctrl+Z undoes it there).' : 'The sequencer is already full (200 bars).';
+    }
+  });
+
+  // ----- key actions -----
+  cfE.Nbrs.addEventListener('click', e=>{ const b = e.target.closest('.cf-nbr'); if(b) cfSelect(parseInt(b.dataset.p), b.dataset.minor === '1', true); });
+  cfE.Enh.addEventListener('click', ()=>{ cf.flat6 = !cf.flat6; cfRefresh(); });
+  [['Sev', 'sev'], ['Hv', 'hv'], ['Snd', 'snd']].forEach(([id, key])=> cfE[id].addEventListener('change', ()=>{ cf[key] = cfE[id].checked; try{ localStorage.setItem(CF_KEY, JSON.stringify({ sev: cf.sev, hv: cf.hv, snd: cf.snd })); }catch(e){} cfStop(); cfRefresh(); }));
+  cfE.SetKeyBtn.addEventListener('click', ()=>{
+    const pc = cfPcOf(cfTonicName());
+    rootKeySel.value = noteNames[pc]; rootKeySel.dispatchEvent(new Event('change', { bubbles: true }));
+    scaleTypeSel.value = cf.minor ? 'minor' : 'major'; scaleTypeSel.dispatchEvent(new Event('change', { bubbles: true }));
+    cfSeenKey = rootKeySel.value + '/' + scaleTypeSel.value;
+    cfE.Msg.textContent = 'The Chord Sequencer (and the Key box above) is now set to ' + cfPretty(cfTonicName()) + (cf.minor ? ' minor' : ' major') + '.';
+  });
+  cfE.PracScaleBtn.addEventListener('click', ()=>{
+    rootKeySel.value = noteNames[cfPcOf(cfTonicName())]; document.getElementById('scaleTypeSelect').value = cf.minor ? 'minor' : 'major';
+    lastPracticeMode = 'scale'; activateSection('practice'); activateMode('scale');
+  });
+  cfE.PracArpBtn.addEventListener('click', ()=>{
+    rootKeySel.value = noteNames[cfPcOf(cfTonicName())]; qualitySel.value = cf.minor ? 'minor' : 'major';
+    lastPracticeMode = 'arpeggio'; activateSection('practice'); activateMode('arpeggio');
+  });
+
+  // follow the app's key when it has changed since the circle was last shown
+  function circleOnMode(mode){
+    if(mode !== 'circle'){ cfStop(); return; }
+    if(!cfSvgBuilt) cfBuildSvg();
+    const g = rootKeySel.value + '/' + scaleTypeSel.value;
+    if(g !== cfSeenKey){
+      cfSeenKey = g;
+      const pc = noteNames.indexOf(rootKeySel.value), minor = scaleTypeSel.value === 'minor';
+      if(pc >= 0){ cf.minor = minor; cf.p = cfPosMajor(minor ? (pc + 3) % 12 : pc); cf.flat6 = false; }
+    }
+    cfRefresh();
+  }
+  try{ const o = JSON.parse(localStorage.getItem(CF_KEY) || '{}'); cf.sev = !!o.sev; cf.hv = !!o.hv; cf.snd = o.snd !== false; }catch(e){}
 
   // ---------------- Help modal ----------------
   // Version reflects the date this file was generated/updated — bump it on every new revision.
-  const APP_VERSION = '2026.11.09.1';
+  const APP_VERSION = '2026.11.11.1';
 
   const TAB_OVERVIEW = {
     drone: 'Sustains a chord that loops until stopped — good for pads, ambient backing, or holding a tonal center.',
@@ -5658,6 +6329,7 @@ function acDecode(f, o){
     sequencer: 'A full piano-roll for building chord progressions and arrangements, with tempo, time signature, metronome, drum patterns, and MIDI import/export.',
     arpeggio: 'Fretboard diagrams and TAB exercises for practicing a chord\'s arpeggio up the neck, position by position, on a real guitar.',
     scale: 'Fretboard diagrams and TAB exercises for practicing a scale up the neck, same position-by-position approach as Arpeggios.',
+    circle: 'An interactive circle of fifths: pick a key to see its signature, related keys and chords, hear them, practise the scale, set the sequencer key, or add common progressions to the Chord Sequencer.',
     finder: 'Click notes anywhere on a 24-fret fretboard and it finds every chord and scale that contains them — a reverse lookup for working out what you\'re playing.',
     backing: 'Play a backing track from a file, a network drive or a link (YouTube, Spotify, direct audio link). The last 20 are kept in a history; drag tracks into a set list and play it with a pause between tracks.',
     ytloop: 'Load a YouTube video, mark a section with A and B, and loop it at any speed from 25% to 200% (pitch stays the same) with an optional count-in. Your last 5 videos and their settings are remembered.',
@@ -5703,6 +6375,12 @@ function acDecode(f, o){
         <li><strong>Note Length</strong> is the duration a new note gets when you click to place it — pick it before clicking.</li>
         <li><strong>Play</strong> loops the whole arrangement (chords + metronome + drums); <strong>Clear all</strong> wipes every note.</li>
       </ul>
+      <h4>Undo, Redo &amp; Projects</h4>
+      <ul>
+        <li><strong>↶ Undo / ↷ Redo</strong> (or <strong>Ctrl+Z</strong> and <strong>Ctrl+Y</strong> / <strong>Ctrl+Shift+Z</strong>) step back and forward through your edits to the chords, drum grid, tempo, bars, time signature and key. A drag, or a quick run of changes, counts as one step. Loading a project or sending chords from Audio → Chords can be undone too. The history lasts until you close or reload the page.</li>
+        <li><strong>💾 Save project</strong> writes the chords, drums, tempo, bars, time signature and key to a <em>.trackmaker.json</em> file you can keep; <strong>📂 Load project</strong> reads one back (undoable with Ctrl+Z). Use it to keep detected and edited work between sessions.</li>
+        <li><strong>Shading</strong> — chords sent from Audio → Chords that the analysis was unsure about are drawn fainter (hover for the confidence). Edit a chord and it becomes solid; <strong>Clear shading</strong> marks them all as checked, and the tick box turns shading off.</li>
+      </ul>
       <h4>Key &amp; Scale</h4>
       <ul>
         <li>Pick <strong>Scale</strong> (major/minor) and tick <strong>Use 7th chords</strong> for sevenths instead of plain triads.</li>
@@ -5741,7 +6419,7 @@ function acDecode(f, o){
         <li><strong>Add link</strong> — paste a YouTube link, a Spotify link (track or episode), or a direct link to an audio file (mp3, m4a, wav, ogg…). Pages like SoundCloud or Bandcamp can't be played.</li>
         <li><strong>Add local files…</strong> — choose one or more audio files. The file window can browse network drives too (a typed path like \\server\share can't be opened by a web page). Chosen files are <em>copied into this browser's storage</em>, so they play without the original being available and without permission prompts. The history shows how much space they use; removing a track from the history and every set list frees its copy.</li>
         <li><strong>History</strong> — the last 20 tracks you added or played. ▶ plays one, + adds it to the current set list, ✎ renames it, ✕ removes it. You can also drag a track into the set list.</li>
-        <li><strong>Set lists</strong> — make as many as you like (New / Rename / Delete). Drag tracks in from the history, drag them up and down to re-order (or use ▲ ▼), ✕ takes one out. <strong>Play set list</strong> plays the tracks one after another, waiting the number of seconds in <em>Pause between tracks</em> (0 for none). While it waits you'll see a countdown with a Skip button. ▶ on a track starts the list from there; ⏮ ⏭ step through it.</li>
+        <li><strong>Set lists</strong> — make as many as you like (New / Rename / Delete). Drag tracks in from the history, drag them up and down to re-order (or use ▲ ▼), ✕ takes one out. <strong>Play set list</strong> plays the tracks one after another, waiting the number of seconds in <em>Pause between tracks</em> (0 for none). <em>Repeat the set list</em> starts again from the top when it reaches the end, and <em>Fade in / out</em> fades each track in at its start and out at its end (set 0 to turn it off; Spotify can't be faded). While it waits you'll see a countdown with a Skip button. ▶ on a track starts the list from there; ⏮ ⏭ step through it.</li>
         <li><strong>Playing</strong> — the transport has play/pause, stop, a seek bar and volume. A track keeps playing if you switch to another tab, and a small "now playing" bar with play/pause and next appears so you can control it from there.</li>
       </ul>
       <p style="color:var(--text-dim);">YouTube and Spotify play inside their own embedded players, so they need an internet connection, and the volume slider doesn't control Spotify. Spotify's embed plays 30-second previews unless you are logged in to Spotify in this browser (Spotify support is experimental). If a track fails during a set list, the error is shown and the list carries on with the next track. Some browsers refuse to start a track on their own without a click; if so, press Play.</p>
@@ -5755,9 +6433,30 @@ function acDecode(f, o){
         <li><strong>A and B boxes</strong> — type a time directly as minutes:seconds with decimals (<em>1:23.45</em>) or just seconds (<em>83.45</em>); the − / + buttons nudge a point by 0.1 s. You can also click the bar under the video to jump around; the shaded part is your loop.</li>
         <li><strong>Speed</strong> — type any speed from 25% to 200% (for example <em>95</em> for 95% speed; <em>0.95</em> works too), nudge it with −5 / −1 / +1 / +5, or pick a preset. Pitch is preserved as you slow down or speed up — YouTube's player does the correction. If YouTube won't run a video at the exact speed you ask for, the speed it actually used is shown underneath.</li>
         <li><strong>Count-in</strong> — choose how many beats to click before the video starts at A, and enter the song's tempo (or tap along with it — Tap takes the current speed into account). The clicks follow the playback speed. <em>Before every loop</em> counts in on each repeat; <em>Only on ▶ Play loop</em> counts in just when you press that button.</li>
-        <li><strong>Recent videos</strong> — the last 5 videos you loaded are kept on this device with their loop points, speed and count-in settings. Click one to reload it; ✕ removes it.</li>
+        <li><strong>Recent videos</strong> — the last 5 videos you loaded are kept on this device with their loop points, speed, count-in settings and where you were up to. Click one (or paste the link again) to bring it all back and carry on from that spot; ✕ removes it.</li>
       </ul>
       <p style="color:var(--text-dim);">Loop points are checked about 30 times a second, so a repeat can land a few hundredths of a second off, and the video takes a moment to restart after each jump. If YouTube says it can't play the video here, the owner may have turned off embedding — or the page may need to be opened over https (for example from GitHub Pages) rather than as a local file.</p>
+    `,
+    finder: `
+      <h4>Finder</h4>
+      <p>Works backwards from the notes you play: click notes on the fretboard and it lists every chord and scale that contains them.</p>
+      <ul>
+        <li><strong>Click</strong> notes on the neck (open strings are clickable in the zone left of the nut); click again to remove one. The matches appear as chips — click a chip to show that chord or scale on the whole neck, and click it again to go back to choosing notes.</li>
+        <li>With a match showing, the neck colours each note by its place in the chord or scale (the root stays gold). Notes you selected that are in the pattern are filled; notes in the pattern you haven't selected are outlined. The <strong>Intervals / Notes</strong> switch changes what is written on the dots.</li>
+        <li><strong>▶ Practice this Arpeggio / Scale</strong> jumps to that practice tab with the root and type already chosen.</li>
+      </ul>
+    `,
+    circle: `
+      <h4>Circle of Fifths</h4>
+      <p>The circle arranges the 12 keys so that each step clockwise goes up a fifth — and adds one sharp (or removes one flat). Keys next to each other share almost all their notes, which is why they sound related and why songs modulate between neighbours.</p>
+      <ul>
+        <li><strong>The wheel</strong> — the outer ring is the major keys and the inner ring the relative minors (the minor key that shares the same notes). The small figures round the edge are the key signature. Click a segment, or use the arrow keys (◀ ▶ round the circle, ▲ ▼ between major and minor). The selected key is gold, its relative is lighter, and the shaded block is the closely related keys: the IV and V keys and their relatives.</li>
+        <li><strong>Chords in this key</strong> — the seven chords built on the scale, with their roman numerals and job: tonic (home), pre-dominant, subdominant and dominant (tension that wants to resolve). Click one to hear it; it lights up on the wheel where it has a place. <strong>7th chords</strong> switches to seventh chords. In a minor key, <strong>Major V (harmonic minor)</strong> swaps the v for the major V that pulls home more strongly, and VII for vii°.</li>
+        <li><strong>Neighbouring keys</strong> — the dominant (a fifth up), subdominant (a fifth down), relative and parallel keys; click one to move there. The 6-sharp / 6-flat key at the bottom can be spelled either way.</li>
+        <li><strong>♪ Hear the scale</strong> plays it up one octave. <strong>🎹 Set as sequencer key</strong> sets the Chord Sequencer's key and major/minor. <strong>▶ Practice this scale</strong> and <strong>▶ Practice the tonic chord</strong> jump to the Scales and Arpeggios tabs set to this key.</li>
+        <li><strong>Common progressions</strong> — famous patterns worked out in this key. ▶ plays one (at the Chord Sequencer's tempo); ＋ adds it to the Chord Sequencer after the chords already there, one bar per chord, extending the length if needed. Undo it there with Ctrl+Z.</li>
+      </ul>
+      <p style="color:var(--text-dim);">When you open this tab it starts from the app's current key. Choosing a key here doesn't change the rest of the app until you press <em>Set as sequencer key</em> or one of the practice buttons.</p>
     `,
     audiochords: `
       <h4>Audio → Chords</h4>
@@ -5765,6 +6464,8 @@ function acDecode(f, o){
       <p>Turns a recording into a draft chord chart. Everything happens in your browser — the audio file is never uploaded. The first analysis downloads the Essentia.js engine from a CDN (a few MB, then cached).</p>
       <ul>
         <li><strong>Choose audio file</strong> — mp3, wav, m4a or ogg. A typical song takes roughly 20–60 seconds; a progress bar shows where it is. The file plays in the player below so you can check the result by ear — click any chord to jump to that spot, and the chord being played lights up.</li>
+        <li><strong>Repeated sections</strong> — when a stretch of the song repeats (a chorus heard several times), <em>Share evidence between repeats</em> lets those repeats back each other up, which fixes some one-off mistakes. Switch it to <em>Treat each part separately</em> if the repeats really do differ. It can't fix a chord that is misheard the same way every time.</li>
+        <li><strong>Uncertain chords</strong> — each chord gets a confidence score. Low-scoring chords are drawn fainter on the chips and the timeline (dashed, with a ? when very unsure) and carried over to the sequencer, so you know which ones to check by ear first. Untick <em>Shade uncertain chords</em> to turn it off.</li>
         <li><strong>Timeline</strong> — once analysed, the waveform appears with the chords drawn above it, plus the key and tempo. During playback the current chord is shown large with the next one beside it, and the view follows the song. Click the waveform to jump to that point, click a chord box to hear that chord, drag the scrollbar to look around, and use − / + / Fit (or Ctrl + scroll) to zoom. Chord colours show each chord's place in the key, and the numbers along the top are bars.</li>
         <li><strong>Chords</strong> — Major / minor is the reliable setting. "+ 7th chords" is experimental: it misses many 7ths and can invent a few, so only use it if you specifically want to try it.</li>
         <li><strong>Chord changes</strong> — Fewer smooths out brief flickers; More follows quick changes more closely. If the result looks like long stretches of one chord, try More.</li>
@@ -5799,6 +6500,8 @@ function acDecode(f, o){
         '<div style="margin:10px 0 4px;"><strong style="color:var(--text);">Practice Tools</strong></div>' +
         '<div><strong>Arpeggios</strong> — ' + TAB_OVERVIEW.arpeggio + '</div>' +
         '<div><strong>Scales</strong> — ' + TAB_OVERVIEW.scale + '</div>' +
+        '<div><strong>Finder</strong> — ' + TAB_OVERVIEW.finder + '</div>' +
+        '<div><strong>Circle of Fifths</strong> — ' + TAB_OVERVIEW.circle + '</div>' +
         '<div style="margin:10px 0 4px;"><strong style="color:var(--text);">Audio Tools</strong></div>' +
         '<div><strong>YouTube Loop</strong> — ' + TAB_OVERVIEW.ytloop + '</div>' +
         '<div><strong>Backing Tracks</strong> — ' + TAB_OVERVIEW.backing + '</div>' +
